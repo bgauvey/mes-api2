@@ -1,8 +1,8 @@
 ﻿using System.Text;
 using BOL.API.Authorization.Services;
 using BOL.API.Repository;
-using BOL.API.Repository.Interfaces.Auth;
-using BOL.API.Repository.Repositories.Auth;
+using BOL.API.Repository.Interfaces.Security;
+using BOL.API.Repository.Repositories.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

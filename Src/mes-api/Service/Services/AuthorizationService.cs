@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using BOL.API.Domain.Enums;
-using BOL.API.Repository.Interfaces.Auth;
+using BOL.API.Repository.Interfaces.Security;
 using BOL.API.Service;
 using Microsoft.IdentityModel.Tokens;
 

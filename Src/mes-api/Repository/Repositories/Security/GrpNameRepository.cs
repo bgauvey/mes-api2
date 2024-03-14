@@ -1,7 +1,7 @@
 ﻿using BOL.API.Domain.Models.Security;
-using BOL.API.Repository.Interfaces.Auth;
+using BOL.API.Repository.Interfaces.Security;
 
-namespace BOL.API.Repository.Repositories.Auth;
+namespace BOL.API.Repository.Repositories.Security;
 
 public class GrpNameRepository : IGrpNameRepository
 {

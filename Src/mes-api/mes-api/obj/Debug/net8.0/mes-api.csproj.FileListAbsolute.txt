@@ -61,6 +61,7 @@
 /Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/mes-api/obj/Debug/net8.0/mes-api.csproj.CoreCompileInputs.cache
 /Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/mes-api/obj/Debug/net8.0/mes-api.MvcApplicationPartsAssemblyInfo.cs
 /Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/mes-api/obj/Debug/net8.0/mes-api.MvcApplicationPartsAssemblyInfo.cache
+/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/mes-api/obj/Debug/net8.0/mes-api.sourcelink.json
 /Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/mes-api/obj/Debug/net8.0/staticwebassets.build.json
 /Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/mes-api/obj/Debug/net8.0/staticwebassets.development.json
 /Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/mes-api/obj/Debug/net8.0/staticwebassets/msbuild.mes-api.Microsoft.AspNetCore.StaticWebAssets.props

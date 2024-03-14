@@ -17,18 +17,18 @@
   <ItemGroup>
     <None Remove="Interfaces\" />
     <None Remove="Repositories\" />
-    <None Remove="Repositories\Auth\" />
-    <None Remove="Interfaces\Auth\" />
     <None Remove="Repositories\Core\" />
     <None Remove="Interfaces\Core\" />
+    <None Remove="Interfaces\Security\" />
+    <None Remove="Repositories\Security\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="Repositories\" />
-    <Folder Include="Repositories\Auth\" />
-    <Folder Include="Interfaces\Auth\" />
     <Folder Include="Repositories\Core\" />
     <Folder Include="Interfaces\Core\" />
+    <Folder Include="Interfaces\Security\" />
+    <Folder Include="Repositories\Security\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Properties\launchSettings.json">

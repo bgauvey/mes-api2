@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qw8UqofGGs9JksrOyfKAslp6yW9jbqcIWoDMuMzhz6kqCVdE619RV0BJuw/C9WZRYaeSt7/VZn+NNzQka06B9g==",
+  "dgSpecHash": "ri7kKeMFdbOOLJxFk2RBBkWTlh6ZYqz6YSMN4SLqeSvZ4/3FW519zodNITPyFRlIhV9H5XFtyUDG2od76bKwNw==",
   "success": true,
   "projectFilePath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Repository/BOL.API.Repository.csproj",
   "expectedPackageFiles": [

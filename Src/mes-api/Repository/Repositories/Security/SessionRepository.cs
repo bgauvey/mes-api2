@@ -1,10 +1,10 @@
 ﻿using System.Data;
 using BOL.API.Domain.Enums;
-using BOL.API.Repository.Interfaces.Auth;
+using BOL.API.Repository.Interfaces.Security;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace BOL.API.Repository.Repositories.Auth;
+namespace BOL.API.Repository.Repositories.Security;
 
 public class SessionRepository : ISessionRepository
 {

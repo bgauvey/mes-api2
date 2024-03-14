@@ -7,6 +7,7 @@
 /Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/obj/Debug/net8.0/BOL.API.Domain.AssemblyInfoInputs.cache
 /Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/obj/Debug/net8.0/BOL.API.Domain.AssemblyInfo.cs
 /Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/obj/Debug/net8.0/BOL.API.Domain.csproj.CoreCompileInputs.cache
+/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/obj/Debug/net8.0/BOL.API.Domain.sourcelink.json
 /Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/obj/Debug/net8.0/BOL.API.Domain.dll
 /Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/obj/Debug/net8.0/refint/BOL.API.Domain.dll
 /Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/obj/Debug/net8.0/BOL.API.Domain.pdb

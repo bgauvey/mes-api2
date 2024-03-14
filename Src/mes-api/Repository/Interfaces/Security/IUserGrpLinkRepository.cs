@@ -1,7 +1,6 @@
-﻿using System;
-using BOL.API.Domain.Models.Security;
+﻿using BOL.API.Domain.Models.Security;
 
-namespace BOL.API.Repository.Interfaces.Auth;
+namespace BOL.API.Repository.Interfaces.Security;
 
 public interface IUserGrpLinkRepository
 {

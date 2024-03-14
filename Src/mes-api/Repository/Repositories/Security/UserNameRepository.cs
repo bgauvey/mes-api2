@@ -20,10 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using BOL.API.Domain.Models.Security;
-using BOL.API.Repository.Interfaces.Auth;
+using BOL.API.Repository.Interfaces.Security;
 using Microsoft.EntityFrameworkCore;
 
-namespace BOL.API.Repository.Repositories.Auth;
+namespace BOL.API.Repository.Repositories.Security;
 
 public class UserNameRepository : IUserNameRepository
 {
