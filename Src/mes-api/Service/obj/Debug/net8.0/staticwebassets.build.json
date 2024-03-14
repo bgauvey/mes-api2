@@ -1,0 +1,23 @@
+{
+  "Version": 1,
+  "Hash": "p5y5zBtgzxrxKraaQjdmaWSeOWHenFzycENOGZD6WgQ=",
+  "Source": "BOL.API.Service",
+  "BasePath": "_content/BOL.API.Service",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Repository/BOL.API.Repository.csproj",
+      "Version": 2,
+      "Source": "BOL.API.Repository",
+      "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
