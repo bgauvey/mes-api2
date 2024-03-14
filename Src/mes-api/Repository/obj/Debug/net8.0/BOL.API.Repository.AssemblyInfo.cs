@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BOL.API.Repository")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba9efb7274196ebdfb9b25d229c6045e683365dd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+741de68a5a2b30d31c7e1582f8ac57fcd69b09b6")]
 [assembly: System.Reflection.AssemblyProductAttribute("BOL.API.Repository")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BOL.API.Repository")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

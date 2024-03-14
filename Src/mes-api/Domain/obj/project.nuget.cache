@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+PWX9/hbiG5/wGNiZVNPOcmyzrk8CxX8LLDFa4TZd0BKUQTmfzoZqyxt8TgkrNea+UerVtd+9MmMCjNtannj+Q==",
+  "dgSpecHash": "qzVcGgeNIVzx4v8qA/cfPZjWQVhRXzX2DIHLcsB3dnne6M/RL4IhTHUCd/WYyO6ZJeyYAPrPt8/f0LjgXLZQWg==",
   "success": true,
-  "projectFilePath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj",
+  "projectFilePath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj",
   "expectedPackageFiles": [
     "/Users/billgauvey/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/Users/billgauvey/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",

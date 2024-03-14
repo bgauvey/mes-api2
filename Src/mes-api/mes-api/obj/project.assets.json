@@ -2961,11 +2961,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/mes-api/mes-api.csproj",
+      "projectUniqueName": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/mes-api/mes-api.csproj",
       "projectName": "mes-api",
-      "projectPath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/mes-api/mes-api.csproj",
+      "projectPath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/mes-api/mes-api.csproj",
       "packagesPath": "/Users/billgauvey/.nuget/packages/",
-      "outputPath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/mes-api/obj/",
+      "outputPath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/mes-api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/billgauvey/.nuget/NuGet/NuGet.Config"
@@ -2980,8 +2980,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Service/BOL.API.Service.csproj": {
-              "projectPath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Service/BOL.API.Service.csproj"
+            "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Service/BOL.API.Service.csproj": {
+              "projectPath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Service/BOL.API.Service.csproj"
             }
           }
         }

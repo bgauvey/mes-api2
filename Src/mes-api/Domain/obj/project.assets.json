@@ -4072,11 +4072,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj",
+      "projectUniqueName": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj",
       "projectName": "BOL.API.Domain",
-      "projectPath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj",
+      "projectPath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj",
       "packagesPath": "/Users/billgauvey/.nuget/packages/",
-      "outputPath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Domain/obj/",
+      "outputPath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/billgauvey/.nuget/NuGet/NuGet.Config"
