@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("mes-api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+956f28910c812bf230a37c8e16a6a55641a98d08")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba9efb7274196ebdfb9b25d229c6045e683365dd")]
 [assembly: System.Reflection.AssemblyProductAttribute("mes-api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("mes-api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

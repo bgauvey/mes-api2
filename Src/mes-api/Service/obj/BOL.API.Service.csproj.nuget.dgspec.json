@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Service/BOL.API.Service.csproj": {}
+    "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Service/BOL.API.Service.csproj": {}
   },
   "projects": {
-    "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj": {
+    "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj",
+        "projectUniqueName": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj",
         "projectName": "BOL.API.Domain",
-        "projectPath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj",
+        "projectPath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj",
         "packagesPath": "/Users/billgauvey/.nuget/packages/",
-        "outputPath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/obj/",
+        "outputPath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/billgauvey/.nuget/NuGet/NuGet.Config"
@@ -74,14 +74,14 @@
         }
       }
     },
-    "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Repository/BOL.API.Repository.csproj": {
+    "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Repository/BOL.API.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Repository/BOL.API.Repository.csproj",
+        "projectUniqueName": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Repository/BOL.API.Repository.csproj",
         "projectName": "BOL.API.Repository",
-        "projectPath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Repository/BOL.API.Repository.csproj",
+        "projectPath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Repository/BOL.API.Repository.csproj",
         "packagesPath": "/Users/billgauvey/.nuget/packages/",
-        "outputPath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Repository/obj/",
+        "outputPath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Repository/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/billgauvey/.nuget/NuGet/NuGet.Config"
@@ -96,8 +96,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj": {
-                "projectPath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj"
+              "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj": {
+                "projectPath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj"
               }
             }
           }
@@ -145,14 +145,14 @@
         }
       }
     },
-    "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Service/BOL.API.Service.csproj": {
+    "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Service/BOL.API.Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Service/BOL.API.Service.csproj",
+        "projectUniqueName": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Service/BOL.API.Service.csproj",
         "projectName": "BOL.API.Service",
-        "projectPath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Service/BOL.API.Service.csproj",
+        "projectPath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Service/BOL.API.Service.csproj",
         "packagesPath": "/Users/billgauvey/.nuget/packages/",
-        "outputPath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Service/obj/",
+        "outputPath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Service/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/billgauvey/.nuget/NuGet/NuGet.Config"
@@ -167,11 +167,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj": {
-                "projectPath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj"
+              "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj": {
+                "projectPath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Domain/BOL.API.Domain.csproj"
               },
-              "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Repository/BOL.API.Repository.csproj": {
-                "projectPath": "/Users/billgauvey/source/repos/bol/mes-api2/Src/mes-api/Repository/BOL.API.Repository.csproj"
+              "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Repository/BOL.API.Repository.csproj": {
+                "projectPath": "/Users/billgauvey/source/repos/mes-api2/Src/mes-api/Repository/BOL.API.Repository.csproj"
               }
             }
           }
