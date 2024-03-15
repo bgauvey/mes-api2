@@ -99,10 +99,12 @@ public class AuthorizationService : IAuthorizationService
 
     private Claim[] Claims(User user)
     {
-        var claims = new List<Claim>();
-        claims.Add(new Claim(ClaimTypes.Name, user.UserName));
-        claims.Add(new Claim(ClaimTypes.GivenName, user.UserDesc));
-        claims.Add(new Claim(ClaimTypes.Sid, user.SessionId.ToString()));
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(ClaimTypes.GivenName, user.UserDesc),
+            new Claim(ClaimTypes.Sid, user.SessionId.ToString())
+        };
         foreach (string role in user.Roles)
         {
             claims.Add(new Claim(ClaimTypes.Role, role));
