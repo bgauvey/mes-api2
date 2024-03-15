@@ -2,12 +2,7 @@
 
 namespace BOL.API.Repository.Interfaces.Security;
 
-public interface IGrpNameRepository
+public interface IGrpNameRepository : IRepositoryBase<GrpName>
 {
-    IEnumerable<GrpName> GetAllGrpNames();
-    GrpName GetGrpNameById(int grpId);
-    void UpdateGrpName(GrpName grpName);
-    void DeleteGrpName(int grpId);
-    void AddGrpName(GrpName grpName);
 }
 

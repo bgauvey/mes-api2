@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
-namespace api.Models;
+namespace BOL.API.Domain.Models.EnProd;
 
 [Table("item_inv")]
 public partial class ItemInv
@@ -103,16 +100,4 @@ public partial class ItemInv
     [Key]
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("EntId")]
-    [InverseProperty("ItemInvs")]
-    public virtual StorageExec Ent { get; set; } = null!;
-
-    [ForeignKey("ItemId, LotNo")]
-    [InverseProperty("ItemInvs")]
-    public virtual Lot? Lot { get; set; }
-
-    [ForeignKey("ItemId, LotNo, SublotNo")]
-    [InverseProperty("ItemInvs")]
-    public virtual Sublot? Sublot { get; set; }
 }

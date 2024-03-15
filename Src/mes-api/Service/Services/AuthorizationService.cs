@@ -80,7 +80,7 @@ public class AuthorizationService : IAuthorizationService
 
     private User Authenticate(string userName, string password)
     {
-        var user =  _userNameRepository.GetUserNameById(userName);
+        var user =  _userNameRepository.GetByCondition(x => x.UserId.Equals(userName)).Single();
         if (user?.Pw == password)
         {
             var data = new User()
@@ -114,8 +114,9 @@ public class AuthorizationService : IAuthorizationService
     {
         List<string> roles = new List<string>();
 
-        var userGrpLinks = _userGrpLinkRepository.GetUserGrpLinkByUserId(userName);
-        var grpNames = _grpNameRepository.GetAllGrpNames();
+        var userGrpLinks = _userGrpLinkRepository.GetByCondition(x => x.UserId.Equals(userName));
+        var grpNames = _grpNameRepository.GetAll();
+
         var groups = userGrpLinks
             .Join(grpNames,
             u => u.GrpId,

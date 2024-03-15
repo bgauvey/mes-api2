@@ -6,8 +6,8 @@ public interface IEntService
 {
     IEnumerable<Ent> GetAllEnts();
     Ent GetEntById(int id);
-    void UpdateEnt(Ent ent);
-    void DeleteEnt(int id);
-    void AddEnt(Ent ent);
+    void Update(Ent ent);
+    void Delete(int id);
+    void Create(Ent ent);
 }
 

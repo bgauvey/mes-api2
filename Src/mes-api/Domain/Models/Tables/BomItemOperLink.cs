@@ -97,15 +97,4 @@ public partial class BomItemOperLink
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [InverseProperty("BomItemOperLink")]
-    public virtual ICollection<BomItemOperStepLink> BomItemOperStepLinks { get; set; } = new List<BomItemOperStepLink>();
-
-    [ForeignKey("DefStorageEntId")]
-    [InverseProperty("BomItemOperLinks")]
-    public virtual StorageExec? DefStorageEnt { get; set; }
-
-    [ForeignKey("ProcessId, OperId")]
-    [InverseProperty("BomItemOperLinks")]
-    public virtual Oper Oper { get; set; } = null!;
 }

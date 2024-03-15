@@ -15,27 +15,28 @@ public class EntService : IEntService
 
     public IEnumerable<Ent> GetAllEnts()
     {
-        return _entRepository.GetAllEnts();
+        return _entRepository.GetAll();
     }
 
     public Ent GetEntById(int id)
     {
-        return _entRepository.GetEntById(id);
+        return _entRepository.GetByCondition(x => x.EntId.Equals(id)).Single();
     }
 
-    public void AddEnt(Ent ent)
+    public void Create(Ent ent)
     {
-        _entRepository.AddEnt(ent);
+        _entRepository.Create(ent);
     }
 
-    public void UpdateEnt(Ent ent)
+    public void Update(Ent ent)
     {
-        _entRepository.UpdateEnt(ent);
+        _entRepository.Update(ent);
     }
 
-    public void DeleteEnt(int id)
+    public void Delete(int id)
     {
-        _entRepository.DeleteEnt(id);
+        var ent = GetEntById(id);
+        _entRepository.Delete(ent);
     }
 }
 

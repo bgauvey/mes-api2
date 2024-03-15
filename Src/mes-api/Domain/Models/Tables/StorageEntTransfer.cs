@@ -97,8 +97,4 @@ public partial class StorageEntTransfer
     [Key]
     [Column("trans_id")]
     public int TransId { get; set; }
-
-    [ForeignKey("EntId")]
-    [InverseProperty("StorageEntTransfers")]
-    public virtual StorageExec Ent { get; set; } = null!;
 }

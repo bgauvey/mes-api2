@@ -1,38 +1,14 @@
 ﻿using System;
 using BOL.API.Domain.Models.Core;
 using BOL.API.Repository.Interfaces.Core;
+using BOL.API.Repository.Repositories;
 
 namespace BOL.API.Repository.Core;
 
-public class EntRepository : IEntRepository
+public class EntRepository : RepositoryBase<Ent>, IEntRepository
 {
-	public EntRepository()
-	{
-	}
-
-    public void AddEnt(Ent ent)
+    public EntRepository(FactelligenceContext context, ILoggerFactory loggerFactory)
+         : base(context, loggerFactory)
     {
-        throw new NotImplementedException();
-    }
-
-    public void DeleteEnt(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<Ent> GetAllEnts()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Ent GetEntById(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void UpdateEnt(Ent ent)
-    {
-        throw new NotImplementedException();
     }
 }
-

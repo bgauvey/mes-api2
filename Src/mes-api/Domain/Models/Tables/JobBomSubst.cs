@@ -142,11 +142,4 @@ public partial class JobBomSubst
     [Column("row_id")]
     public int RowId { get; set; }
 
-    [ForeignKey("DefRejectEntId")]
-    [InverseProperty("JobBomSubstDefRejectEnts")]
-    public virtual StorageExec? DefRejectEnt { get; set; }
-
-    [ForeignKey("DefStorageEntId")]
-    [InverseProperty("JobBomSubstDefStorageEnts")]
-    public virtual StorageExec? DefStorageEnt { get; set; }
 }

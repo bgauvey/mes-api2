@@ -122,12 +122,4 @@ public partial class ItemSubst
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("DefRejectEntId")]
-    [InverseProperty("ItemSubstDefRejectEnts")]
-    public virtual StorageExec? DefRejectEnt { get; set; }
-
-    [ForeignKey("DefStorageEntId")]
-    [InverseProperty("ItemSubstDefStorageEnts")]
-    public virtual StorageExec? DefStorageEnt { get; set; }
 }

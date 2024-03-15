@@ -136,12 +136,4 @@ public partial class TransferList
     [Key]
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("FromEntId")]
-    [InverseProperty("TransferListFromEnts")]
-    public virtual StorageExec FromEnt { get; set; } = null!;
-
-    [ForeignKey("ToEntId")]
-    [InverseProperty("TransferListToEnts")]
-    public virtual StorageExec ToEnt { get; set; } = null!;
 }

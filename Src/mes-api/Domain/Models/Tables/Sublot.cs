@@ -82,16 +82,4 @@ public partial class Sublot
     [Column("row_id")]
     public int RowId { get; set; }
 
-    [InverseProperty("Sublot")]
-    public virtual ICollection<AssignedLot> AssignedLots { get; set; } = new List<AssignedLot>();
-
-    [InverseProperty("Sublot")]
-    public virtual ICollection<ItemInv> ItemInvs { get; set; } = new List<ItemInv>();
-
-    [ForeignKey("ItemId, LotNo")]
-    [InverseProperty("Sublots")]
-    public virtual Lot Lot { get; set; } = null!;
-
-    [InverseProperty("Sublot")]
-    public virtual ICollection<SublotAttr> SublotAttrs { get; set; } = new List<SublotAttr>();
 }

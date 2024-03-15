@@ -39,7 +39,4 @@ public partial class ItemStorageExecLink
     [Column("row_id")]
     public int RowId { get; set; }
 
-    [ForeignKey("EntId")]
-    [InverseProperty("ItemStorageExecLinks")]
-    public virtual StorageExec Ent { get; set; } = null!;
 }

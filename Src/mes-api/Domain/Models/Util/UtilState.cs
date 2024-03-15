@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
-namespace api.Models;
+namespace BOL.API.Domain.Models.Util;
 
 [Table("util_state")]
-[Index("StateDesc", Name = "IX_util_state", IsUnique = true)]
 public partial class UtilState
 {
     [Column("state_desc")]

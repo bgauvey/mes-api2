@@ -2,12 +2,7 @@
 
 namespace BOL.API.Repository.Interfaces.Security;
 
-public interface IUserNameRepository
+public interface IUserNameRepository : IRepositoryBase<UserName>
 {
-    IEnumerable<UserName> GetAllUserNames();
-    UserName GetUserNameById(string userId);
-    int UpdateUserName(UserName userName);
-    int DeleteUserName(string userNamed);
-    int AddUserName(UserName userName);
+    int ChangePassword(string userId, string oldPassword, string newPassword);
 }
-

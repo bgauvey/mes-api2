@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Models;
+namespace BOL.API.Domain.Models.Util;
 
-[PrimaryKey("EntId", "RawReasCd")]
-[Table("util_raw_reas")]
-public partial class UtilRawRea
+[PrimaryKey("EntId", "RawReasCd", "ReasCd")]
+[Table("util_reas_link")]
+public partial class UtilReasLink
 {
     [Key]
     [Column("ent_id")]
@@ -19,11 +17,9 @@ public partial class UtilRawRea
     [StringLength(40)]
     public string RawReasCd { get; set; } = null!;
 
-    [Column("def_reas_cd")]
-    public int DefReasCd { get; set; }
-
-    [Column("prompt")]
-    public bool Prompt { get; set; }
+    [Key]
+    [Column("reas_cd")]
+    public int ReasCd { get; set; }
 
     [Column("last_edit_comment")]
     [StringLength(254)]

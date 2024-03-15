@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
-namespace api.Models;
+namespace BOL.API.Domain.Models.Util;
 
 [Table("util_log")]
-[Index("EventTimeUtc", "EntId", Name = "IX_util_log", IsUnique = true)]
 public partial class UtilLog
 {
     [Column("event_time_utc", TypeName = "datetime")]

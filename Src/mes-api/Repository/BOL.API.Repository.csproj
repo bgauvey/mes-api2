@@ -21,6 +21,12 @@
     <None Remove="Interfaces\Core\" />
     <None Remove="Interfaces\Security\" />
     <None Remove="Repositories\Security\" />
+    <None Remove="Interfaces\Prod\" />
+    <None Remove="Interfaces\EnProd\" />
+    <None Remove="Interfaces\Util\" />
+    <None Remove="Repositories\EnProd\" />
+    <None Remove="Repositories\Prod\" />
+    <None Remove="Repositories\Util\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
@@ -29,6 +35,12 @@
     <Folder Include="Interfaces\Core\" />
     <Folder Include="Interfaces\Security\" />
     <Folder Include="Repositories\Security\" />
+    <Folder Include="Interfaces\Prod\" />
+    <Folder Include="Interfaces\EnProd\" />
+    <Folder Include="Interfaces\Util\" />
+    <Folder Include="Repositories\EnProd\" />
+    <Folder Include="Repositories\Prod\" />
+    <Folder Include="Repositories\Util\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Properties\launchSettings.json">

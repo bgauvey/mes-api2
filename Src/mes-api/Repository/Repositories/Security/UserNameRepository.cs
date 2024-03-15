@@ -19,21 +19,20 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using BOL.API.Domain.Models.Prod;
 using BOL.API.Domain.Models.Security;
+using BOL.API.Repository.Interfaces;
+using BOL.API.Repository.Interfaces.Prod;
 using BOL.API.Repository.Interfaces.Security;
 using Microsoft.EntityFrameworkCore;
 
 namespace BOL.API.Repository.Repositories.Security;
 
-public class UserNameRepository : IUserNameRepository
+public class UserNameRepository : RepositoryBase<UserName>, IUserNameRepository
 {
-    private readonly FactelligenceContext _Context;
-    private readonly ILogger _Logger;
-
     public UserNameRepository(FactelligenceContext context, ILoggerFactory loggerFactory)
+         : base(context, loggerFactory)
     {
-        _Context = context;
-        _Logger = loggerFactory.CreateLogger(nameof(UserNameRepository));
     }
 
     public int ChangePassword(string userId, string oldPassword, string newPassword)
@@ -41,32 +40,7 @@ public class UserNameRepository : IUserNameRepository
         return _Context.Database.ExecuteSqlInterpolated($"sp_U_UserName_ChangePassword @userId={userId},@pw={oldPassword},@newPw={newPassword}");
     }
 
-    public int AddUserName(UserName userName)
-    {
-        _Context.UserNames.AddAsync(userName);
-        return _Context.SaveChanges();
-    }
-
-    public int DeleteUserName(string userId)
-    {
-        var userName = _Context.UserNames.SingleOrDefault(u => u.UserId == userId);
-        _Context.UserNames.Remove(userName);
-        return _Context.SaveChanges();
-    }
-
-    public IEnumerable<UserName> GetAllUserNames()
-    {
-        return _Context.UserNames.ToList();
-    }
-
-    public UserName GetUserNameById(string userId)
-    {
-        return _Context.UserNames
-            .Where(u => u.UserId == userId)
-            .SingleOrDefault();
-    }
-
-    public int UpdateUserName(UserName userName)
+    public new int Update(UserName userName)
     {
         return _Context.Database.ExecuteSqlInterpolated(
                 $"@user_id={userName.UserId},@user_desc={userName.UserDesc},@active={userName.Active},@hourly_cost={userName.HourlyCost},@email_address={

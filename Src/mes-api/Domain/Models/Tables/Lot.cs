@@ -70,18 +70,4 @@ public partial class Lot
     [Column("row_id")]
     public int RowId { get; set; }
 
-    [InverseProperty("Lot")]
-    public virtual ICollection<AssignedLot> AssignedLots { get; set; } = new List<AssignedLot>();
-
-    [InverseProperty("Lot")]
-    public virtual InvLotAttr? InvLotAttr { get; set; }
-
-    [InverseProperty("Lot")]
-    public virtual ICollection<ItemInv> ItemInvs { get; set; } = new List<ItemInv>();
-
-    [InverseProperty("Lot")]
-    public virtual ICollection<LotAttr> LotAttrs { get; set; } = new List<LotAttr>();
-
-    [InverseProperty("Lot")]
-    public virtual ICollection<Sublot> Sublots { get; set; } = new List<Sublot>();
 }

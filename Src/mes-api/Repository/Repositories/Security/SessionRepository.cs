@@ -1,20 +1,17 @@
 ﻿using System.Data;
 using BOL.API.Domain.Enums;
+using BOL.API.Domain.Models.Security;
 using BOL.API.Repository.Interfaces.Security;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace BOL.API.Repository.Repositories.Security;
 
-public class SessionRepository : ISessionRepository
+public class SessionRepository : RepositoryBase<Sessn>, ISessionRepository
 {
-    private readonly FactelligenceContext _Context;
-    private readonly ILogger _Logger;
-
     public SessionRepository(FactelligenceContext context, ILoggerFactory loggerFactory)
+         : base(context, loggerFactory)
     {
-        _Context = context;
-        _Logger = loggerFactory.CreateLogger(nameof(SessionRepository));
     }
 
     public int Create(ClientType clientType, string clientAddress, ref int sessionId)
@@ -41,29 +38,9 @@ public class SessionRepository : ISessionRepository
         return recordsAffected;
     }
 
-    public Task<int> CreateAsync(ClientType clientType, string clientAddress, ref int sessionId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public int Delete(int sessionId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<int> DeleteAsync(int sessionId)
-    {
-        throw new NotImplementedException();
-    }
-
     public int Login(int sessionId, string userId, string userPw)
     {
         return _Context.Database.ExecuteSqlInterpolated($"sp_U_Session_LogIn @session_id={sessionId}, @user_id={userId}, @user_pw={userPw}");
-    }
-
-    public async Task<int> LoginAsync(int sessionId, string userId, string userPw)
-    {
-        return await _Context.Database.ExecuteSqlInterpolatedAsync($"sp_U_Session_LogIn @session_id={sessionId}, @user_id={userId}, @user_pw={userPw}");
     }
 }
 

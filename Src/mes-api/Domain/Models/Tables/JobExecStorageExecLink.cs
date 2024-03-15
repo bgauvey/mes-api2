@@ -37,8 +37,4 @@ public partial class JobExecStorageExecLink
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("StorageEntId")]
-    [InverseProperty("JobExecStorageExecLinks")]
-    public virtual StorageExec StorageEnt { get; set; } = null!;
 }

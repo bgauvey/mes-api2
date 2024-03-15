@@ -13,6 +13,9 @@
     <None Remove="Models\Core\" />
     <None Remove="Enums\" />
     <None Remove="Models\Security\" />
+    <None Remove="Models\EnProd\" />
+    <None Remove="Models\Prod\" />
+    <None Remove="Models\Util\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -20,6 +23,9 @@
     <Folder Include="Models\Core\" />
     <Folder Include="Enums\" />
     <Folder Include="Models\Security\" />
+    <Folder Include="Models\EnProd\" />
+    <Folder Include="Models\Prod\" />
+    <Folder Include="Models\Util\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
