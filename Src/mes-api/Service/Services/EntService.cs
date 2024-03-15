@@ -1,19 +1,22 @@
 ﻿using BOL.API.Domain.Models.Core;
 using BOL.API.Repository.Core;
+using BOL.API.Repository.Interfaces.Core;
 using BOL.API.Service.Interfaces;
 
 namespace BOL.API.Service.Services;
 
 public class EntService : IEntService
 {
-    private readonly EntRepository _entRepository;
+    private readonly IEntRepository _entRepository;
+    private readonly ILogger _logger;
 
-    public EntService(EntRepository entRepository)
+    public EntService(IEntRepository entRepository, ILoggerFactory loggerFactory)
     {
         _entRepository = entRepository;
+        _logger = loggerFactory.CreateLogger(nameof(EntService));
     }
 
-    public IEnumerable<Ent> GetAllEnts()
+    public IEnumerable<Ent> GetAll()
     {
         return _entRepository.GetAll();
     }

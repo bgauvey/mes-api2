@@ -1,8 +1,12 @@
 ﻿using System.Text;
 using BOL.API.Authorization.Services;
 using BOL.API.Repository;
+using BOL.API.Repository.Core;
+using BOL.API.Repository.Interfaces.Core;
 using BOL.API.Repository.Interfaces.Security;
 using BOL.API.Repository.Repositories.Security;
+using BOL.API.Service.Interfaces;
+using BOL.API.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -86,10 +90,12 @@ builder.Services.AddScoped<IGrpNameRepository, GrpNameRepository>();
 builder.Services.AddScoped<ISessionRepository, SessionRepository>();
 builder.Services.AddScoped<IUserGrpLinkRepository, UserGrpLinkRepository>();
 builder.Services.AddScoped<IUserNameRepository, UserNameRepository>();
+builder.Services.AddScoped<IEntRepository, EntRepository>();
+
 
 // Add services
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
-// builder.Services.AddScoped<IEntService, EntService>();
+builder.Services.AddScoped<IEntService, EntService>();
 
 
 var app = builder.Build();
