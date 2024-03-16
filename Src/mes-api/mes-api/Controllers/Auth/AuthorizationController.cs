@@ -3,7 +3,7 @@ using BOL.API.Service.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace bol.api.Controllers;
+namespace bol.api.Controllers.Auth;
 
 [Route("auth")]
 public class AuthorizationController : ControllerBase

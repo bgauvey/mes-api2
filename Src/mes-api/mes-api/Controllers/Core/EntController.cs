@@ -3,10 +3,10 @@ using BOL.API.Service.Interfaces;
 using BOL.API.Service.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace bol.api.Controllers;
+namespace bol.api.Controllers.Core;
 
 [Route("ent")]
-public class EntController : Controller
+public class EntController : ControllerBase
 {
     private readonly ILogger _logger;
     private readonly IEntService _entService;

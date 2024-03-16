@@ -20,9 +20,13 @@
 
   <ItemGroup>
     <None Remove="Controllers\" />
+    <None Remove="Controllers\Auth\" />
+    <None Remove="Controllers\Core\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Controllers\Auth\" />
+    <Folder Include="Controllers\Core\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Service\BOL.API.Service.csproj">
