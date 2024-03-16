@@ -7,6 +7,10 @@
     <RootNamespace>BOL.API.Domain</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\net8.0\BOL.API.Domain.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove="Models\" />
     <None Remove="Models\Tables\" />
@@ -16,6 +20,7 @@
     <None Remove="Models\EnProd\" />
     <None Remove="Models\Prod\" />
     <None Remove="Models\Util\" />
+    <None Remove="Models\Generic\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -26,6 +31,7 @@
     <Folder Include="Models\EnProd\" />
     <Folder Include="Models\Prod\" />
     <Folder Include="Models\Util\" />
+    <Folder Include="Models\Generic\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">

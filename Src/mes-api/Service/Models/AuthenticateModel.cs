@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using BOL.API.Domain.Enums;
 
-namespace BOL.API.Service;
+namespace BOL.API.Service.Models;
 
 public class AuthenticateModel
 {

@@ -1,5 +1,5 @@
 ﻿//
-//  AttrRepository.cs
+//  Command.cs
 //
 //  Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -18,15 +18,14 @@
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-using BOL.API.Domain.Models.Core;
-using BOL.API.Repository.Interfaces.Core;
 
-namespace BOL.API.Repository.Repositories.Core;
+namespace BOL.API.Domain.Models.Generic;
 
-public class AttrRepository : RepositoryBase<Attr>, IAttrRepository
+public class Command
 {
-    public AttrRepository(FactelligenceContext context, ILoggerFactory loggerFactory)
-         : base(context, loggerFactory)
-    {
-    }
+	public string? Schema { get; set; }
+	public string Object { get; set; }
+	public string MsgType { get; set; }
+	public string Cmd { get; set; }
+	public List<KeyValuePair<string, object>>? Parameters { get; set;  }
 }

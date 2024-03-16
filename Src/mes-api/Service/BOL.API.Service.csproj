@@ -8,13 +8,19 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\net8.0\BOL.API.Service.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove="Interfaces\" />
     <None Remove="Services\" />
+    <None Remove="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="Services\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\BOL.API.Domain.csproj" />

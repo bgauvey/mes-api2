@@ -4,10 +4,11 @@ using System.Security.Claims;
 using System.Text;
 using BOL.API.Domain.Enums;
 using BOL.API.Repository.Interfaces.Security;
-using BOL.API.Service;
+using BOL.API.Service.Interfaces;
+using BOL.API.Service.Models;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BOL.API.Authorization.Services;
+namespace BOL.API.Service.Services;
 
 public class AuthorizationService : IAuthorizationService
 {

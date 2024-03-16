@@ -1,5 +1,5 @@
 ﻿
-using BOL.API.Service;
+using BOL.API.Service.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,10 +8,10 @@ namespace bol.api.Controllers
     [Route("auth")]
     public class AuthorizationController : ControllerBase
     {
-        readonly BOL.API.Authorization.Services.IAuthorizationService _authorizationService;
+        readonly BOL.API.Service.Interfaces.IAuthorizationService _authorizationService;
         readonly ILogger _logger;
 
-        public AuthorizationController(BOL.API.Authorization.Services.IAuthorizationService authorizationService, ILoggerFactory loggerFactory)
+        public AuthorizationController(BOL.API.Service.Interfaces.IAuthorizationService authorizationService, ILoggerFactory loggerFactory)
         {
             _logger = loggerFactory.CreateLogger(nameof(AuthorizationController));
             _authorizationService = authorizationService;

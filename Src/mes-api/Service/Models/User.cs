@@ -1,4 +1,4 @@
-﻿namespace BOL.API.Service;
+﻿namespace BOL.API.Service.Models;
 
 public class User
 {

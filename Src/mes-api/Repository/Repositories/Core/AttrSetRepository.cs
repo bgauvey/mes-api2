@@ -21,9 +21,8 @@
 
 using BOL.API.Domain.Models.Core;
 using BOL.API.Repository.Interfaces.Core;
-using BOL.API.Repository.Repositories;
 
-namespace BOL.API.Repository.Core;
+namespace BOL.API.Repository.Repositories.Core;
 
 public class AttrSetRepository : RepositoryBase<AttrSet>, IAttrSetRepository
 {

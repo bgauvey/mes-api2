@@ -7,7 +7,7 @@
     "BOL.API.Repository": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:53091",
+      "applicationUrl": "http://localhost:14712",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

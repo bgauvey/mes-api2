@@ -1,29 +1,18 @@
 ﻿using System.Text;
-using BOL.API.Authorization.Services;
-using BOL.API.Repository;
-using BOL.API.Repository.Core;
-using BOL.API.Repository.Interfaces.Core;
-using BOL.API.Repository.Interfaces.Security;
-using BOL.API.Repository.Repositories.Security;
+using bol.api;
+using BOL.API.Repository.ServiceExtension;
 using BOL.API.Service.Interfaces;
 using BOL.API.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Add SQL Server support
-builder.Services.AddDbContext<FactelligenceContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("FactelligenceDatabase"));
-});
-
 // Add services to the container.
-
+builder.Services.AddDIServices(builder.Configuration);
+builder.Services.ConfigureServices();
 builder.Services.AddControllers();
-
 builder.Services.AddHttpContextAccessor();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -62,9 +51,13 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 
-    // using System.Reflection;
-    // var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    // options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+    foreach(var file in Directory.GetFiles(AppContext.BaseDirectory))
+    {
+        if (file.EndsWith("xml"))
+        {
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, file));
+        }
+    }
 });
 
 // Add Cors
@@ -84,19 +77,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
-
-// Add repositories
-builder.Services.AddScoped<IGrpNameRepository, GrpNameRepository>();
-builder.Services.AddScoped<ISessionRepository, SessionRepository>();
-builder.Services.AddScoped<IUserGrpLinkRepository, UserGrpLinkRepository>();
-builder.Services.AddScoped<IUserNameRepository, UserNameRepository>();
-builder.Services.AddScoped<IEntRepository, EntRepository>();
-
-
-// Add services
-builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
-builder.Services.AddScoped<IEntService, EntService>();
-
 
 var app = builder.Build();
 

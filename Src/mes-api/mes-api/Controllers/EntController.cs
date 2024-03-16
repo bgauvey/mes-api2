@@ -1,5 +1,6 @@
 ﻿using BOL.API.Domain.Models.Core;
 using BOL.API.Service.Interfaces;
+using BOL.API.Service.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bol.api.Controllers
@@ -49,6 +50,21 @@ namespace bol.api.Controllers
         public void Delete(int id)
         {
             _entService.Delete(id);
+        }
+
+        // GET ent/files/5
+        [HttpGet("files/{id}")]
+        public IEnumerable<EntFile> GetFiles(int id)
+        {
+            return _entService.GetFiles(id);
+        }
+
+
+        // GET ent/attrs/5
+        [HttpGet("attrs/{id}")]
+        public IEnumerable<EntityAttribute> GetAttrs(int id)
+        {
+            return _entService.GetAttrs(id);
         }
     }
 }

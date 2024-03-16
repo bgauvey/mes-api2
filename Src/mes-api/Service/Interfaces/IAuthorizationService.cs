@@ -1,6 +1,6 @@
-﻿using BOL.API.Service;
+﻿using BOL.API.Service.Models;
 
-namespace BOL.API.Authorization.Services;
+namespace BOL.API.Service.Interfaces;
 
 public interface IAuthorizationService
 {

@@ -1,5 +1,5 @@
 ﻿//
-//  AttrRepository.cs
+//  IUtilityRepository.cs
 //
 //  Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -18,15 +18,14 @@
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-using BOL.API.Domain.Models.Core;
-using BOL.API.Repository.Interfaces.Core;
 
-namespace BOL.API.Repository.Repositories.Core;
+using BOL.API.Domain.Models;
 
-public class AttrRepository : RepositoryBase<Attr>, IAttrRepository
+namespace BOL.API.Repository.Interfaces.Generic;
+
+public interface IGenericRepository
 {
-    public AttrRepository(FactelligenceContext context, ILoggerFactory loggerFactory)
-         : base(context, loggerFactory)
-    {
-    }
+
+	Task<object> GetFromCommand(Command command);
+	Task<int> ExecuteCommand(Command command);
 }
