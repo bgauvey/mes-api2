@@ -21,9 +21,8 @@
 
 using BOL.API.Domain.Models.Prod;
 using BOL.API.Repository.Interfaces.Prod;
-using BOL.API.Repository.Repositories;
 
-namespace BOL.API.Repository.Prod;
+namespace BOL.API.Repository.Repositories.Prod;
 
 public class ItemRepository : RepositoryBase<Item>, IItemRepository
 {

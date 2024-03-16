@@ -1,9 +1,14 @@
 ﻿
+
 using BOL.API.Repository.Interfaces.Core;
+using BOL.API.Repository.Interfaces.EnProd;
 using BOL.API.Repository.Interfaces.Generic;
+using BOL.API.Repository.Interfaces.Prod;
 using BOL.API.Repository.Interfaces.Security;
 using BOL.API.Repository.Repositories.Core;
+using BOL.API.Repository.Repositories.EnProd;
 using BOL.API.Repository.Repositories.Generic;
+using BOL.API.Repository.Repositories.Prod;
 using BOL.API.Repository.Repositories.Security;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,11 +24,7 @@ public static class ServiceExtension
         });
 
         // Add repositories
-        services.AddScoped<IGrpNameRepository, GrpNameRepository>();
-        services.AddScoped<ISessionRepository, SessionRepository>();
-        services.AddScoped<IUserGrpLinkRepository, UserGrpLinkRepository>();
-        services.AddScoped<IUserNameRepository, UserNameRepository>();
-
+        // Core
         services.AddScoped<IAttrRepository, AttrRepository>();
         services.AddScoped<IAttrSetRepository, AttrSetRepository>();
         services.AddScoped<IEntAttrRepository, EntAttrRepository>();
@@ -31,7 +32,23 @@ public static class ServiceExtension
         services.AddScoped<IEntLinkRepository, EntLinkRepository>();
         services.AddScoped<IEntRepository, EntRepository>();
 
+        // EnProd
+        services.AddScoped<IItemInvRepository, ItemInvRepository>();
+        services.AddScoped<IStorageExecRepository, StorageExecRepository>();
+
+        // Generic
         services.AddScoped<IGenericRepository, GenericRepository>();
+
+        // Prod
+        services.AddScoped<IItemRepository, ItemRepository>();
+        services.AddScoped<IJobExecRepository, JobExecRepository>();
+
+        // Security
+        services.AddScoped<IGrpNameRepository, GrpNameRepository>();
+        services.AddScoped<ISessionRepository, SessionRepository>();
+        services.AddScoped<IUserGrpLinkRepository, UserGrpLinkRepository>();
+        services.AddScoped<IUserNameRepository, UserNameRepository>();
+
         return services;
     }
 }

@@ -21,9 +21,8 @@
 
 using BOL.API.Domain.Models.EnProd;
 using BOL.API.Repository.Interfaces.EnProd;
-using BOL.API.Repository.Repositories;
 
-namespace BOL.API.Repository.EnProd;
+namespace BOL.API.Repository.Repositories.EnProd;
 
 public class ItemInvRepository : RepositoryBase<ItemInv>, IItemInvRepository
 {
