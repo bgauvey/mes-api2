@@ -21,8 +21,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Security.Claims;
-using api.Repository;
-using api.Repository.Interfaces;
+using BOL.API.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -37,19 +36,18 @@ namespace api.APIs
     [Authorize]
     public class JobExecController : Controller
     {
-        IJobExecRepository _JobExecRepository;
+        IJobExecService _JobExecService;
         ILogger _logger;
 
-        public JobExecController(IJobExecRepository jobExecRepository, ILoggerFactory loggerFactory)
+        public JobExecController(IJobExecService jobExecService, ILoggerFactory loggerFactory)
         {
-            _JobExecRepository = jobExecRepository;
+            _JobExecService = jobExecService;
             _logger = loggerFactory.CreateLogger(nameof(JobExecController));
         }
 
         /// <summary>
         /// To capture production data for the running job on the specified entity.
         /// </summary>
-        /// <param name="userId">Required. A string to identify the user</param>
         /// <param name="entId">Required. An int to identify the entity</param>
         /// <param name="qtyProd">Required. A double specifying the production quantity to be added</param>
         /// <param name="reasCd"></param>
@@ -85,7 +83,7 @@ namespace api.APIs
         /// <para>If a negative amount of good production is added, a check must be made to see whether there is still enough good product available to ready the next job(s) downstream if its state is currently other than NEW or CANCELLED.  This check need only consider the material produced in the current job.As with the check to ready a job, this will mean finding each next job downstream via the job_route table, and getting its job_bom records for this item, then checking the item_prod table for the jobs feeding this one, to see whether they have produced enough for this work order to meet this requirement.If this requirement is no longer met, the downstream job’s state is changed back to NEW if it is currently READY.  Otherwise a warning is returned saying that because the job was already started it could not be un-readied.If the backflush flag is set for any of the BOM items for this job then consumption transactions will be generated to consume the materials at standard rates.  Similarly, if the update_inv flag is set for any of these BOM items then inventory adjustment transactions will also be applied automatically.</para>
         /// </remarks>
         [HttpPost("AddProd", Name = "AddProd")]
-        public IActionResult AddProd(string userId, int entId, double qtyProd,
+        public IActionResult AddProd(int entId, double qtyProd,
         int? reasCd, string? lotNo, string? rmLotNo, int? toEntId, string? itemId, int? byproductBomPos,
         string? extRef, bool? applyScalingFactor, string? spare1, string? spare2, string? spare3, string? spare4, int? jobPos)
         {
@@ -98,7 +96,7 @@ namespace api.APIs
 
                 var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
                                            .Select(c => c.Value).SingleOrDefault();
-
+                _JobExecService.AddProd(entId, qtyProd,reasCd, lotNo, rmLotNo, toEntId, itemId, byproductBomPos, extRef, applyScalingFactor, spare1, spare2, spare3, spare4, jobPos);
                 return Ok();
             }
             catch (Exception exp)
@@ -155,6 +153,10 @@ namespace api.APIs
                 var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
                                            .Select(c => c.Value).SingleOrDefault();
 
+                _JobExecService.AddProdPostExec(entId, qtyProd,
+        woId, operId, seqNo, shiftStart, shiftId, itemId, reasCd,
+        lotNo, rmLotNo, toEntId, processed, byproduct, extRef,
+        moveStatus, spare1, spare2, spare3, spare4);
                 return Ok();
             }
             catch (Exception exp)
@@ -181,6 +183,7 @@ namespace api.APIs
                 var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
                                            .Select(c => c.Value).SingleOrDefault();
 
+                _JobExecService.CancelAllJobs(woId);
 
                 return Ok();
             }
@@ -202,15 +205,7 @@ namespace api.APIs
         {
             try
             {
-                /*
-                if (User.Identity == null)
-                {
-                    throw new Exception("User name not found.");
-                }
-                value.LastEditBy = User.Identity.Name.Split("\\")[1];
-                */
-
-
+                _JobExecService.GetJobQueue(woId, itemId);
                 return Ok();
             }
             catch (Exception exp)
@@ -234,10 +229,7 @@ namespace api.APIs
         {
             try
             {
-                if (User.Identity == null)
-                {
-                    throw new Exception("User name not found.");
-                }
+                _JobExecService.GetQueue(entId, jobState, reqdByTime, job_Priority, maxRows);
 
                 return Ok();
             }

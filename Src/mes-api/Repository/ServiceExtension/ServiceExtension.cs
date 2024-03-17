@@ -5,11 +5,13 @@ using BOL.API.Repository.Interfaces.EnProd;
 using BOL.API.Repository.Interfaces.Generic;
 using BOL.API.Repository.Interfaces.Prod;
 using BOL.API.Repository.Interfaces.Security;
+using BOL.API.Repository.Interfaces.Util;
 using BOL.API.Repository.Repositories.Core;
 using BOL.API.Repository.Repositories.EnProd;
 using BOL.API.Repository.Repositories.Generic;
 using BOL.API.Repository.Repositories.Prod;
 using BOL.API.Repository.Repositories.Security;
+using BOL.API.Repository.Util;
 using Microsoft.EntityFrameworkCore;
 
 namespace BOL.API.Repository.ServiceExtension;
@@ -48,6 +50,9 @@ public static class ServiceExtension
         services.AddScoped<ISessionRepository, SessionRepository>();
         services.AddScoped<IUserGrpLinkRepository, UserGrpLinkRepository>();
         services.AddScoped<IUserNameRepository, UserNameRepository>();
+
+        //Utilization
+        services.AddScoped<IUtilExecRepository, UtilExecRepository>();
 
         return services;
     }

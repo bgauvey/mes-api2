@@ -1,11 +1,9 @@
-﻿using System;
-using BOL.API.Repository.Interfaces.EnProd;
-using BOL.API.Repository.Interfaces.Util;
+﻿using BOL.API.Repository.Interfaces.Util;
 using BOL.API.Service.Interfaces;
 
 namespace BOL.API.Service.Services
 {
-	public class UtilizationService : IUtilizationService
+    public class UtilizationService : IUtilizationService
     {
         private readonly IUtilExecRepository _utilExecRepository;
         private readonly ILogger _logger;

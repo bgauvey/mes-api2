@@ -11,6 +11,7 @@ public static class ServiceExtensione
         services.AddScoped<IEntService, EntService>();
         services.AddScoped<IInventoryService, InventoryService>();
         services.AddScoped<IItemService, ItemService>();
+        services.AddScoped<IJobExecService, JobExecService>();
         services.AddScoped<IUtilizationService, UtilizationService>();
     }
 }

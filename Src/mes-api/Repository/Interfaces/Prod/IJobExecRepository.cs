@@ -26,16 +26,16 @@ namespace BOL.API.Repository.Interfaces.Prod;
 
 public interface IJobExecRepository : IRepositoryBase<JobExec>
 {
-    void AddProd(int sessionId, string userId, int entId, double qtyProd,
+    void AddProd(int entId, double qtyProd,
     int? reasCd, string? lotNo, string? rmLotNo, int? toEntId, string? itemId, int? byproductBomPos,
     string? extRef, bool? applyScalingFactor, string? spare1, string? spare2, string? spare3, string? spare4, int? jobPos);
 
-    void AddProdPostExec(int sessionId, string userId, int entId, double qtyProd,
+    void AddProdPostExec(int entId, double qtyProd,
     string woId, string operId, int seqNo, DateTime shiftStart, int shiftId, string? itemId, int? reasCd,
     string? lotNo, string? rmLotNo, int? toEntId, bool? processed, bool? byproduct, string extRef,
     int? moveStatus, string? spare1, string? spare2, string? spare3, string? spare4);
 
-    void CancelAllJobs(int sessionId, string woId);
+    void CancelAllJobs(string woId);
 
     List<object> GetJobQueue(string woId, string itemId);
 
