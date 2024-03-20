@@ -35,9 +35,9 @@ public class UserNameRepository : RepositoryBase<UserName>, IUserNameRepository
     {
     }
 
-    public int ChangePassword(string userId, string oldPassword, string newPassword)
+    public async Task<int> ChangePassword(string userId, string oldPassword, string newPassword)
     {
-        return _Context.Database.ExecuteSqlInterpolated($"sp_U_UserName_ChangePassword @userId={userId},@pw={oldPassword},@newPw={newPassword}");
+        return await _Context.Database.ExecuteSqlInterpolatedAsync($"sp_U_UserName_ChangePassword @userId={userId},@pw={oldPassword},@newPw={newPassword}");
     }
 
     public new int Update(UserName userName)

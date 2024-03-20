@@ -37,7 +37,33 @@ public class AuthorizationService : IAuthorizationService
         return await Login(authenticateModel.Username, authenticateModel.Password, authenticateModel.ClientType);
     }
 
+    public async Task<int> LogOff(int? EntId)
+    {
+        var sessionId = ClaimsPrincipal.Current.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                                           .Select(c => c.Value).SingleOrDefault();
+        var userId = ClaimsPrincipal.Current.Identity.Name;
+        return await _sessionRepository.LogOff(Convert.ToInt32(sessionId), userId, EntId);
+    }
 
+    public async Task<int> LogOnEnt(int EntId, int? CurLabCd, int? CurDeptId, double? PctLabToApply)
+    {
+        if (ClaimsPrincipal.Current != null)
+        {
+            var sessionId = ClaimsPrincipal.Current.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                                                      .Select(c => c.Value).SingleOrDefault();
+            var userId = ClaimsPrincipal.Current.Identity.Name;
+            return await _sessionRepository.LogOnEnt(Convert.ToInt32(sessionId), userId, EntId, CurLabCd, CurDeptId, PctLabToApply);
+        }
+        else
+        {
+            throw new BadHttpRequestException("User can not be null", 400);
+        }
+    }
+
+    public async Task<int> ChangePassword(string userId, string oldPassword, string newPassword)
+    {
+        return await _userNameRepository.ChangePassword(userId, oldPassword, newPassword);
+    }
 
     private async Task<User> Login(string userId, string password, ClientType clientType)
     {
@@ -62,6 +88,7 @@ public class AuthorizationService : IAuthorizationService
         });
         return user;
     }
+
     private string GetToken(User user)
     {
         // authentication successful so generate jwt token
@@ -134,4 +161,5 @@ public class AuthorizationService : IAuthorizationService
         }
         return roles.ToArray();
     }
+
 }

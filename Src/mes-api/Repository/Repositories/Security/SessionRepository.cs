@@ -38,9 +38,22 @@ public class SessionRepository : RepositoryBase<Sessn>, ISessionRepository
         return recordsAffected;
     }
 
-    public int Login(int sessionId, string userId, string userPw)
+    public async Task<int> Login(int sessionId, string userId, string userPw)
     {
-        return _Context.Database.ExecuteSqlInterpolated($"sp_U_Session_LogIn @session_id={sessionId}, @user_id={userId}, @user_pw={userPw}");
+        return await _Context.Database.ExecuteSqlInterpolatedAsync($"sp_U_Session_LogIn @session_id={sessionId}, @user_id={userId}, @user_pw={userPw}");
+    }
+
+    public async Task<int> LogOff(int sessionId, string userId, int? EntId)
+    {
+        DateTime? logoffTime = null;
+        return await _Context.Database.ExecuteSqlInterpolatedAsync($"sp_U_Session_LogOff @session_id={sessionId}, @user_id={userId}, @ent_id={EntId}, @logoff_time={logoffTime}");
+    }
+
+    public async Task<int> LogOnEnt(int sessionId, string userId, int EntId, int? CurLabCd, int? CurDeptId, double? PctLabToApply)
+    {
+        DateTime? logonTime = null;
+        return await _Context.Database.ExecuteSqlInterpolatedAsync($"sp_U_Session_LogOnEnt @session_id={sessionId}, @user_id={userId}, @ent_id={EntId}, @cur_lab_cd={
+            CurLabCd}, @cur_dept_id={CurLabCd}, @pct_lab_to_apply={PctLabToApply},@logon_time={logonTime}");
     }
 }
 

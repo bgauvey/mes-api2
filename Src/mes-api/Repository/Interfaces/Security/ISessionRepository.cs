@@ -6,5 +6,7 @@ namespace BOL.API.Repository.Interfaces.Security;
 public interface ISessionRepository: IRepositoryBase<Sessn>
 {
     int Create(ClientType clientType, string clientAddress, ref int sessionId);
-    int Login(int sessionId, string userId, string userPw);
+    Task<int> Login(int sessionId, string userId, string userPw);
+    Task<int> LogOff(int sessionId, string userId, int? EntId);
+    Task<int> LogOnEnt(int sessionId, string userId, int EntId, int? CurLabCd, int? CurDeptId, double? PctLabToApply);
 }

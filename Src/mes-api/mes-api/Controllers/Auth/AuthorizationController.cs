@@ -31,5 +31,25 @@ public class AuthorizationController : ControllerBase
 
         return Ok(user.Token);
     }
+
+    [HttpPost("logoff")]
+    public async Task<int> LogOff(int? EntId)
+    {
+        return await _authorizationService.LogOff(EntId);
+    }
+
+    [HttpPost("changepassword")]
+    public async Task<int> ChangePassword(string userId, string oldPassword, string newPassword)
+    {
+        return await _authorizationService.ChangePassword(userId, oldPassword, newPassword);
+    }
+
+    [HttpPost("logonent")]
+    [ProducesResponseType(typeof(string), 200)]
+    [ProducesResponseType(typeof(string), 400)]
+    public async Task<int> LogOnEnt(int EntId, int? CurlabCd, int? CurDeptId, double? PctLabToApply)
+    {
+        return await _authorizationService.LogOnEnt(EntId, CurlabCd, CurDeptId, PctLabToApply);
+    }
 }
 
