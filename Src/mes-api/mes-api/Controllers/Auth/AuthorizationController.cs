@@ -19,40 +19,72 @@ public class AuthorizationController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("login")]
-    [ProducesResponseType(typeof(string), 200)]
-    [ProducesResponseType(typeof(string), 400)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Login([FromBody] AuthenticateModel model)
     {
-        var user = await _authorizationService.Login(model);
+        try
+        {
+            var user = await _authorizationService.Login(model);
 
-        if (user == null)
-            return BadRequest(new { message = "Username or password is incorrect" });
+            if (user == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
 
-        return Ok(user.Token);
+            return Ok(user.Token);
+        }
+        catch (Exception exp)
+        {
+            _logger.LogError(exp.Message);
+            return BadRequest(new { Status = false, Message = exp.Message });
+        }
     }
 
     [HttpPost("logoff")]
-    [ProducesResponseType(typeof(string), 200)]
-    [ProducesResponseType(typeof(string), 400)]
-    public async Task<int> LogOff(int? EntId)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<int>> LogOff(int? EntId)
     {
-        return await _authorizationService.LogOff(EntId);
+        try
+        {
+            return await _authorizationService.LogOff(EntId);
+        }
+        catch (Exception exp)
+        {
+            _logger.LogError(exp.Message);
+            return BadRequest(new { Status = false, Message = exp.Message });
+        }
     }
 
     [HttpPost("changepassword")]
-    [ProducesResponseType(typeof(string), 200)]
-    [ProducesResponseType(typeof(string), 400)]
-    public async Task<int> ChangePassword(string userId, string oldPassword, string newPassword)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<int>> ChangePassword(string userId, string oldPassword, string newPassword)
     {
-        return await _authorizationService.ChangePassword(userId, oldPassword, newPassword);
+        try
+        {
+            return await _authorizationService.ChangePassword(userId, oldPassword, newPassword);
+        }
+        catch (Exception exp)
+        {
+            _logger.LogError(exp.Message);
+            return BadRequest(new { Status = false, Message = exp.Message });
+        }
     }
 
     [HttpPost("logonent")]
-    [ProducesResponseType(typeof(string), 200)]
-    [ProducesResponseType(typeof(string), 400)]
-    public async Task<int> LogOnEnt(int EntId, int? CurlabCd, int? CurDeptId, double? PctLabToApply)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<int>> LogOnEnt(int EntId, int? CurlabCd, int? CurDeptId, double? PctLabToApply)
     {
-        return await _authorizationService.LogOnEnt(EntId, CurlabCd, CurDeptId, PctLabToApply);
+        try
+        {
+            return await _authorizationService.LogOnEnt(EntId, CurlabCd, CurDeptId, PctLabToApply);
+        }
+        catch (Exception exp)
+        {
+            _logger.LogError(exp.Message);
+            return BadRequest(new { Status = false, Message = exp.Message });
+        }
     }
 }
 

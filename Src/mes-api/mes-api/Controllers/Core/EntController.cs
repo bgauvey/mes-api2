@@ -31,7 +31,6 @@ public class EntController : ControllerBase
         {
             var ents = _entService.GetAll();
             return Ok(ents);
-
         }
         catch (Exception exp)
         {
