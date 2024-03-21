@@ -17,7 +17,6 @@ public class AuthorizationController : ControllerBase
         _authorizationService = authorizationService;
     }
 
-    // POST: auth/login
     [AllowAnonymous]
     [HttpPost("login")]
     [ProducesResponseType(typeof(string), 200)]
@@ -33,12 +32,16 @@ public class AuthorizationController : ControllerBase
     }
 
     [HttpPost("logoff")]
+    [ProducesResponseType(typeof(string), 200)]
+    [ProducesResponseType(typeof(string), 400)]
     public async Task<int> LogOff(int? EntId)
     {
         return await _authorizationService.LogOff(EntId);
     }
 
     [HttpPost("changepassword")]
+    [ProducesResponseType(typeof(string), 200)]
+    [ProducesResponseType(typeof(string), 400)]
     public async Task<int> ChangePassword(string userId, string oldPassword, string newPassword)
     {
         return await _authorizationService.ChangePassword(userId, oldPassword, newPassword);

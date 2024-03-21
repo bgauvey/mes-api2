@@ -1,11 +1,15 @@
-﻿using BOL.API.Domain.Models.Core;
+﻿using System.Net.Mime;
+using BOL.API.Domain.Models.Core;
 using BOL.API.Service.Interfaces;
 using BOL.API.Service.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bol.api.Controllers.Core;
 
 [Route("ent")]
+[EnableCors("AllowAnyOrigin")]
 public class EntController : ControllerBase
 {
     private readonly ILogger _logger;
@@ -19,52 +23,137 @@ public class EntController : ControllerBase
 
     // GET: api/values
     [HttpGet]
-    public IEnumerable<Ent> Get()
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public ActionResult<IEnumerable<Ent>> Get()
     {
-        return _entService.GetAll();
+        try
+        {
+            var ents = _entService.GetAll();
+            return Ok(ents);
+
+        }
+        catch (Exception exp)
+        {
+            _logger.LogError(exp.Message);
+            return BadRequest(new { Status = false, Message = exp.Message });
+        }
     }
 
     // GET api/values/5
     [HttpGet("{id}")]
-    public Ent Get(int id)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public ActionResult<Ent> Get(int id)
     {
-        return _entService.GetEntById(id);
+        
+        try
+        {
+            var ent = _entService.GetEntById(id);
+            return Ok(ent);
+
+        }
+        catch (Exception exp)
+        {
+            _logger.LogError(exp.Message);
+            return BadRequest(new { Status = false, Message = exp.Message });
+        }
     }
 
     // POST api/values
     [HttpPost]
-    public void Post([FromBody]Ent entity)
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize]
+    public IActionResult Post([FromBody]Ent entity)
     {
-        _entService.Create(entity);
+        try
+        {
+            _entService.Create(entity);
+            return Created();
+        }
+        catch (Exception exp)
+        {
+            _logger.LogError(exp.Message);
+            return BadRequest(new { Status = false, Message = exp.Message});
+        }
     }
 
     // PUT api/values/5
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody]Ent entity)
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize]
+    public IActionResult Put(int id, [FromBody]Ent entity)
     {
-        _entService.Update(entity);
+        try
+        {
+            _entService.Update(entity);
+            return Created();
+        }
+        catch (Exception exp)
+        {
+            _logger.LogError(exp.Message);
+            return BadRequest(new { Status = false, Message = exp.Message });
+        }
     }
 
     // DELETE api/values/5
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize]
+    public IActionResult Delete(int id)
     {
-        _entService.Delete(id);
+        try
+        {
+            _entService.Delete(id);
+            return NoContent();
+        }
+        catch (Exception exp)
+        {
+            _logger.LogError(exp.Message);
+            return BadRequest(new { Status = false, Message = exp.Message });
+        }
     }
 
     // GET ent/files/5
     [HttpGet("files/{id}")]
-    public IEnumerable<EntFile> GetFiles(int id)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public ActionResult<IEnumerable<EntFile>> GetFiles(int id)
     {
-        return _entService.GetFiles(id);
+        try
+        {
+            var files = _entService.GetFiles(id);
+            return Ok(files);
+        }
+        catch (Exception exp)
+        {
+            _logger.LogError(exp.Message);
+            return BadRequest(new { Status = false, Message = exp.Message });
+        }
     }
 
 
     // GET ent/attrs/5
     [HttpGet("attrs/{id}")]
-    public IEnumerable<EntityAttribute> GetAttrs(int id)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public ActionResult<IEnumerable<EntityAttribute>> GetAttrs(int id)
     {
-        return _entService.GetAttrs(id);
+        try
+        {
+            var attrs = _entService.GetAttrs(id);
+            return Ok(attrs);
+        }
+        catch (Exception exp)
+        {
+            _logger.LogError(exp.Message);
+            return BadRequest(new { Status = false, Message = exp.Message });
+        }
     }
 }
 

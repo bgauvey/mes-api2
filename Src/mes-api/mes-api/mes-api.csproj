@@ -22,11 +22,13 @@
     <None Remove="Controllers\" />
     <None Remove="Controllers\Auth\" />
     <None Remove="Controllers\Core\" />
+    <None Remove="Infrastructure\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Controllers\Auth\" />
     <Folder Include="Controllers\Core\" />
+    <Folder Include="Infrastructure\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Service\BOL.API.Service.csproj">
