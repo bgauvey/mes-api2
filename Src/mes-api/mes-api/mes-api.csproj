@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>bol.api</RootNamespace>
+    <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>67707e16-e32d-4fa0-b95f-3995f5e9defa</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
@@ -23,12 +25,14 @@
     <None Remove="Controllers\Auth\" />
     <None Remove="Controllers\Core\" />
     <None Remove="Infrastructure\" />
+    <None Remove="GlobalErrorHandler\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Controllers\Auth\" />
     <Folder Include="Controllers\Core\" />
     <Folder Include="Infrastructure\" />
+    <Folder Include="GlobalErrorHandler\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Service\BOL.API.Service.csproj">

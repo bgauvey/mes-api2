@@ -36,8 +36,8 @@ namespace api.APIs
     [Authorize]
     public class JobExecController : Controller
     {
-        IJobExecService _JobExecService;
-        ILogger _logger;
+        private readonly IJobExecService _JobExecService;
+        private readonly ILogger _logger;
 
         public JobExecController(IJobExecService jobExecService, ILoggerFactory loggerFactory)
         {
@@ -96,13 +96,13 @@ namespace api.APIs
 
                 var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
                                            .Select(c => c.Value).SingleOrDefault();
-                _JobExecService.AddProd(entId, qtyProd,reasCd, lotNo, rmLotNo, toEntId, itemId, byproductBomPos, extRef, applyScalingFactor, spare1, spare2, spare3, spare4, jobPos);
+                _JobExecService.AddProd(entId, qtyProd, reasCd, lotNo, rmLotNo, toEntId, itemId, byproductBomPos, extRef, applyScalingFactor, spare1, spare2, spare3, spare4, jobPos);
                 return Ok();
             }
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -162,7 +162,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -190,7 +190,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -211,7 +211,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -236,7 +236,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
     }

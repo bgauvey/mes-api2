@@ -1,8 +1,7 @@
 ﻿using System.Text;
 using bol.api;
+using bol.api.GlobalErrorHandler;
 using BOL.API.Repository.ServiceExtension;
-using BOL.API.Service.Interfaces;
-using BOL.API.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -51,7 +50,7 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 
-    foreach(var file in Directory.GetFiles(AppContext.BaseDirectory))
+    foreach (var file in Directory.GetFiles(AppContext.BaseDirectory))
     {
         if (file.EndsWith("xml"))
         {
@@ -79,6 +78,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 
 var app = builder.Build();
+
+app.ConfigureExceptionHandler();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

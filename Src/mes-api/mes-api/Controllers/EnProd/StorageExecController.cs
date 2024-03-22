@@ -18,8 +18,10 @@
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+using System.Net.Mime;
 using BOL.API.Domain.Models.EnProd;
 using BOL.API.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,9 +30,9 @@ namespace api.APIs
     [Route("enprod/storageexec")]
     [EnableCors("AllowAnyOrigin")]
     public class StorageExecController : ControllerBase
-	{
-        IInventoryService _inventoryService;
-        ILogger _logger;
+    {
+        private readonly IInventoryService _inventoryService;
+        private readonly ILogger _logger;
         public StorageExecController(IInventoryService InventoryService, ILoggerFactory loggerFactory)
         {
             _inventoryService = InventoryService;
@@ -38,77 +40,80 @@ namespace api.APIs
         }
 
         [HttpPost("AddInv")]
-        //[Authorize]
-        public async Task<IActionResult> AddInv([FromBody] StorageExec value)
+        [Authorize]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult AddInv([FromBody] ItemInv value)
         {
             try
             {
-                //var i = await _inventoryService.AddInv(value);
+                _inventoryService.AddInv(value.EntId, value.ItemId, value.GradeCd.Value, value.StatusCd.Value, value.QtyLeft, value.LotNo,
+                    value.QtyLeftErp, value.DateInLocal, value.ExpiryDate, value.WoId, value.OperId, value.SeqNo, null, true, false);
 
-                return Ok(value);
+                return Created();
 
             }
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
         [HttpPost("GetInventory")]
-        //[Authorize]
-        public async Task<IActionResult> GetInventory([FromBody] StorageExec value)
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult GetInventory([FromBody] int entId)
         {
             try
             {
-
-                //var i = await _inventoryService.GetInventory(value);
-
-                return Ok(value);
-
+                object i = _inventoryService.GetInventory(entId, null, null, null);
+                return Ok(i);
             }
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
 
         [HttpPost("GetShortages")]
-        //[Authorize]
-        public async Task<IActionResult> GetShortages([FromBody] StorageExec value)
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult GetShortages([FromBody] int? entId)
         {
             try
             {
-
-                //var i = await _inventoryService.GetShortages(value);
-
-                return Ok(value);
-
+                object i = _inventoryService.GetShortages(entId);
+                return Ok(i);
             }
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
         [HttpPost("ReduceInv")]
-        //[Authorize]
-        public async Task<IActionResult> ReduceInv([FromBody] StorageExec value)
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult ReduceInv([FromBody] int entId, string itemId, int gradeCd, int statusCd, double reduceQty, string? lotNo,
+            double? reduceQtyErp, DateTime? dateOut, bool? goodsShipped)
         {
             try
             {
-                //var i = await _inventoryService.ReduceInv(value);
-
-                return Ok(value);
-
+                _inventoryService.ReduceInv(entId, itemId, gradeCd, statusCd, reduceQty, lotNo, reduceQtyErp, dateOut, goodsShipped);
+                return NoContent();
             }
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -126,7 +131,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -145,7 +150,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -164,7 +169,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
     }

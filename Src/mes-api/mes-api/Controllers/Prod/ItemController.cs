@@ -29,15 +29,14 @@ namespace api.APIs
     [Route("prod/item")]
     [EnableCors("AllowAnyOrigin")]
     public class ItemController : ControllerBase
-	{
-        IItemService _itemService;
-        ILogger _logger;
+    {
+        private readonly IItemService _itemService;
+        private readonly ILogger _logger;
         public ItemController(IItemService ItemService, ILoggerFactory loggerFactory)
         {
             _itemService = ItemService;
             _logger = loggerFactory.CreateLogger(nameof(ItemController));
         }
-
 
         [HttpGet]
         [Authorize]
@@ -46,13 +45,12 @@ namespace api.APIs
             try
             {
                 var items = await _itemService.GetItemsAsync();
-            
                 return Ok(items);
             }
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -68,7 +66,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -96,7 +94,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -120,7 +118,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -136,7 +134,7 @@ namespace api.APIs
                     throw new Exception("User name not found.");
                 }
                 value.LastEditBy = User.Identity.Name.Split("\\")[1];
-                
+
                 var i = await _itemService.UpdateAsync(value);
 
                 return Ok(value);
@@ -145,10 +143,9 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
-
     }
 }
 

@@ -28,8 +28,8 @@ namespace api.APIs
     [EnableCors("AllowAnyOrigin")]
     public class UtilizationController : ControllerBase
     {
-        IUtilizationService _utilizationService;
-        ILogger _logger;
+        private readonly IUtilizationService _utilizationService;
+        private readonly ILogger _logger;
         public UtilizationController(IUtilizationService utilizationService, ILoggerFactory loggerFactory)
         {
             _utilizationService = utilizationService;
@@ -51,7 +51,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -69,7 +69,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -88,7 +88,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -107,7 +107,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -126,7 +126,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -146,7 +146,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -165,7 +165,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
     }
