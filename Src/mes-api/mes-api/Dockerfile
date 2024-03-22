@@ -6,7 +6,6 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0-preview AS build
-# Add the line below ---------------------------------------------------
 RUN dotnet dev-certs https
 WORKDIR /src
 COPY ["mes-api/mes-api.csproj", "mes-api/"]
@@ -23,7 +22,6 @@ RUN dotnet publish "mes-api.csproj" -c Release -o /app/publish /p:UseAppHost=fal
 
 FROM base AS final
 WORKDIR /app
-# Add the line below ---------------------------------------------------
 COPY --from=publish /root/.dotnet/corefx/cryptography/x509stores/my/* /root/.dotnet/corefx/cryptography/x509stores/my/
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "mes-api.dll"]
