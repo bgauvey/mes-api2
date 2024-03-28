@@ -74,26 +74,6 @@ namespace api.APIs
             }
         }
 
-
-        [HttpGet("GetStatusInfoByUser")]
-        //[Authorize]
-        public async Task<IActionResult> GetStatusInfoByUser([FromBody] object value)
-        {
-            try
-            {
-                //var i = await _utilizationService.GetStatusInfoByUserAsync();
-
-                return Ok(value);
-
-            }
-            catch (Exception exp)
-            {
-                _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, exp.Message });
-            }
-        }
-
-
         [HttpPost("SetPendingReason")]
         //[Authorize]
         public async Task<IActionResult> SetPendingReason([FromBody] object value)

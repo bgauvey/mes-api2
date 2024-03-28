@@ -31,5 +31,4 @@ public interface IUtilExecRepository : IRepositoryBase<UtilExec>
 	Task<string> GetAvailableReasonsAsync(int entId, int rawReasCode);
 	Task<string> GetOldAvailableReasonsAsync(int entId, int reasCode);
     int UpdateDurations();
-	object GetStatusInfoByUser();
 }

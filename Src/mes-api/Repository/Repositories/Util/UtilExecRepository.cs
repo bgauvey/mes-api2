@@ -66,7 +66,6 @@ public class UtilExecRepository : RepositoryBase<UtilExec>, IUtilExecRepository
             return jsonString;
         });
 
-        //dynamic dsObject = JsonConvert.DeserializeObject<ExpandoObject>(data);
         return data;
     }
 
@@ -96,10 +95,6 @@ public class UtilExecRepository : RepositoryBase<UtilExec>, IUtilExecRepository
         return data;
     }
 
-    public object GetStatusInfoByUser()
-    {
-        throw new NotImplementedException();
-    }
 
     public int SetPendingReason()
     {

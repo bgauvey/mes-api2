@@ -153,5 +153,26 @@ namespace bol.api.Controllers.Core
                 return BadRequest(new { Status = false, exp.Message });
             }
         }
+
+
+        [HttpGet("GetStatusInfoByUser")]
+        //[Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetStatusInfoByUser([FromBody] object value)
+        {
+            try
+            {
+                //var i = await _entService.GetStatusInfoByUserAsync();
+
+                return Ok(value);
+
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
     }
 }

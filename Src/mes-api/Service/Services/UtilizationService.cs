@@ -24,11 +24,6 @@ namespace BOL.API.Service.Services
             return await _utilExecRepository.GetOldAvailableReasonsAsync(entId, reasCode);
         }
 
-        public object GetStatusInfoByUserAsync()
-        {
-            throw new NotImplementedException();
-        }
-
         public int SetPendingReasonAsync()
         {
             throw new NotImplementedException();
