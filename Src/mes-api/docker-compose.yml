@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  mes-api:
+    image: ${DOCKER_REGISTRY-}mesapi
+    container_name: webapi
+    build:
+      context: .
+      dockerfile: mes-api/Dockerfile
+    networks:
+      - mesapi_net
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql
+    hostname: mssql
+    environment:
+      ACCEPT_EULA: 'Y'
+      MSSQL_SA_PASSWORD: 'MorningSun89!@123'
+      MSSQL_DATA_DIR: /var/opt/mssql/data
+      MSSQL_PID: 'Developer' 
+      MSSQL_TCP_PORT: 1433
+      MSSQL_RPC_PORT: 135
+      PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    ports: 
+      - "1433:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
+      - ./log:/var/opt/mssql/log
+      - ./secrets:/var/opt/mssql/secrets
+    networks:
+      - mesapi_net
+
+networks:
+  mesapi_net:
+    name: mesapi_net

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOL.API.Repository", "Repos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLassDiagram", "CLassDiagram\CLassDiagram.csproj", "{9E280195-0DB7-4FC0-AB5B-B598541A5F0E}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{73320100-E62C-4305-B8B1-019988BBEE89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,15 +37,31 @@ Global
 		{7595A997-254B-4B05-B282-B2262C453819}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7595A997-254B-4B05-B282-B2262C453819}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7595A997-254B-4B05-B282-B2262C453819}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD:Src/mes-api/mes-api.sln
 		{9E280195-0DB7-4FC0-AB5B-B598541A5F0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9E280195-0DB7-4FC0-AB5B-B598541A5F0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E280195-0DB7-4FC0-AB5B-B598541A5F0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E280195-0DB7-4FC0-AB5B-B598541A5F0E}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{971BEB6F-574E-4170-BFEB-E3F775DCA0DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{971BEB6F-574E-4170-BFEB-E3F775DCA0DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{971BEB6F-574E-4170-BFEB-E3F775DCA0DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{971BEB6F-574E-4170-BFEB-E3F775DCA0DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73320100-E62C-4305-B8B1-019988BBEE89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73320100-E62C-4305-B8B1-019988BBEE89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73320100-E62C-4305-B8B1-019988BBEE89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73320100-E62C-4305-B8B1-019988BBEE89}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> 404a913538aa6364508d4214b7d0be278aa8de4e:Src/mes-api/mes-api2.sln
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {94E1577F-D13E-404F-86AC-D6149119E384}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.StandardHeader = $1
+		$1.Text = @\n${FileName}\n \nAuthor:\n      ${AuthorName} <${AuthorEmail}>\n\nCopyright (c) ${Year} ${CopyrightHolder}\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the "Software"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.
 	EndGlobalSection
 EndGlobal

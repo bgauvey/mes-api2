@@ -18,6 +18,7 @@
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+using System.Dynamic;
 using BOL.API.Service.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -28,8 +29,8 @@ namespace api.APIs
     [EnableCors("AllowAnyOrigin")]
     public class UtilizationController : ControllerBase
     {
-        IUtilizationService _utilizationService;
-        ILogger _logger;
+        private readonly IUtilizationService _utilizationService;
+        private readonly ILogger _logger;
         public UtilizationController(IUtilizationService utilizationService, ILoggerFactory loggerFactory)
         {
             _utilizationService = utilizationService;
@@ -39,59 +40,39 @@ namespace api.APIs
 
         [HttpGet("GetAvailableReasons")]
         //[Authorize]
-        public async Task<IActionResult> GetAvailableReasons([FromBody] object value)
+        public async Task<IActionResult> GetAvailableReasons(int inEntId, int inRawReasCode)
         {
             try
             {
-                //var i = await _utilizationService.GetAvailableReasonsAsync();
+                var data = await _utilizationService.GetAvailableReasonsAsync(inEntId, inRawReasCode);
 
-                return Ok(value);
+                return Ok(data);
 
             }
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
         [HttpGet("GetOldAvailableReasons")]
         //[Authorize]
-        public async Task<IActionResult> GetOldAvailableReasons([FromBody] object value)
+        public async Task<IActionResult> GetOldAvailableReasons(int entId, int reasCode)
         {
             try
             {
-                //var i = await _utilizationService.GetOldAvailableReasonsAsync();
+                var data = await _utilizationService.GetOldAvailableReasonsAsync(entId, reasCode);
 
-                return Ok(value);
+                return Ok(data);
 
             }
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
-
-
-        [HttpGet("GetStatusInfoByUser")]
-        //[Authorize]
-        public async Task<IActionResult> GetStatusInfoByUser([FromBody] object value)
-        {
-            try
-            {
-                //var i = await _utilizationService.GetStatusInfoByUserAsync();
-
-                return Ok(value);
-
-            }
-            catch (Exception exp)
-            {
-                _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
-            }
-        }
-
 
         [HttpPost("SetPendingReason")]
         //[Authorize]
@@ -107,7 +88,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -126,7 +107,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -146,7 +127,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
 
@@ -165,7 +146,7 @@ namespace api.APIs
             catch (Exception exp)
             {
                 _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, Message = exp.Message });
+                return BadRequest(new { Status = false, exp.Message });
             }
         }
     }

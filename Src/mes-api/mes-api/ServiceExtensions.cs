@@ -1,17 +1,18 @@
 ﻿using BOL.API.Service.Interfaces;
 using BOL.API.Service.Services;
 
-namespace bol.api;
-
-public static class ServiceExtensione
+namespace bol.api
 {
-    public static void ConfigureServices(this IServiceCollection services)
+    public static class ServiceExtensione
     {
-        services.AddScoped<IAuthorizationService, AuthorizationService>();
-        services.AddScoped<IEntService, EntService>();
-        services.AddScoped<IInventoryService, InventoryService>();
-        services.AddScoped<IItemService, ItemService>();
-        services.AddScoped<IJobExecService, JobExecService>();
-        services.AddScoped<IUtilizationService, UtilizationService>();
+        public static void ConfigureServices(this IServiceCollection services)
+        {
+            services.AddScoped<IAuthorizationService, AuthorizationService>();
+            services.AddScoped<IEntService, EntService>();
+            services.AddScoped<IInventoryService, InventoryService>();
+            services.AddScoped<IItemService, ItemService>();
+            services.AddScoped<IJobExecService, JobExecService>();
+            services.AddScoped<IUtilizationService, UtilizationService>();
+        }
     }
 }

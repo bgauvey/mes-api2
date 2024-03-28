@@ -28,8 +28,7 @@ public interface IUtilExecRepository : IRepositoryBase<UtilExec>
 	int SetReason();
 	int SetRawReas();
 	int SetPendingReason();
-	object GetAvailableReasons();
-	object GetOldAvailableReasons();
-	int UpdateDurations();
-	object GetStatusInfoByUser();
+	Task<string> GetAvailableReasonsAsync(int entId, int rawReasCode);
+	Task<string> GetOldAvailableReasonsAsync(int entId, int reasCode);
+    int UpdateDurations();
 }

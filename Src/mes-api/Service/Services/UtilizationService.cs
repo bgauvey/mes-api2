@@ -14,19 +14,14 @@ namespace BOL.API.Service.Services
             _logger = loggerFactory.CreateLogger(nameof(UtilizationService));
         }
 
-        public object GetAvailableReasonsAsync()
+        public async Task<string> GetAvailableReasonsAsync(int entId, int rawReasCode)
         {
-            throw new NotImplementedException();
+            return await _utilExecRepository.GetAvailableReasonsAsync(entId, rawReasCode);
         }
 
-        public object GetOldAvailableReasonsAsync()
+        public async Task<string> GetOldAvailableReasonsAsync(int entId, int reasCode)
         {
-            throw new NotImplementedException();
-        }
-
-        public object GetStatusInfoByUserAsync()
-        {
-            throw new NotImplementedException();
+            return await _utilExecRepository.GetOldAvailableReasonsAsync(entId, reasCode);
         }
 
         public int SetPendingReasonAsync()
