@@ -19,27 +19,81 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Data;
+using System.Dynamic;
+using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Util;
+using BOL.API.Repository.Helper;
 using BOL.API.Repository.Interfaces.Util;
 using BOL.API.Repository.Repositories;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace BOL.API.Repository.Util;
 
 public class UtilExecRepository : RepositoryBase<UtilExec>, IUtilExecRepository
 {
-    public UtilExecRepository(FactelligenceContext context, ILoggerFactory loggerFactory)
+    private readonly IConfiguration _Configuration;
+    private readonly CommandProcessor _CommandProcessor;
+    public UtilExecRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
          : base(context, loggerFactory)
     {
+        _Configuration = configuration;
+        _CommandProcessor = new CommandProcessor(_Configuration);
     }
 
-    public object GetAvailableReasons()
+    public async Task<string> GetAvailableReasonsAsync(int entId, int rawReasCode)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>();
+        parameters.Add(new KeyValuePair<string, object>("in_ent_id", entId));
+        parameters.Add(new KeyValuePair<string, object>("in_raw_reas_cd", rawReasCode));
+        Command command = new Command()
+        {
+            Cmd = "GETAVAILREASNS",
+            MsgType = "getall",
+            Object = "UTIL_EXEC",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        //dynamic dsObject = JsonConvert.DeserializeObject<ExpandoObject>(data);
+        return data;
     }
 
-    public object GetOldAvailableReasons()
+    public async Task<string> GetOldAvailableReasonsAsync(int entId, int reasCode)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>();
+        parameters.Add(new KeyValuePair<string, object>("ent_id", entId));
+        parameters.Add(new KeyValuePair<string, object>("reas_cd", reasCode));
+        Command command = new Command()
+        {
+            Cmd = "GetOldAvalReas",
+            MsgType = "getall",
+            Object = "Util_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
     public object GetStatusInfoByUser()

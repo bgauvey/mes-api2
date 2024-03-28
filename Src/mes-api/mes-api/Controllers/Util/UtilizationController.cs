@@ -18,6 +18,7 @@
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+using System.Dynamic;
 using BOL.API.Service.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -39,13 +40,13 @@ namespace api.APIs
 
         [HttpGet("GetAvailableReasons")]
         //[Authorize]
-        public async Task<IActionResult> GetAvailableReasons([FromBody] object value)
+        public async Task<IActionResult> GetAvailableReasons(int inEntId, int inRawReasCode)
         {
             try
             {
-                //var i = await _utilizationService.GetAvailableReasonsAsync();
+                var data = await _utilizationService.GetAvailableReasonsAsync(inEntId, inRawReasCode);
 
-                return Ok(value);
+                return Ok(data);
 
             }
             catch (Exception exp)
@@ -57,13 +58,13 @@ namespace api.APIs
 
         [HttpGet("GetOldAvailableReasons")]
         //[Authorize]
-        public async Task<IActionResult> GetOldAvailableReasons([FromBody] object value)
+        public async Task<IActionResult> GetOldAvailableReasons(int entId, int reasCode)
         {
             try
             {
-                //var i = await _utilizationService.GetOldAvailableReasonsAsync();
+                var data = await _utilizationService.GetOldAvailableReasonsAsync(entId, reasCode);
 
-                return Ok(value);
+                return Ok(data);
 
             }
             catch (Exception exp)

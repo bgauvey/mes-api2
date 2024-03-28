@@ -4,11 +4,13 @@ using BOL.API.Domain.Models.Prod;
 using BOL.API.Domain.Models.Security;
 using BOL.API.Domain.Models.Util;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace BOL.API.Repository;
 
 public class FactelligenceContext : DbContext
 {
+    #region Models
     //Core Models
     public DbSet<Attr> Attrs { get; set; }
     public DbSet<AttrSet> AttrSets { get; set; }
@@ -45,6 +47,7 @@ public class FactelligenceContext : DbContext
     public DbSet<UtilReasGrpClass> UtilReasGrpClasses { get; set; }
     public DbSet<UtilReasLink> UtilReasLinks { get; set; }
     public DbSet<UtilState> UtilStates { get; set; }
+    #endregion
 
     public FactelligenceContext(DbContextOptions<FactelligenceContext> options) : base(options)
     {
