@@ -39,6 +39,12 @@
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Remove="api.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="api.json" />
+  </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>

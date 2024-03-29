@@ -37,7 +37,6 @@ namespace api.APIs
             _logger = loggerFactory.CreateLogger(nameof(UtilizationController));
         }
 
-
         [HttpGet("GetAvailableReasons")]
         //[Authorize]
         public async Task<IActionResult> GetAvailableReasons(int inEntId, int inRawReasCode)
@@ -76,13 +75,13 @@ namespace api.APIs
 
         [HttpPost("SetPendingReason")]
         //[Authorize]
-        public async Task<IActionResult> SetPendingReason([FromBody] object value)
+        public async Task<IActionResult> SetPendingReason(int entId, int finalReasCode, int logId, int periodAffected, int oldReasCode, string comments)
         {
             try
             {
-                //var i = await _utilizationService.SetPendingReasonAsync();
+                var i = await _utilizationService.SetPendingReasonAsync(entId, finalReasCode, logId, periodAffected, oldReasCode, comments);
 
-                return Ok(value);
+                return Ok(i);
 
             }
             catch (Exception exp)
@@ -95,13 +94,13 @@ namespace api.APIs
 
         [HttpPost("SetRawReas")]
         //[Authorize]
-        public async Task<IActionResult> SetRawReas([FromBody] object value)
+        public async Task<IActionResult> SetRawReas(int entId, int rawReasCode, DateTime newReasStart, string comments)
         {
             try
             {
-                //var i = await _utilizationService.SetRawReasAsync();
+                var i = await _utilizationService.SetRawReasAsync(entId, rawReasCode, newReasStart, comments);
 
-                return Ok(value);
+                return Ok(i);
 
             }
             catch (Exception exp)

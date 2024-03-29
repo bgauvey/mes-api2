@@ -1,0 +1,1113 @@
+{
+  "factelligence": {
+  "mw_objects": {
+    "object": [
+      {
+        "_name": "ARSERVER.EXPORTTOFILE"
+      },
+      {
+        "_name": "ARSERVER.EXPORTTOWEBCACHE"
+      },
+      {
+        "_name": "ARSERVER.LOGINVALIDATION"
+      },
+      {
+        "_name": "ARSERVER.PRINTREPORT"
+      },
+      {
+        "_name": "CUSTOM.EXEC"
+      },
+      {
+        "_name": "CUSTOM.SP"
+      },
+      {
+        "_name": "CUSTOM.SQL"
+      },
+      {
+        "_name": "CUSTOM.TRANSACTXML"
+      },
+      {
+        "_name": "DIRECTORTRANS.BATCHEXEC"
+      },
+      {
+        "_name": "DIRECTORTRANS.EXECBATCH"
+      },
+      {
+        "_name": "DIRECTORTRANS.TRANSACTXML"
+      },
+      {
+        "_name": "DNC_EXEC.UPDATE"
+      },
+      {
+        "_name": "DNC_EXEC.UPDATESPECIFIC"
+      },
+      {
+        "_name": "DX_SCHED.GETRSFROMEXTERNALDATABASE"
+      },
+      {
+        "_name": "DX_SCHED.RUNQUERY"
+      },
+      {
+        "_name": "DX_SCHED_RUN.CHECKFORTRIGGERS"
+      },
+      {
+        "_name": "DX_SCHED_RUN.HANDLEEVENTCHANGES"
+      },
+      {
+        "_name": "DX_SCHED_RUN.NEWEVENT"
+      },
+      {
+        "_name": "DX_SCHED_RUN.RUNQUERY"
+      },
+      {
+        "_name": "DX_SCHED_RUN.TESTCONNECTION"
+      },
+      {
+        "_name": "DX_SCHED_RUN.TESTEXPORT"
+      },
+      {
+        "_name": "DX_SCHED_RUN.TESTIMPORT"
+      },
+      {
+        "_name": "DX_SCHED_RUN.TESTQUERY"
+      },
+      {
+        "_name": "ENT.CLONE"
+      },
+      {
+        "_name": "ENT.DOAUTOSHIFTCHANGES"
+      },
+      {
+        "_name": "ENT.DOPASTSHIFTCHANGES"
+      },
+      {
+        "_name": "ENT.GETAVAILENDTIME"
+      },
+      {
+        "_name": "ENT.GETREFRESHEDSHIFTSCHED"
+      },
+      {
+        "_name": "ENT.GETSHIFTSCHED"
+      },
+      {
+        "_name": "ENT.REFRESHSHIFTSCHED"
+      },
+      {
+        "_name": "ENT.STARTSHIFT"
+      },
+      {
+        "_name": "JOB.SETCONCURRENTLINK"
+      },
+      {
+        "_name": "JOB_EXEC.SETCURLOTDATA"
+      },
+      {
+        "_name": "JOB_EXEC.SETJOBQUEUE"
+      },
+      {
+        "_name": "JOB_EXEC.SETUISCREENTAGVALUES"
+      },
+      {
+        "_name": "JOB_EXEC.STARTNEXTJOBVIAFC"
+      },
+      {
+        "_name": "JOB_EXEC.STARTSOME"
+      },
+      {
+        "_name": "JOB_SCHED_EXEC.APPLYSCHEDULE"
+      },
+      {
+        "_name": "LOGIN.LOGINVALIDATION"
+      },
+      {
+        "_name": "OPER_SPEC_VER.UPDATESPECIFIC"
+      },
+      {
+        "_name": "SCRIPT.DELETEBYNAME"
+      },
+      {
+        "_name": "SCRIPT.UPDATEBYNAME"
+      },
+      {
+        "_name": "SESSION.DOAUTOSHIFTCHANGES"
+      },
+      {
+        "_name": "SESSION.DODAILYTASKS"
+      },
+      {
+        "_name": "SESSION.GETMODULESLICENSED"
+      },
+      {
+        "_name": "SESSION.GETUSERBYPW"
+      },
+      {
+        "_name": "SESSION.GETVERINFO"
+      },
+      {
+        "_name": "SESSION.KILLSTALESESSIONS"
+      },
+      {
+        "_name": "SESSION.LOGOFF"
+      },
+      {
+        "_name": "SESSION.STARTBGSESSION"
+      },
+      {
+        "_name": "SESSION.SWITCHSESSION"
+      },
+      {
+        "_name": "SESSION.SWITCHUSER"
+      },
+      {
+        "_name": "SESSION.VALIDPW"
+      },
+      {
+        "_name": "SESSION.VALIDSESSION"
+      },
+      {
+        "_name": "SHIFT_EXC.ADD"
+      },
+      {
+        "_name": "SHIFT_EXC.DELETE"
+      },
+      {
+        "_name": "SHIFT_EXC.DELETEALL"
+      },
+      {
+        "_name": "SHIFT_EXC.UPDATE"
+      },
+      {
+        "_name": "SHIFT_EXC.UPDATESPECIFIC"
+      },
+      {
+        "_name": "SHIFT_SCHED.DELETEALL"
+      },
+      {
+        "_name": "SHIFT_SCHED.UPDATESPECIFIC"
+      },
+      {
+        "_name": "SHIPMENT_LOT.GETLOTNOS"
+      },
+      {
+        "_name": "SHIPMENT_LOT.GETMAXTOSHIP"
+      },
+      {
+        "_name": "SHIPMENT_LOT.SHIP"
+      },
+      {
+        "_name": "STD_OPER_SPEC_VER.UPDATESPECIFIC"
+      },
+      {
+        "_name": "UI_CONFIG.SAVESECTIONPARAMS"
+      },
+      {
+        "_name": "UI_CONFIG_DEFAULT.SAVESECTIONPARAMS"
+      },
+      {
+        "_name": "USER_NAME.ADDORUPDATE"
+      },
+      {
+        "_name": "USER_NAME.CHANGEPASSWORD"
+      },
+      {
+        "_name": "USER_NAME.CHANGEPWD"
+      },
+      {
+        "_name": "UTIL_EXEC.UPDATE"
+      },
+      {
+        "_name": "UTIL_EXEC.UPDATEDURATIONS"
+      },
+      {
+        "_name": "UTIL_EXEC.UPDATESPECIFIC"
+      },
+      {
+        "_name": "UTIL_LOG.UPDATESPECIFIC"
+      },
+      {
+        "_name": "WEB.HANDLEWEBREQUEST"
+      }
+    ]
+  },
+  "db_objects": {
+    "object": [
+      {
+        "_name": "BOM_ITEM_OPER_LINK.CHANGEPRODUCEDITEM",
+        "_value": "SP_U_BOM_ITEM_OPER_LINK_CHPRIT"
+      },
+      {
+        "_name": "BOM_ITEM_OPER_LINK.GETBOMOPERINFO",
+        "_value": "SP_SA_BIOL_GETBOMOPERINFO"
+      },
+      {
+        "_name": "BOM_ITEM_OPER_STEP_LINK.GETBOMOPERSTEPINFO",
+        "_value": "SP_SA_BIOSL_GETBOMOPERSTEPINFO"
+      },
+      {
+        "_name": "BOM_ITEM_SUBST.GETNEXTALTNO",
+        "_value": "SP_SA_BI_SUBST_GETNEXTALTNO"
+      },
+      {
+        "_name": "BOM_VER.CLONE",
+        "_value": "SP_I_BOM_VER_CLONE"
+      },
+      {
+        "_name": "BOM_VER.COPY",
+        "_value": "SP_I_BOM_VER_COPY"
+      },
+      {
+        "_name": "BOM_VER.UPDATE",
+        "_value": "SP_U_BOM_VER"
+      },
+      {
+        "_name": "DATA_LOG_GRP.ADDSAMPLE",
+        "_value": "SP_I_DATA_LOG_GRP_ADDSAMPLE"
+      },
+      {
+        "_name": "DATA_LOG_GRP.CHECKDATALOGGRPVALEXISTS",
+        "_value": "SP_SA_DATA_LOG_GRP_ISVALEXISTS"
+      },
+      {
+        "_name": "DATA_LOG_GRP.CLONE",
+        "_value": "SP_I_DATA_LOG_GRP_CLONE"
+      },
+      {
+        "_name": "DATA_LOG_GRP.GETAVAILGROUPS",
+        "_value": "SP_SA_DLG_GETAVAILGROUPS"
+      },
+      {
+        "_name": "DATA_LOG_GRP.GETDATALOGADDITIONS",
+        "_value": "SP_SA_DL_GETDATALOGNADDITIONS"
+      },
+      {
+        "_name": "DATA_LOG_GRP.GETDATALOGDATAFORJOB",
+        "_value": "SP_SA_DL_GETDATALOGDATAFORJOB"
+      },
+      {
+        "_name": "DATA_LOG_GRP.GETENTGROUPS",
+        "_value": "SP_SA_DATA_LOG_GRP_GETENTGRPS"
+      },
+      {
+        "_name": "DATA_LOG_GRP.GETMAXDLNROW",
+        "_value": "SP_SA_DL_GETMAXDLNROW"
+      },
+      {
+        "_name": "DATA_LOG_GRP.SAMPLEVIAFC",
+        "_value": "SP_I_DATA_LOG_GRP_SAMPLEVIAFC"
+      },
+      {
+        "_name": "DATA_LOG_GRP.SAVESAMPLE",
+        "_value": "SP_I_DATA_LOG_GRP_SAVESAMPLE"
+      },
+      {
+        "_name": "DATA_LOG_GRP_STD_OPER_LINK.ADD",
+        "_value": "SP_I_DATA_LOG_GRP_STD_OPERLNK"
+      },
+      {
+        "_name": "DATA_LOG_GRP_STD_OPER_LINK.DELETE",
+        "_value": "SP_D_DATA_LOG_GRP_STD_OPER_LNK"
+      },
+      {
+        "_name": "DATA_LOG_GRP_STD_OPER_LINK.GETALL",
+        "_value": "SP_SA_DATA_LOG_GRP_STD_OPERLNK"
+      },
+      {
+        "_name": "DATA_LOG_GRP_STD_OPER_LINK.GETBYKEY",
+        "_value": "SP_S_DATA_LOG_GRP_STD_OPER_LNK"
+      },
+      {
+        "_name": "DIR.CHANGESEQ",
+        "_value": "SP_U_DIR_CHANGE_SEQ"
+      },
+      {
+        "_name": "DX_MAP_EXP.GETDISTINCTMAPPINGS",
+        "_value": "SP_S_DX_MAP_EXP_GETDISTMAPS"
+      },
+      {
+        "_name": "DX_MAP_IMP.GETDISTINCTMAPPINGS",
+        "_value": "SP_S_DX_MAP_IMP_GETDISTMAPS"
+      },
+      {
+        "_name": "DX_SCHED.CLONE",
+        "_value": "SP_I_DX_SCHED_CLONE"
+      },
+      {
+        "_name": "DX_SCHED.GETIMPORTFIELDMAPPINGS",
+        "_value": "SP_SA_DX_MAP_IMP_GETIMPORTMAPS"
+      },
+      {
+        "_name": "DX_SCHED.TESTQUERY",
+        "_value": "SP_SA_DX_SCHED_TESTQUERY"
+      },
+      {
+        "_name": "ENT.GETALL_TOPLEVEL",
+        "_value": "SP_SA_ENT_GETTOPLEVELENTS"
+      },
+      {
+        "_name": "ENT.GETAVAILSHIFTTIME",
+        "_value": "SP_S_ENT_GETAVAILSHIFTTIME"
+      },
+      {
+        "_name": "ENT.GETSHIFTENDENTITIES",
+        "_value": "SP_SA_ENT_GETSHIFTSCHEDENTS"
+      },
+      {
+        "_name": "ENT.GETSHIFTTEMPLATES",
+        "_value": "SP_S_SHIFT_SCHED_GETSCHED"
+      },
+      {
+        "_name": "ENT.GETSTATUSINFO",
+        "_value": "SP_SA_ENT_GETSTATUS"
+      },
+      {
+        "_name": "ENT.GETSTATUSINFOBYUSER",
+        "_value": "SP_SA_ENT_GETSTATUSBYUSER"
+      },
+      {
+        "_name": "ENT.UPDATE",
+        "_value": "SP_U_ENT"
+      },
+      {
+        "_name": "FC_NAMESP_NODE.CLONE",
+        "_value": "SP_I_FC_NAMESP_NODE_CLONE"
+      },
+      {
+        "_name": "FC_NAMESP_NODE.GETMAXCOUNTER",
+        "_value": "SP_SA_FCN_GETMAXCOUNTER"
+      },
+      {
+        "_name": "FC_NAMESP_NODE_TAG.CLONE",
+        "_value": "SP_I_FC_NAMESP_NODE_TAG_CLONE"
+      },
+      {
+        "_name": "FC_NAMESP_NODE_TAG.CURDATETIME",
+        "_value": "SP_U_FC_NAMESP_TAG_CURDATETIME"
+      },
+      {
+        "_name": "FC_NAMESP_NODE_TAG.GETCHANGESANDRESET",
+        "_value": "SP_SA_FC_NAMESP_TAG_GETCHNGES"
+      },
+      {
+        "_name": "FOLDER.CLONE",
+        "_value": "SP_I_FOLDER_CLONE"
+      },
+      {
+        "_name": "FOLDER.GETFOLDERVER",
+        "_value": "SP_S_ENT_FOLDER_REV"
+      },
+      {
+        "_name": "FOLDER.REMOVE",
+        "_value": "SP_D_FOLDER_REMOVE"
+      },
+      {
+        "_name": "FOLDER.SETPREFERREDVER",
+        "_value": "SP_U_FOLDER_SET_PREF_VER"
+      },
+      {
+        "_name": "GRP_ENT_LINK.CANACCESS",
+        "_value": "SP_S_GRP_ENT_LINK_CAN_ACCESS"
+      },
+      {
+        "_name": "GRP_ENT_LINK.GETENTACCESSBYGRP",
+        "_value": "SP_S_GRP_ENT_LINK_ENTACCBYGRP"
+      },
+      {
+        "_name": "GRP_ENT_LINK.GETENTACCESSBYUSER",
+        "_value": "SP_S_GRP_ENT_LINK_ENTACCBYUSER"
+      },
+      {
+        "_name": "GRP_ENT_LINK.GETGRPACCESSBYENT",
+        "_value": "SP_S_GRP_ENT_LINK_GRPACCBYENT"
+      },
+      {
+        "_name": "GRP_ENT_LINK.GETUSERACCESSBYENT",
+        "_value": "SP_S_GRP_ENT_LINK_USERACCBYENT"
+      },
+      {
+        "_name": "GRP_PRIV_LINK.GETPRIV",
+        "_value": "SP_S_GRP_PRIV_LINK_GETPRIV"
+      },
+      {
+        "_name": "GRP_PRIV_LINK.GETPRIVILEGESBYUSER",
+        "_value": "SP_S_GRP_PRIV_LINK_BY_USER"
+      },
+      {
+        "_name": "GRP_PRIV_LINK.GETUSERSBYPRIVILEGE",
+        "_value": "SP_S_GRP_PRIV_LINK_BY_PRIV"
+      },
+      {
+        "_name": "ITEM_ATTR.GETAVAILABLEATTRS",
+        "_value": "SP_SA_ITEM_ATTR_GETAVAILATTRS"
+      },
+      {
+        "_name": "ITEM_CLASS_ATTR.GETAVAILABLEATTRS",
+        "_value": "SP_SA_IC_ATTR_GETAVAILATTRS"
+      },
+      {
+        "_name": "ITEM_CONS.GETCONSBYFILTER",
+        "_value": "SP_SA_ITEM_CONS_GETCONSBYFILTR"
+      },
+      {
+        "_name": "ITEM_CONS.GETCONSCOUNT",
+        "_value": "SP_SA_ITEM_CONS_GETCONSCOUNT"
+      },
+      {
+        "_name": "ITEM_CONS.SPLIT",
+        "_value": "SP_I_ITEM_CONS_SPLIT"
+      },
+      {
+        "_name": "ITEM_PROCESS_LINK.GETNEXTITEMPREF",
+        "_value": "SP_SA_IPL_GETNEXTITEMPREF"
+      },
+      {
+        "_name": "ITEM_PROD.GETPRODBYFILTER",
+        "_value": "SP_SA_ITEM_PROD_GETPRODBYFILTR"
+      },
+      {
+        "_name": "ITEM_PROD.GETPRODCOUNT",
+        "_value": "SP_SA_ITEM_PROD_GETPRODCOUNT"
+      },
+      {
+        "_name": "ITEM_PROD.SPLIT",
+        "_value": "SP_I_ITEM_PROD_SPLIT"
+      },
+      {
+        "_name": "ITEM_REAS_GRP_ENT_LINK.GETREASONS",
+        "_value": "SP_S_IRG_ENT_LINK_GET_REASONS"
+      },
+      {
+        "_name": "JOB.GETCANLOGDATACAPABILITY",
+        "_value": "SP_SA_JOB_CAN_LOG_DATA"
+      },
+      {
+        "_name": "JOB.GETDISPLAYSEQ",
+        "_value": "SP_SA_JOB_GETDISPLAYSEQ"
+      },
+      {
+        "_name": "JOB_ATTR.GETAVAILABLEATTRS",
+        "_value": "SP_SA_JOB_ATTR_GETAVAILATTRS"
+      },
+      {
+        "_name": "JOB_BOM_SUBST.GETNEXTALTNO",
+        "_value": "SP_SA_JB_SUBST_GETNEXTALTNO"
+      },
+      {
+        "_name": "JOB_EXEC.ADDCONS",
+        "_value": "SP_I_ITEM_CONS_ADDCONS"
+      },
+      {
+        "_name": "JOB_EXEC.ADDCONSDIRECT",
+        "_value": "SP_I_ITEM_CONS_ADDCONSDIRECT"
+      },
+      {
+        "_name": "JOB_EXEC.ADDCONSPOSTEXEC",
+        "_value": "SP_I_ITEM_CONS_ADDCONSPOSTEXEC"
+      },
+      {
+        "_name": "JOB_EXEC.ADDPROD",
+        "_value": "SP_I_ITEM_PROD_ADDPROD"
+      },
+      {
+        "_name": "JOB_EXEC.ADDPRODPOSTEXEC",
+        "_value": "SP_I_ITEM_PROD_ADDPRODPOSTEXEC"
+      },
+      {
+        "_name": "JOB_EXEC.CERTSIGNOFF",
+        "_value": "SP_CERT_SIGNOFF"
+      },
+      {
+        "_name": "JOB_EXEC.CERTSIGNOFFALLOWED",
+        "_value": "SP_CERT_SIGNOFF_ALLOWED"
+      },
+      {
+        "_name": "JOB_EXEC.CERTSIGNOFFDONE",
+        "_value": "SP_CERT_SIGNOFF_DONE"
+      },
+      {
+        "_name": "JOB_EXEC.CERTSIGNOFFREQD",
+        "_value": "SP_CERT_SIGNOFF_REQD"
+      },
+      {
+        "_name": "JOB_EXEC.CERTSTARTALLOWED",
+        "_value": "SP_CERT_START_ALLOWED"
+      },
+      {
+        "_name": "JOB_EXEC.CHANGESPECVALUE",
+        "_value": "SP_U_JOB_SPEC_CHANGESPECVALUE"
+      },
+      {
+        "_name": "JOB_EXEC.CHANGESPECVALUES",
+        "_value": "SP_U_JOB_SPEC_CHANGESPECVALUES"
+      },
+      {
+        "_name": "JOB_EXEC.CHANGEWOQTYS",
+        "_value": "SP_ALLOC_JOB_QTY"
+      },
+      {
+        "_name": "JOB_EXEC.CHANGEWOREQFINISHTIME",
+        "_value": "SP_U_JOB_EXEC_CHWOREQFINTIME"
+      },
+      {
+        "_name": "JOB_EXEC.CLONEJOB",
+        "_value": "SP_I_JOB_EXEC_CLONEJOB"
+      },
+      {
+        "_name": "JOB_EXEC.CLONEWO",
+        "_value": "SP_I_JOB_EXEC_CLONEWO"
+      },
+      {
+        "_name": "JOB_EXEC.CREATEJOBSFROMSTDOPS",
+        "_value": "SP_I_JOB_EXEC_CRTJOBSFROMSTDOP"
+      },
+      {
+        "_name": "JOB_EXEC.CREATEWOFROMPROCESS",
+        "_value": "SP_I_JOB_EXEC_CWOFP_STACK"
+      },
+      {
+        "_name": "JOB_EXEC.CREATEWOFROMPROCESSQTYS",
+        "_value": "SP_I_JOB_EXEC_CWOFP_QTY"
+      },
+      {
+        "_name": "JOB_EXEC.ENDJOB",
+        "_value": "SP_U_JOB_EXEC_ENDBATCHJOBS"
+      },
+      {
+        "_name": "JOB_EXEC.GETAVAILJOBPOS",
+        "_value": "SP_SA_JOB_EXEC_GETAVAILJOBPOS"
+      },
+      {
+        "_name": "JOB_EXEC.GETITEMSPRODBYDSTRMJOB",
+        "_value": "SP_SA_JE_GETITMSPRODBYDSTRMJOB"
+      },
+      {
+        "_name": "JOB_EXEC.GETJOBBOMSTEPQUANTITIES",
+        "_value": "SP_SA_JOB_EXEC_GETJBSTEPQUANTS"
+      },
+      {
+        "_name": "JOB_EXEC.GETQUEUE",
+        "_value": "SP_SA_JOB_EXEC_GETQUEUE"
+      },
+      {
+        "_name": "JOB_EXEC.GETREQDCERTSIGNOFFS",
+        "_value": "SP_SA_JOB_EXEC_GETREQDSIGNOFFS"
+      },
+      {
+        "_name": "JOB_EXEC.GETRUNNABLEENTITIES",
+        "_value": "SP_SA_ENT_GETRUNNABLEENTITIES"
+      },
+      {
+        "_name": "JOB_EXEC.GETSCHEDENTSBYWINDOW",
+        "_value": "SP_SA_JOB_EXEC_GETSCHEDENTS"
+      },
+      {
+        "_name": "JOB_EXEC.GETSCHEDULABLEENTITIES",
+        "_value": "SP_SA_JOB_EXEC_GETSCHEDENTS"
+      },
+      {
+        "_name": "JOB_EXEC.GETSCHEDULABLEENTITY",
+        "_value": "SP_SA_ENT_GETSCHEDULABLEENTITY"
+      },
+      {
+        "_name": "JOB_EXEC.GETSCHEDULABLEPARENTS",
+        "_value": "SP_SA_ENT_GETSCHEDPARENTS"
+      },
+      {
+        "_name": "JOB_EXEC.INSERTPRODVIAFC",
+        "_value": "SP_I_ITEM_PROD_INSERTPRODVIAFC"
+      },
+      {
+        "_name": "JOB_EXEC.ISSAMEPRODUCED",
+        "_value": "SP_SA_ITEM_PROD_ISSAMEPRODUCED"
+      },
+      {
+        "_name": "JOB_EXEC.LOGJOBEVENT",
+        "_value": "SP_I_JOB_EVENT"
+      },
+      {
+        "_name": "JOB_EXEC.PAUSEJOB",
+        "_value": "SP_U_JOB_EXEC_PAUSEBATCHJOBS"
+      },
+      {
+        "_name": "JOB_EXEC.REJECTPROD",
+        "_value": "SP_I_ITEM_PROD_SPLIT"
+      },
+      {
+        "_name": "JOB_EXEC.SETACTUALSPECVALUE",
+        "_value": "SP_U_JOB_SPEC_SETACTSPECVALUE"
+      },
+      {
+        "_name": "JOB_EXEC.SETATTR",
+        "_value": "SP_U_JOB_ATTR_SETATTR"
+      },
+      {
+        "_name": "JOB_EXEC.SPLITJOB",
+        "_value": "SP_I_JOB_EXEC_SPLITJOB"
+      },
+      {
+        "_name": "JOB_EXEC.STARTDATAENTRYJOB",
+        "_value": "SP_U_JOB_EXEC_STRTDATAENTRYJOB"
+      },
+      {
+        "_name": "JOB_EXEC.STARTJOB",
+        "_value": "SP_U_JOB_EXEC_STARTBATCHJOBS"
+      },
+      {
+        "_name": "JOB_EXEC.STARTSTEP",
+        "_value": "SP_U_JOB_STEP_STARTSTEP"
+      },
+      {
+        "_name": "JOB_EXEC.STEPLOGIN",
+        "_value": "SP_U_JOB_STEP_STEPLOGIN"
+      },
+      {
+        "_name": "JOB_EXEC.STEPLOGOUT",
+        "_value": "SP_U_JOB_STEP_STEPLOGOUT"
+      },
+      {
+        "_name": "JOB_EXEC.STOPSTEP",
+        "_value": "SP_U_JOB_STEP_STOPSTEP"
+      },
+      {
+        "_name": "JOB_EXEC.UPDATESTEPDATA",
+        "_value": "SP_U_JOB_STEP_UPDATESTEPDATA"
+      },
+      {
+        "_name": "JOB_EXEC.UPDATETEMPLATESPECVALUES",
+        "_value": "SP_U_JOB_SPEC_UPDTEMPLSPECVALS"
+      },
+      {
+        "_name": "JOB_EXEC.VERIFYPROCESS",
+        "_value": "SP_S_JOB_EXEC_VERIFYPROCESS"
+      },
+      {
+        "_name": "JOB_EXEC_STORAGE_EXEC_LINK.ADD",
+        "_value": "SP_I_JOB_EXEC_STORAGE_EXC_LNK"
+      },
+      {
+        "_name": "JOB_EXEC_STORAGE_EXEC_LINK.DELETE",
+        "_value": "SP_D_JOB_EXEC_STORAGE_EXEC_LNK"
+      },
+      {
+        "_name": "JOB_EXEC_STORAGE_EXEC_LINK.GETALL",
+        "_value": "SP_SA_JOB_EXEC_STORAGE_EXC_LNK"
+      },
+      {
+        "_name": "JOB_EXEC_STORAGE_EXEC_LINK.GETALLBYXML",
+        "_value": "SP_SA_JOB_EXEC_STORAGE_EXC_LNK"
+      },
+      {
+        "_name": "JOB_EXEC_STORAGE_EXEC_LINK.GETBYKEY",
+        "_value": "SP_S_JOB_EXEC_STORAGE_EXEC_LNK"
+      },
+      {
+        "_name": "JOB_EXEC_STORAGE_EXEC_LINK.UPDATE",
+        "_value": "SP_U_JOB_EXEC_STORAGE_EXEC_LNK"
+      },
+      {
+        "_name": "JOB_ROUTE.GETJOBPATH",
+        "_value": "SP_SA_JOB_GETJOBPATH"
+      },
+      {
+        "_name": "JOB_ROUTE.GETJOBROUTE",
+        "_value": "SP_SA_JOB_GETJOBROUTE"
+      },
+      {
+        "_name": "JOB_SCHED_EXEC.REFRESHTEMPSHIFTEXC",
+        "_value": "SP_U_JSE_REFRESHTEMPSHIFTEXC"
+      },
+      {
+        "_name": "JOB_SPEC.GETAUDITENABLED",
+        "_value": "SP_SA_JOB_SPEC_GETAUDITENABLED"
+      },
+      {
+        "_name": "JOB_SPEC.GETJOBSPECS",
+        "_value": "SP_SA_JOB_SPEC_GETJSBYFILTER"
+      },
+      {
+        "_name": "JOB_STEP_DATA.GETBYFILTER",
+        "_value": "SP_SA_JOB_STEP_DATA_GETBYFILTR"
+      },
+      {
+        "_name": "JOB_STEP_DATA.GETCOUNT",
+        "_value": "SP_SA_JOB_STEP_DATA_GETCOUNT"
+      },
+      {
+        "_name": "LABOR_EXEC.ADDLABOR",
+        "_value": "SP_I_LABOR_EXEC_ADDLABOR"
+      },
+      {
+        "_name": "LABOR_EXEC.GETAVAILABLELABCODES",
+        "_value": "SP_SA_LABOR_EXEC_GETAVLABCDS"
+      },
+      {
+        "_name": "LABOR_EXEC.GETENTLOGONSBYSESSIONUSER",
+        "_value": "SP_SA_LE_GETENTLOGONSBYSESNUSR"
+      },
+      {
+        "_name": "LABOR_EXEC.GETLABORSTARTTIMEFORASHIFT",
+        "_value": "SP_SA_LE_GETLABRSTRTFORASHIFT"
+      },
+      {
+        "_name": "LABOR_EXEC.GETPREVSHIFTSTARTTIME",
+        "_value": "SP_SA_LABR_EXEC_GETPRVSHFTSTRT"
+      },
+      {
+        "_name": "LABOR_EXEC.SETLABDATA",
+        "_value": "SP_U_LABOR_EXEC_NEWLABOR"
+      },
+      {
+        "_name": "LABOR_EXEC.UPDATEDURATION",
+        "_value": "SP_U_LABOR_EXEC_UPDLABDURATION"
+      },
+      {
+        "_name": "LABOR_USAGE.GETLABORBYFILTER",
+        "_value": "SP_SA_LU_GETLABORBYFILTER"
+      },
+      {
+        "_name": "LABOR_USAGE.GETLABORCOUNT",
+        "_value": "SP_SA_LU_GETLABORCOUNT"
+      },
+      {
+        "_name": "LANGUAGE.CLONE",
+        "_value": "SP_LANGUAGE_CLONE"
+      },
+      {
+        "_name": "LANGUAGE.DELETEBYLANG",
+        "_value": "SP_D_LANGUAGE_BY_LANG"
+      },
+      {
+        "_name": "LANGUAGE.NEXTFREELANGID",
+        "_value": "SP_S_LANGUAGE_NEXT_FREE"
+      },
+      {
+        "_name": "LOT.GETLOTSUBLOTBYFILTER",
+        "_value": "SP_SA_LOT_GETLOTSUBLOTBYFILTR"
+      },
+      {
+        "_name": "LOT_ATTR.GETAVAILABLEATTRS",
+        "_value": "SP_SA_LOT_ATTR_GETAVAILATTRS"
+      },
+      {
+        "_name": "MESSAGE.SENDEMAIL",
+        "_value": "SP_I_MESSAGE_SENDEMAIL"
+      },
+      {
+        "_name": "OPER.CLONE",
+        "_value": "SP_I_OPER_CLONE"
+      },
+      {
+        "_name": "OPER_ATTR.GETAVAILABLEATTRS",
+        "_value": "SP_SA_OPER_ATTR_GETAVAILATTRS"
+      },
+      {
+        "_name": "OPER_ENT_LINK.GETCANLOGDATACAPABILITY",
+        "_value": "SP_SA_OEL_CAN_LOG_DATA"
+      },
+      {
+        "_name": "OPER_ENT_SPEC.GETITEMENTSPECS",
+        "_value": "SP_SA_OES_GETITEMENTSPECS"
+      },
+      {
+        "_name": "OPER_SPEC_VER.GETVERSIONS",
+        "_value": "SP_SA_OPER_SPEC_VER_GETVERS"
+      },
+      {
+        "_name": "PROCESS.CLONE",
+        "_value": "SP_I_PROCESS_CLONE"
+      },
+      {
+        "_name": "PROCESS.CREATEOPFROMSTDOP",
+        "_value": "SP_I_PROCESS_CREATEOPFROMSTDOP"
+      },
+      {
+        "_name": "PROCESS.GETITEMPRODATOPER",
+        "_value": "SP_SA_PROCESS_GETITMPRODATOPER"
+      },
+      {
+        "_name": "PROCESS.GETNEXTVERID",
+        "_value": "SP_SA_PROCESS_GETNEXTVERID"
+      },
+      {
+        "_name": "PROCESS_ATTR.GETAVAILABLEATTRS",
+        "_value": "SP_SA_PA_GETAVAILATTRS"
+      },
+      {
+        "_name": "PROFAB.GETQUEUE",
+        "_value": "SP_SA_SO_GETQUEUE"
+      },
+      {
+        "_name": "SCRIPT.SAVEFORMSCRIPT",
+        "_value": "SP_I_FORM_SCRIPT"
+      },
+      {
+        "_name": "SESSION.ADDENTLISTENTRY",
+        "_value": "SP_I_ENT_LOGON_LIST"
+      },
+      {
+        "_name": "SESSION.DOHOURLYTASKS",
+        "_value": "SP_BG_HOURLY_TASKS"
+      },
+      {
+        "_name": "SESSION.DOMINUTELYTASKS",
+        "_value": "SP_BG_MINUTELY_TASKS"
+      },
+      {
+        "_name": "SESSION.ENDSESSION",
+        "_value": "SP_D_SESSION"
+      },
+      {
+        "_name": "SESSION.GETALLDBSTATUS",
+        "_value": "SP_SA_DB_STATUS"
+      },
+      {
+        "_name": "SESSION.GETDBSERVERTIME",
+        "_value": "SP_S_GETDBSERVERTIME"
+      },
+      {
+        "_name": "SESSION.GETDBSTATUS",
+        "_value": "SP_S_DB_STATUS"
+      },
+      {
+        "_name": "SESSION.GETDNCENTS",
+        "_value": "SP_SA_ENT_LOGON_GETDNCENTS"
+      },
+      {
+        "_name": "SESSION.GETENTLOGONLIST",
+        "_value": "SP_SA_ENT_LOGON_LIST"
+      },
+      {
+        "_name": "SESSION.GETENTLOGONS",
+        "_value": "SP_SA_ENT_LOGON"
+      },
+      {
+        "_name": "SESSION.GETENTS",
+        "_value": "SP_SA_ENT_LOGON_GETENTS"
+      },
+      {
+        "_name": "SESSION.GETJOBEXECENTS",
+        "_value": "SP_SA_ENT_LOGON_GETJOBEXECENTS"
+      },
+      {
+        "_name": "SESSION.GETLASTENTLOGONTIME",
+        "_value": "SP_SA_ENT_LOGON_GETLASTLOGTIME"
+      },
+      {
+        "_name": "SESSION.GETOEEEXECENTS",
+        "_value": "SP_SA_ENT_LOGON_GETOEEEXECENTS"
+      },
+      {
+        "_name": "SESSION.GETSERVERTIME",
+        "_value": "SP_S_GETSERVERTIME"
+      },
+      {
+        "_name": "SESSION.GETSESSIONS",
+        "_value": "SP_SA_SESSION"
+      },
+      {
+        "_name": "SESSION.GETUNIQUEENTSBYUSER",
+        "_value": "SP_S_ENT_GETUNIQUEENTSBYUSER"
+      },
+      {
+        "_name": "SESSION.GETUTILEXECENTS",
+        "_value": "SP_SA_ENT_LOGN_GETUTILEXECENTS"
+      },
+      {
+        "_name": "SESSION.LOGIN",
+        "_value": "SP_U_SESSION_LOGIN"
+      },
+      {
+        "_name": "SESSION.LOGONENT",
+        "_value": "SP_I_ENT_LOGON"
+      },
+      {
+        "_name": "SESSION.LOGONENTLIST",
+        "_value": "SP_U_SESSION_LOGONENTLIST"
+      },
+      {
+        "_name": "SESSION.REFRESHHEARTBEAT",
+        "_value": "SP_U_SESSION_HEARTBEAT"
+      },
+      {
+        "_name": "SESSION.SAVEENTLIST",
+        "_value": "SP_I_ENT_LOGON_LIST_SAVE"
+      },
+      {
+        "_name": "SESSION.SETMWDBUSER",
+        "_value": "SP_U_DB_STATUS_SETMWUSER"
+      },
+      {
+        "_name": "SESSION.STARTSESSION",
+        "_value": "SP_I_SESSION"
+      },
+      {
+        "_name": "SESSION.TRANSFERUSERSESSION",
+        "_value": "SP_SA_SESSION_TRANSFRUSERSESSN"
+      },
+      {
+        "_name": "SESSION.UPDATECLIENTEVENTS",
+        "_value": "SP_U_SESSION_EVENTS"
+      },
+      {
+        "_name": "SHIPMENT_LOT.GETQTYSHIPPED",
+        "_value": "SP_SA_SHIPMENT_LOT_GETQTYSHIPD"
+      },
+      {
+        "_name": "SO.GETNEXTSOID",
+        "_value": "SP_SA_SO_GETNEXTSOID"
+      },
+      {
+        "_name": "SPC_ITEM_CLASS_CHAR_RULE_LINK.ADD",
+        "_value": "SP_I_SPC_ITM_CLAS_CHR_RUL_LNK"
+      },
+      {
+        "_name": "SPC_ITEM_CLASS_CHAR_RULE_LINK.DELETE",
+        "_value": "SP_D_SPC_ITEM_CLAS_CHR_RUL_LNK"
+      },
+      {
+        "_name": "SPC_ITEM_CLASS_CHAR_RULE_LINK.GETALL",
+        "_value": "SP_SA_SPC_ITM_CLAS_CHR_RUL_LNK"
+      },
+      {
+        "_name": "SPC_ITEM_CLASS_CHAR_RULE_LINK.GETALLBYXML",
+        "_value": "SP_SA_SPC_ITM_CLAS_CHR_RUL_LNK"
+      },
+      {
+        "_name": "SPC_ITEM_CLASS_CHAR_RULE_LINK.GETBYKEY",
+        "_value": "SP_S_SPC_ITM_CLAS_CHR_RULE_LNK"
+      },
+      {
+        "_name": "SPEC.GETGROUPS",
+        "_value": "SP_S_SPEC_GET_GROUPS"
+      },
+      {
+        "_name": "STD_OPER.CLONE",
+        "_value": "SP_I_STD_OPER_CLONE"
+      },
+      {
+        "_name": "STD_OPER_ATTR.GETAVAILABLEATTRS",
+        "_value": "SP_SA_STD_OA_GETAVAILATTRS"
+      },
+      {
+        "_name": "STD_OPER_ENT_SPEC.GETENTSPECS",
+        "_value": "SP_SA_STD_OES_GETENTSPECS"
+      },
+      {
+        "_name": "STD_OPER_ENT_SPEC.GETSPECS",
+        "_value": "SP_SA_STD_OES_GETSPECS"
+      },
+      {
+        "_name": "STORAGE_EXEC.ADDINV",
+        "_value": "SP_I_ITEM_INV_ADD"
+      },
+      {
+        "_name": "STORAGE_EXEC.GETINVENTORY",
+        "_value": "SP_SA_STORAGE_EXEC_GETINVENTRY"
+      },
+      {
+        "_name": "STORAGE_EXEC.GETINVENTORYBYFILTER",
+        "_value": "SP_SA_ITEM_INV_FILTR"
+      },
+      {
+        "_name": "STORAGE_EXEC.GETSHORTAGES",
+        "_value": "SP_SA_STORAGE_EXEC_GETSHRTAGES"
+      },
+      {
+        "_name": "STORAGE_EXEC.MOVE",
+        "_value": "SP_U_ITEM_INV_MOVE"
+      },
+      {
+        "_name": "STORAGE_EXEC.REDUCEINV",
+        "_value": "SP_U_ITEM_INV_REDUCE"
+      },
+      {
+        "_name": "STORAGE_EXEC.SPLIT",
+        "_value": "SP_U_ITEM_INV_SPLIT"
+      },
+      {
+        "_name": "STORAGE_EXEC.TRANSFERANDUPDATEINV",
+        "_value": "SP_U_ITEM_INV_TRANSANDUPDINV"
+      },
+      {
+        "_name": "STORAGE_EXEC.VERIFYINVPROPS",
+        "_value": "SP_SA_ITEM_INV_VERIFYINVPROPS"
+      },
+      {
+        "_name": "UI_CONFIG.GETCONFIGORDEFAULTDATA",
+        "_value": "SP_SA_UI_CONF_GETCONFORDEFDATA"
+      },
+      {
+        "_name": "USER_NAME.ADD",
+        "_value": "SP_I_USER_NAME_NOCOM"
+      },
+      {
+        "_name": "USER_NAME.UPDATE",
+        "_value": "SP_U_USER_NAME_NOCOM"
+      },
+      {
+        "_name": "UTIL_EXEC.GETAVAILABLEREASONS",
+        "_value": "SP_SA_UTIL_EXEC_GETAVAILREASNS"
+      },
+      {
+        "_name": "UTIL_EXEC.GETEVENTSTARTIMETFORASHIFT",
+        "_value": "SP_SA_UE_GETEVNTSTRTFORASHIFT"
+      },
+      {
+        "_name": "UTIL_EXEC.GETOLDAVAILABLEREASONS",
+        "_value": "SP_SA_UTIL_EXEC_GETOLDAVALREAS"
+      },
+      {
+        "_name": "UTIL_EXEC.GETPREVSHIFTSTARTTIME",
+        "_value": "SP_SA_UTIL_EXEC_GETPRVSHFTSTRT"
+      },
+      {
+        "_name": "UTIL_EXEC.INSRAWREASVIAFC",
+        "_value": "SP_I_UTIL_EXEC_INSRAWREASVIAFC"
+      },
+      {
+        "_name": "UTIL_EXEC.SETCHUNKPENDINGREASON",
+        "_value": "SP_U_UTIL_EXEC_SETCHNKPENDREAS"
+      },
+      {
+        "_name": "UTIL_EXEC.SETPENDINGREASON",
+        "_value": "SP_U_UTIL_EXEC_SETPENDINGREAS"
+      },
+      {
+        "_name": "UTIL_EXEC.SETREASON",
+        "_value": "SP_U_UTIL_EXEC_NEWREASON"
+      },
+      {
+        "_name": "UTIL_LOG.ADDUTIL",
+        "_value": "SP_I_UTIL_LOG_ADDUTIL"
+      },
+      {
+        "_name": "UTIL_LOG.GETALLBYPERIOD",
+        "_value": "SP_SA_UTIL_LOG_BYPERIOD"
+      },
+      {
+        "_name": "UTIL_LOG.GETJOBUTILCOUNT",
+        "_value": "SP_SA_UTIL_LOG_GETJOBUTILCOUNT"
+      },
+      {
+        "_name": "UTIL_LOG.GETUTILCOUNT",
+        "_value": "SP_SA_UTIL_LOG_GETUTILCOUNT"
+      },
+      {
+        "_name": "WO.GETAVAILABLEATTRS",
+        "_value": "SP_SA_WO_ATTR_GETAVAILATTRS"
+      },
+      {
+        "_name": "WO.GETNEXTWOID",
+        "_value": "SP_SA_WO_GETNEXTWOID"
+      }
+    ]
+  },
+  "db_batch_objects": "",
+  "custom_db_objects": {
+    "object": {
+      "_name": "ITEM_PROD.ADDPRODPOSTEXEC",
+      "_value": "SP_I_ITEM_PROD_ADDPRODPOSTEXEC"
+    }
+  },
+  "custom_db_batch_objects": ""
+}
+}

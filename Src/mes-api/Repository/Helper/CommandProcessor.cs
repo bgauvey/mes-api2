@@ -23,17 +23,15 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
 using System.Data;
 using System.Runtime.CompilerServices;
 using BOL.API.Domain.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace BOL.API.Repository.Helper
 {
-	public class CommandProcessor
+    public class CommandProcessor
 	{
         private readonly IConfiguration _Configuration;
         public CommandProcessor(IConfiguration configuration)
@@ -41,7 +39,38 @@ namespace BOL.API.Repository.Helper
             _Configuration = configuration;
 		}
 
-		public DataTable GetDataTableFromCommand(Command command)
+        public int ExecuteCommand(Command command)
+        {
+            var conStr = _Configuration.GetConnectionString("DefaultConnection");
+            var sqlConnection = new SqlConnection(conStr);
+            using (var sqlCommand = sqlConnection.CreateCommand())
+            {
+                var cmd = parseCommand(command);
+                sqlCommand.CommandText = cmd.StoredProcedure;
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                if (cmd.parmaeters != null)
+                {
+                    foreach (var p in cmd.parmaeters)
+                    {
+                        var dbParameter = sqlCommand.CreateParameter();
+                        dbParameter.ParameterName = p.Key;
+                        if (p.Value != null)
+                        {
+                            var t = p.Value.GetType();
+                            if (t is string)
+                                dbParameter.Value = p.Value.ToString();
+                            else
+                                dbParameter.Value = p.Value;
+                        }
+                        sqlCommand.Parameters.Add(dbParameter);
+                    }
+                }
+                sqlConnection.Open();
+                return sqlCommand.ExecuteNonQuery();
+            }
+        }
+
+        public DataTable GetDataTableFromCommand(Command command)
 		{
             var conStr = _Configuration.GetConnectionString("DefaultConnection");
             var sqlConnection = new SqlConnection(conStr);
@@ -60,8 +89,14 @@ namespace BOL.API.Repository.Helper
                     {
                         var dbParameter = sqlCommand.CreateParameter();
                         dbParameter.ParameterName = p.Key;
-                        var t = p.Value.GetType();
-                        dbParameter.Value = p.Value.ToString();
+                        if (p.Value != null)
+                        {
+                            var t = p.Value.GetType();
+                            if (t is string)
+                                dbParameter.Value = p.Value.ToString();
+                            else
+                                dbParameter.Value = p.Value;
+                        }
                         sqlCommand.Parameters.Add(dbParameter);
                     }
                 }
@@ -76,15 +111,14 @@ namespace BOL.API.Repository.Helper
         }
 
 
-        public (string StoredProcedure, List<KeyValuePair<string, object>> parmaeters) parseCommand(Command command)
+        #region Private Methods
+        private (string StoredProcedure, List<KeyValuePair<string, object>> parmaeters) parseCommand(Command command)
         {
-
             var sp = getSpFromCommand(command);
             return (sp, command.Parameters);
         }
 
-
-        public string parseCommandAsScalar(Command command)
+        private string parseCommandAsScalar(Command command)
         {
             var sqlCommand = getSpFromCommand(command);
 
@@ -101,7 +135,6 @@ namespace BOL.API.Repository.Helper
             return $"EXEC {sqlCommand}";
         }
 
-        #region Private Methods
         private string getSpFromCommand(Command command)
         {
             string schema = String.IsNullOrEmpty(command.Schema) ? "dbo" : command.Schema;

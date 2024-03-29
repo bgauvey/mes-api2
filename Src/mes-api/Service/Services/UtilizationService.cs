@@ -24,14 +24,14 @@ namespace BOL.API.Service.Services
             return await _utilExecRepository.GetOldAvailableReasonsAsync(entId, reasCode);
         }
 
-        public int SetPendingReasonAsync()
+        public async Task<int> SetPendingReasonAsync(int entId, int finalReasCode, int logId, int periodAffected, int oldReasCode, string comments)
         {
-            throw new NotImplementedException();
+            return await _utilExecRepository.SetPendingReasonAsync(entId, finalReasCode, logId, periodAffected, oldReasCode, comments);
         }
 
-        public int SetRawReasAsync()
+        public async Task<int> SetRawReasAsync(int entId, int rawReasCode, DateTime newReasStart, string comments)
         {
-            throw new NotImplementedException();
+            return await _utilExecRepository.SetRawReasAsync(entId, rawReasCode, newReasStart, comments);
         }
 
         public int SetReasonAsync()

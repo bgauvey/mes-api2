@@ -50,9 +50,9 @@ public class UtilExecRepository : RepositoryBase<UtilExec>, IUtilExecRepository
         parameters.Add(new KeyValuePair<string, object>("in_raw_reas_cd", rawReasCode));
         Command command = new Command()
         {
-            Cmd = "GETAVAILREASNS",
+            Cmd = "GetAvailReasns",
             MsgType = "getall",
-            Object = "UTIL_EXEC",
+            Object = "Util_Exec",
             Parameters = parameters,
             Schema = "dbo"
         };
@@ -95,15 +95,64 @@ public class UtilExecRepository : RepositoryBase<UtilExec>, IUtilExecRepository
         return data;
     }
 
-
-    public int SetPendingReason()
+    public async Task<int> SetPendingReasonAsync(int entId, int finalReasCode, int logId, int periodAffected, int oldReasCode, string comments)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("final_reas_cd", finalReasCode),
+            new KeyValuePair<string, object>("log_id", logId),
+            new KeyValuePair<string, object>("period_affected", periodAffected),
+            new KeyValuePair<string, object>("old_reas_cd", oldReasCode),
+            new KeyValuePair<string, object>("comments", comments)
+        };
+        Command command = new Command()
+        {
+            Cmd = "SetPendingReas",
+            MsgType = "exec",
+            Object = "Util_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            int rowsAffected = _CommandProcessor.ExecuteCommand(command);
+
+            return rowsAffected;
+        });
+
+        return data;
     }
 
-    public int SetRawReas()
+    public async Task<int> SetRawReasAsync(int entId, int rawReasCode, DateTime newReasStart, string comments)
     {
-        throw new NotImplementedException();
+
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("raw_reas_cd", rawReasCode),
+            new KeyValuePair<string, object>("new_reas_start", newReasStart),
+            new KeyValuePair<string, object>("@comments", comments),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "SetRawReason",
+            MsgType = "exec",
+            Object = "Util_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            int rowsAffected = _CommandProcessor.ExecuteCommand(command);
+
+            return rowsAffected;
+        });
+
+        return data;
     }
 
     public int SetReason()
