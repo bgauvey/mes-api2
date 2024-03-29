@@ -18,23 +18,22 @@
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-using System.Dynamic;
 using BOL.API.Service.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.APIs
 {
-    [Route("util/utilization")]
+    [Route("util/utilexec")]
     [EnableCors("AllowAnyOrigin")]
-    public class UtilizationController : ControllerBase
+    public class UtilExecController : ControllerBase
     {
         private readonly IUtilizationService _utilizationService;
         private readonly ILogger _logger;
-        public UtilizationController(IUtilizationService utilizationService, ILoggerFactory loggerFactory)
+        public UtilExecController(IUtilizationService utilizationService, ILoggerFactory loggerFactory)
         {
             _utilizationService = utilizationService;
-            _logger = loggerFactory.CreateLogger(nameof(UtilizationController));
+            _logger = loggerFactory.CreateLogger(nameof(UtilExecController));
         }
 
         [HttpGet("GetAvailableReasons")]
@@ -113,14 +112,14 @@ namespace api.APIs
 
         [HttpPost("SetReason")]
         //[Authorize]
-        public async Task<IActionResult> SetReason([FromBody] object value)
+        public async Task<IActionResult> SetReason(int entId, int newReasCode, DateTime newReasStartLocal, bool reasPending, string comments)
         {
             try
             {
 
-                //var i = await _utilizationService.SetReasonAsync();
+                var i = await _utilizationService.SetReasonAsync(entId, newReasCode, newReasStartLocal, reasPending, comments);
 
-                return Ok(value);
+                return Ok(i);
 
             }
             catch (Exception exp)
@@ -133,13 +132,13 @@ namespace api.APIs
 
         [HttpPost("UpdateDurations")]
         //[Authorize]
-        public async Task<IActionResult> UpdateDurations([FromBody] object value)
+        public async Task<IActionResult> UpdateDurations(int entId)
         {
             try
             {
-                //var i = await _utilizationService.UpdateDurationsAsync();
+                var i = await _utilizationService.UpdateDurationsAsync(entId);
 
-                return Ok(value);
+                return Ok(i);
 
             }
             catch (Exception exp)

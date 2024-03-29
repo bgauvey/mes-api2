@@ -34,14 +34,14 @@ namespace BOL.API.Service.Services
             return await _utilExecRepository.SetRawReasAsync(entId, rawReasCode, newReasStart, comments);
         }
 
-        public int SetReasonAsync()
+        public async Task<int> SetReasonAsync(int entId, int newReasCode, DateTime newReasStartLocal, bool reasPending, string comments)
         {
-            throw new NotImplementedException();
+            return await _utilExecRepository.SetReasonAsync(entId, newReasCode, newReasStartLocal, reasPending, comments);
         }
 
-        public int UpdateDurationsAsync()
+        public async Task<int> UpdateDurationsAsync(int entId)
         {
-            throw new NotImplementedException();
+            return await _utilExecRepository.UpdateDurationsAsync(entId);
         }
     }
 }

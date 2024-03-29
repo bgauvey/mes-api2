@@ -21,6 +21,7 @@
 
 using System.Data;
 using System.Dynamic;
+using System.Xml.Linq;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Util;
 using BOL.API.Repository.Helper;
@@ -45,9 +46,11 @@ public class UtilExecRepository : RepositoryBase<UtilExec>, IUtilExecRepository
 
     public async Task<string> GetAvailableReasonsAsync(int entId, int rawReasCode)
     {
-        var parameters = new List<KeyValuePair<string, object>>();
-        parameters.Add(new KeyValuePair<string, object>("in_ent_id", entId));
-        parameters.Add(new KeyValuePair<string, object>("in_raw_reas_cd", rawReasCode));
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("in_ent_id", entId),
+            new KeyValuePair<string, object>("in_raw_reas_cd", rawReasCode)
+        };
         Command command = new Command()
         {
             Cmd = "GetAvailReasns",
@@ -71,9 +74,11 @@ public class UtilExecRepository : RepositoryBase<UtilExec>, IUtilExecRepository
 
     public async Task<string> GetOldAvailableReasonsAsync(int entId, int reasCode)
     {
-        var parameters = new List<KeyValuePair<string, object>>();
-        parameters.Add(new KeyValuePair<string, object>("ent_id", entId));
-        parameters.Add(new KeyValuePair<string, object>("reas_cd", reasCode));
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("reas_cd", reasCode)
+        };
         Command command = new Command()
         {
             Cmd = "GetOldAvalReas",
@@ -127,7 +132,6 @@ public class UtilExecRepository : RepositoryBase<UtilExec>, IUtilExecRepository
 
     public async Task<int> SetRawReasAsync(int entId, int rawReasCode, DateTime newReasStart, string comments)
     {
-
         var parameters = new List<KeyValuePair<string, object>>
         {
             new KeyValuePair<string, object>("ent_id", entId),
@@ -155,14 +159,58 @@ public class UtilExecRepository : RepositoryBase<UtilExec>, IUtilExecRepository
         return data;
     }
 
-    public int SetReason()
+    public async Task<int> SetReasonAsync(int entId, int newReasCode, DateTime newReasStartLocal, bool reasPending, string comments)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("new_reas_cd", newReasCode),
+            new KeyValuePair<string, object>("new_reas_start_local", newReasStartLocal),
+            new KeyValuePair<string, object>("reas_pending", reasPending),
+            new KeyValuePair<string, object>("comments", comments)
+        };
+        Command command = new Command()
+        {
+            Cmd = "SetReason",
+            MsgType = "exec",
+            Object = "Util_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            int rowsAffected = _CommandProcessor.ExecuteCommand(command);
+
+            return rowsAffected;
+        });
+
+        return data;
     }
 
-    public int UpdateDurations()
+    public async Task<int> UpdateDurationsAsync(int entId)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+        };
+        Command command = new Command()
+        {
+            Cmd = "UpdateDurations",
+            MsgType = "exec",
+            Object = "Util_Log",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            int rowsAffected = _CommandProcessor.ExecuteCommand(command);
+
+            return rowsAffected;
+        });
+
+        return data;
     }
 }
 
