@@ -13,6 +13,7 @@ namespace bol.api
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<IJobExecService, JobExecService>();
             services.AddScoped<IUtilizationService, UtilizationService>();
+            services.AddScoped<IUtilStateService, UtilStateService>();
         }
     }
 }

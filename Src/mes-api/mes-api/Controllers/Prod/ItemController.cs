@@ -24,7 +24,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-namespace api.APIs
+namespace bol.api.Controllers.Prod
 {
     [Route("prod/item")]
     [EnableCors("AllowAnyOrigin")]
@@ -82,7 +82,7 @@ namespace api.APIs
                 {
                     throw new Exception("User name not found.");
                 }
-                value.LastEditBy = User.Identity.Name.Split("\\")[1];
+                value.LastEditBy = User.Identity.Name;
 
                 var itemId = await _itemService.CreateAsync(value);
 

@@ -9,4 +9,10 @@ public interface IRepositoryBase<T>
     void Create(T entity);
     void Update(T entity);
     void Delete(T entity);
+
+    Task<IEnumerable<T>> GetAllAsync();
+    Task<T> GetByConditionAsync(Expression<Func<T, bool>> expression);
+    Task<int> CreateAsync(T entity);
+    Task<int> UpdateAsync(T entity);
+    Task<int> DeleteAsync(T entity);
 }

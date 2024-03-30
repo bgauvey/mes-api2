@@ -26,7 +26,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-namespace api.APIs
+namespace bol.api.Controllers.Prod
 {
     /// <summary>
     /// JobExec API

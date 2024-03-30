@@ -22,7 +22,7 @@ using BOL.API.Service.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-namespace api.APIs
+namespace bol.api.Controllers.Util
 {
     [Route("util/utilexec")]
     [EnableCors("AllowAnyOrigin")]

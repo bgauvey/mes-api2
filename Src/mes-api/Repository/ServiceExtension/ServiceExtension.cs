@@ -11,6 +11,7 @@ using BOL.API.Repository.Repositories.EnProd;
 using BOL.API.Repository.Repositories.Generic;
 using BOL.API.Repository.Repositories.Prod;
 using BOL.API.Repository.Repositories.Security;
+using BOL.API.Repository.Repositories.Util;
 using BOL.API.Repository.Util;
 using Microsoft.EntityFrameworkCore;
 
@@ -53,6 +54,7 @@ public static class ServiceExtension
 
         //Utilization
         services.AddScoped<IUtilExecRepository, UtilExecRepository>();
+        services.AddScoped<IUtilStateRepository, UtilStateRepository>();
 
         return services;
     }
