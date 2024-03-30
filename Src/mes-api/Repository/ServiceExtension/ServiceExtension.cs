@@ -55,6 +55,7 @@ public static class ServiceExtension
         //Utilization
         services.AddScoped<IUtilExecRepository, UtilExecRepository>();
         services.AddScoped<IUtilStateRepository, UtilStateRepository>();
+        services.AddScoped<IUtilReasGrpRepository, UtilReasGrpRepository>();
 
         return services;
     }

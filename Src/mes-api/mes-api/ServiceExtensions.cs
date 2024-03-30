@@ -14,6 +14,7 @@ namespace bol.api
             services.AddScoped<IJobExecService, JobExecService>();
             services.AddScoped<IUtilizationService, UtilizationService>();
             services.AddScoped<IUtilStateService, UtilStateService>();
+            services.AddScoped<IUtilReasGrpService, UtilReasGrpService>();
         }
     }
 }

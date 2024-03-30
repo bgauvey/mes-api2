@@ -1,5 +1,5 @@
 ﻿//
-// IUtilStateService.cs
+// IUtilReasGrpRepository.cs
 //
 // Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -23,18 +23,13 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
+using System;
 using BOL.API.Domain.Models.Util;
 
-namespace BOL.API.Service.Interfaces
+namespace BOL.API.Repository.Interfaces.Util
 {
-	public interface IUtilStateService
-	{
-        Task<IEnumerable<UtilState>> GetAllAsync();
-        Task<UtilState> GetAsync(int stateCd);
-        Task<int> CreateAsync(UtilState utilState);
-        Task<int> UpdateAsync(UtilState utilState);
-        Task<int> DeleteAsync(UtilState utilState);
-    }
+	public interface IUtilReasGrpRepository : IRepositoryBase<UtilReasGrp>
+    {
+	}
 }
 

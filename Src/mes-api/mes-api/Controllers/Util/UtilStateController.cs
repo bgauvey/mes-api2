@@ -111,12 +111,12 @@ namespace bol.api.Controllers.Util
         {
             try
             {
-                var utilStateToUpdate = await _utilStateService.GetAsync(stateCd);
+                var utilStateToDelete = await _utilStateService.GetAsync(stateCd);
 
-                if (utilStateToUpdate == null)
+                if (utilStateToDelete == null)
                     return NotFound($"UtilState with StateCd = {stateCd} not found");
 
-                var data = await _utilStateService.DeleteAsync(stateCd);
+                var data = await _utilStateService.DeleteAsync(utilStateToDelete);
                 return Ok(data);
             }
             catch (Exception exp)
