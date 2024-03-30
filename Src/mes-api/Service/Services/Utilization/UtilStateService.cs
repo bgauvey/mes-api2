@@ -1,5 +1,5 @@
 ﻿//
-// UtilReasGrpService.cs
+// UtilStateService.cs
 //
 // Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -23,47 +23,46 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
 using BOL.API.Domain.Models.Util;
 using BOL.API.Repository.Interfaces.Util;
 using BOL.API.Service.Interfaces;
 
-namespace BOL.API.Service.Services
+namespace BOL.API.Service.Services.Utilization
 {
-	public class UtilReasGrpService : IUtilReasGrpService
+    public class UtilStateService: IUtilStateService
 	{
-        private readonly IUtilReasGrpRepository _utilReasGrpRepository;
+        private readonly IUtilStateRepository _utilStateRepository;
         private readonly ILogger _logger;
 
-        public UtilReasGrpService(IUtilReasGrpRepository utilReasGrpRepository, ILoggerFactory loggerFactory)
-		{
-            _utilReasGrpRepository = utilReasGrpRepository;
-            _logger = loggerFactory.CreateLogger(nameof(UtilReasGrpService));
+        public UtilStateService(IUtilStateRepository utilStateRepository, ILoggerFactory loggerFactory)
+        {
+            _utilStateRepository = utilStateRepository;
+            _logger = loggerFactory.CreateLogger(nameof(UtilStateService));
         }
 
-        public async Task<int> CreateAsync(UtilReasGrp utilReasGrp)
+        public async Task<int> CreateAsync(UtilState utilState)
         {
-            return await _utilReasGrpRepository.CreateAsync(utilReasGrp);
+            return await _utilStateRepository.CreateAsync(utilState);
         }
 
-        public async Task<int> DeleteAsync(UtilReasGrp utilReasGrp)
+        public async Task<int> DeleteAsync(UtilState utilState)
         {
-            return await _utilReasGrpRepository.DeleteAsync(utilReasGrp);
+            return await _utilStateRepository.DeleteAsync(utilState);
         }
 
-        public async Task<IEnumerable<UtilReasGrp>> GetAllAsync()
+        public async Task<IEnumerable<UtilState>> GetAllAsync()
         {
-            return await _utilReasGrpRepository.GetAllAsync();
+            return await _utilStateRepository.GetAllAsync();
         }
 
-        public async Task<UtilReasGrp> GetAsync(int reasGrpId)
+        public async Task<UtilState> GetAsync(int stateCd)
         {
-            return await _utilReasGrpRepository.GetByConditionAsync(t => t.ReasGrpId == reasGrpId);
+            return await _utilStateRepository.GetByConditionAsync(t => t.StateCd == stateCd);
         }
 
-        public async Task<int> UpdateAsync(UtilReasGrp utilReasGrp)
+        public async Task<int> UpdateAsync(UtilState utilState)
         {
-            return await _utilReasGrpRepository.UpdateAsync(utilReasGrp);
+            return await _utilStateRepository.UpdateAsync(utilState);
         }
     }
 }

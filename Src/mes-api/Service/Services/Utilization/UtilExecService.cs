@@ -1,17 +1,17 @@
 ﻿using BOL.API.Repository.Interfaces.Util;
-using BOL.API.Service.Interfaces;
+using BOL.API.Service.Interfaces.Utilization;
 
-namespace BOL.API.Service.Services
+namespace BOL.API.Service.Services.Utilization
 {
-    public class UtilizationService : IUtilizationService
+    public class UtilExecService : IUtilExecService
     {
         private readonly IUtilExecRepository _utilExecRepository;
         private readonly ILogger _logger;
 
-        public UtilizationService(IUtilExecRepository utilExecRepository, ILoggerFactory loggerFactory)
+        public UtilExecService(IUtilExecRepository utilExecRepository, ILoggerFactory loggerFactory)
         {
             _utilExecRepository = utilExecRepository;
-            _logger = loggerFactory.CreateLogger(nameof(UtilizationService));
+            _logger = loggerFactory.CreateLogger(nameof(UtilExecService));
         }
 
         public async Task<string> GetAvailableReasonsAsync(int entId, int rawReasCode)

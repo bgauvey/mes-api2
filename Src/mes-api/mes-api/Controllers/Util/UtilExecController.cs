@@ -18,7 +18,7 @@
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-using BOL.API.Service.Interfaces;
+using BOL.API.Service.Interfaces.Utilization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,9 +28,9 @@ namespace bol.api.Controllers.Util
     [EnableCors("AllowAnyOrigin")]
     public class UtilExecController : ControllerBase
     {
-        private readonly IUtilizationService _utilizationService;
+        private readonly IUtilExecService _utilizationService;
         private readonly ILogger _logger;
-        public UtilExecController(IUtilizationService utilizationService, ILoggerFactory loggerFactory)
+        public UtilExecController(IUtilExecService utilizationService, ILoggerFactory loggerFactory)
         {
             _utilizationService = utilizationService;
             _logger = loggerFactory.CreateLogger(nameof(UtilExecController));

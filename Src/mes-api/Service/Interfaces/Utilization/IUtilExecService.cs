@@ -1,7 +1,7 @@
 ﻿using System;
-namespace BOL.API.Service.Interfaces;
+namespace BOL.API.Service.Interfaces.Utilization;
 
-public interface IUtilizationService
+public interface IUtilExecService
 {
     Task<int> SetReasonAsync(int entId, int newReasCode, DateTime newReasStartLocal, bool reasPending, string comments);
     Task<int> SetRawReasAsync(int entId, int rawReasCode, DateTime newReasStart, string comments);

@@ -1,5 +1,7 @@
 ﻿using BOL.API.Service.Interfaces;
+using BOL.API.Service.Interfaces.Utilization;
 using BOL.API.Service.Services;
+using BOL.API.Service.Services.Utilization;
 
 namespace bol.api
 {
@@ -12,7 +14,7 @@ namespace bol.api
             services.AddScoped<IInventoryService, InventoryService>();
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<IJobExecService, JobExecService>();
-            services.AddScoped<IUtilizationService, UtilizationService>();
+            services.AddScoped<IUtilExecService, UtilExecService>();
             services.AddScoped<IUtilStateService, UtilStateService>();
             services.AddScoped<IUtilReasGrpService, UtilReasGrpService>();
         }
