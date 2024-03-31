@@ -1,7 +1,6 @@
 ﻿using System.Net.Mime;
 using System.Security.Claims;
 using BOL.API.Domain.Models.Core;
-using BOL.API.Domain.Models.Util;
 using BOL.API.Service.Interfaces;
 using BOL.API.Service.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -166,7 +165,6 @@ namespace bol.api.Controllers.Core
             }
         }
 
-
         // GET ent/attrs/5
         [HttpGet("attrs/{entId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -190,18 +188,89 @@ namespace bol.api.Controllers.Core
             }
         }
 
-
-        [HttpGet("GetStatusInfoByUser/{userid}")]
-        [Authorize]
+        [HttpGet("GetAllTopLevel")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetStatusInfoByUser(string userId)
+        public async Task<IActionResult> GetAllTopLevelAsync()
         {
             try
             {
-                var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
-                           .Select(c => Convert.ToInt32(c.Value)).SingleOrDefault();
+                var data = await _entService.GetAllTopLevelAsync();
 
+                return Ok(data);
+
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        [HttpGet("GetShiftSchedEntities/{entId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetShiftSchedEntitiesAsync(int entId)
+        {
+            try
+            {
+                var data = await _entService.GetShiftSchedEntitiesAsync(entId);
+
+                return Ok(data);
+
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        [HttpGet("GetShiftTemplates")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetShiftTemplatesAsync(int entId, DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                var data = await _entService.GetShiftTemplatesAsync(entId, startDate, endDate);
+
+                return Ok(data);
+
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        [HttpGet("GetStatusInfo/{entId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetStatusInfoAsync(int entId, int childLevels)
+        {
+            try
+            {
+                var data = await _entService.GetStatusInfoAsync(entId, childLevels);
+
+                return Ok(data);
+
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        [HttpGet("GetStatusInfoByUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetStatusInfoByUser(int sessionId, string userId)
+        {
+            try
+            {
                 var data = await _entService.GetStatusInfoByUserAsync(sessionId, userId);
 
                 return Ok(data);

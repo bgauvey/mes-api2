@@ -334,34 +334,6 @@
         "_value": "SP_SA_DX_SCHED_TESTQUERY"
       },
       {
-        "_name": "ENT.GETALL_TOPLEVEL",
-        "_value": "SP_SA_ENT_GETTOPLEVELENTS"
-      },
-      {
-        "_name": "ENT.GETAVAILSHIFTTIME",
-        "_value": "SP_S_ENT_GETAVAILSHIFTTIME"
-      },
-      {
-        "_name": "ENT.GETSHIFTENDENTITIES",
-        "_value": "SP_SA_ENT_GETSHIFTSCHEDENTS"
-      },
-      {
-        "_name": "ENT.GETSHIFTTEMPLATES",
-        "_value": "SP_S_SHIFT_SCHED_GETSCHED"
-      },
-      {
-        "_name": "ENT.GETSTATUSINFO",
-        "_value": "SP_SA_ENT_GETSTATUS"
-      },
-      {
-        "_name": "ENT.GETSTATUSINFOBYUSER",
-        "_value": "SP_SA_ENT_GETSTATUSBYUSER"
-      },
-      {
-        "_name": "ENT.UPDATE",
-        "_value": "SP_U_ENT"
-      },
-      {
         "_name": "FC_NAMESP_NODE.CLONE",
         "_value": "SP_I_FC_NAMESP_NODE_CLONE"
       },
@@ -1037,6 +1009,7 @@
         "_name": "USER_NAME.UPDATE",
         "_value": "SP_U_USER_NAME_NOCOM"
       },
+
       {
         "_name": "UTIL_EXEC.GETAVAILABLEREASONS",
         "_value": "SP_SA_UTIL_EXEC_GETAVAILREASNS"

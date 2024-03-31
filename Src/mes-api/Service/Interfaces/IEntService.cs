@@ -13,6 +13,11 @@ public interface IEntService
 
     IEnumerable<EntFile> GetFiles(int id);
     IEnumerable<EntityAttribute> GetAttrs(int id);
+
     Task<string> GetStatusInfoByUserAsync(int sessionId, string userId);
+    Task<string> GetAllTopLevelAsync();
+    Task<string> GetShiftSchedEntitiesAsync(int entId);
+    Task<string> GetStatusInfoAsync(int entId, int childLevels);
+    Task<string> GetShiftTemplatesAsync(int entId, DateTime startDate, DateTime endDate);
 }
 

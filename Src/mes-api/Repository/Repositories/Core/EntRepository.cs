@@ -19,7 +19,34 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
         _CommandProcessor = new CommandProcessor(_Configuration);
     }
 
-    public async Task<string> GetStatusInfoByUserAsync(int sessionId, string userId = "")
+    public async Task<string> GetAllTopLevelAsync()
+    {
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetTopLevelEnts",
+            MsgType = "getall",
+            Object = "Ent",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
+    }
+
+    public async Task<string> GetStatusInfoByUserAsync(int sessionId, string userId)
     {
         var parameters = new List<KeyValuePair<string, object>>
         {
@@ -32,6 +59,93 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
             Cmd = "GetStatusByUser",
             MsgType = "getall",
             Object = "Ent",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
+    }
+
+    public async Task<string> GetShiftSchedEntitiesAsync(int entId)
+    {
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetShiftSchedEnts",
+            MsgType = "getall",
+            Object = "Ent",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
+    }
+
+    public async Task<string> GetStatusInfoAsync(int entId, int childLevels)
+    {
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("child_levels", childLevels),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetStatus",
+            MsgType = "getall",
+            Object = "Ent",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
+    }
+
+    public async Task<string> GetShiftTemplatesAsync(int entId, DateTime startDate, DateTime endDate)
+    {
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("start_date", startDate),
+            new KeyValuePair<string, object>("end_date", endDate),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "Sched_GetSched",
+            MsgType = "getspec",
+            Object = "Shift",
             Parameters = parameters,
             Schema = "dbo"
         };

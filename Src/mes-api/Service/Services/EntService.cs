@@ -74,6 +74,26 @@ public class EntService : IEntService
         return entityAttrs;
     }
 
+    public async Task<string> GetAllTopLevelAsync()
+    {
+        return await _entRepository.GetAllTopLevelAsync();
+    }
+
+    public async Task<string> GetShiftSchedEntitiesAsync(int entId)
+    {
+        return await _entRepository.GetShiftSchedEntitiesAsync(entId);
+    }
+
+    public async Task<string> GetShiftTemplatesAsync(int entId, DateTime startDate, DateTime endDate)
+    {
+        return await _entRepository.GetShiftTemplatesAsync(entId, startDate, endDate);
+    }
+
+    public async Task<string> GetStatusInfoAsync(int entId, int childLevels)
+    {
+        return await _entRepository.GetStatusInfoAsync(entId, childLevels);
+    }
+
     public async Task<string> GetStatusInfoByUserAsync(int sessionId, string userId)
     {
         return await _entRepository.GetStatusInfoByUserAsync(sessionId, userId);
