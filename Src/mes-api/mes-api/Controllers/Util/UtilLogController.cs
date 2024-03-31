@@ -29,7 +29,6 @@ namespace bol.api.Controllers.Util
 
         // GET: api/values
         [HttpGet]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Get(DateTime eventTime)
@@ -48,7 +47,6 @@ namespace bol.api.Controllers.Util
 
         // GET api/values/5
         [HttpGet("{logId}")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<UtilLog>> Get(int logId)
@@ -139,7 +137,6 @@ namespace bol.api.Controllers.Util
         }
 
         [HttpGet("GetAllByPeriod")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllByPeriodAsync(int entId, DateTime startTimeLocal, DateTime endTimeLocal)

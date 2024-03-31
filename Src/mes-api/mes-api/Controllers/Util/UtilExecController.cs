@@ -38,7 +38,6 @@ namespace bol.api.Controllers.Util
         }
 
         [HttpGet("GetAvailableReasons")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAvailableReasons(int inEntId, int inRawReasCode)
@@ -58,7 +57,6 @@ namespace bol.api.Controllers.Util
         }
 
         [HttpGet("GetOldAvailableReasons")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetOldAvailableReasons(int entId, int reasCode)

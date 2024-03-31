@@ -24,7 +24,6 @@ namespace bol.api.Controllers.Util
 
         // GET: api/values
         [HttpGet]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<UtilReasGrp>>> Get()
@@ -43,7 +42,6 @@ namespace bol.api.Controllers.Util
 
         // GET api/values/5
         [HttpGet("{reasGrpId}")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<UtilReasGrp>> Get(int reasGrpId)

@@ -28,7 +28,6 @@ namespace bol.api.Controllers.Util
 
         // GET: api/values
         [HttpGet]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<UtilReasLink>>> Get()
@@ -47,7 +46,6 @@ namespace bol.api.Controllers.Util
 
         // GET api/values/5
         [HttpGet("{rowId}")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<UtilReasLink>> Get(int rowId)

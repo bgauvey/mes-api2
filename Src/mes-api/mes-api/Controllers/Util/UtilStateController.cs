@@ -23,7 +23,6 @@ namespace bol.api.Controllers.Util
 
         // GET: api/values
         [HttpGet]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<List<UtilState>>> Get()
@@ -42,7 +41,6 @@ namespace bol.api.Controllers.Util
 
         // GET api/values/5
         [HttpGet("{stateCd}")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<UtilState>> Get(int stateCd)
