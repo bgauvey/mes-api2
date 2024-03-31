@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using BOL.API.Domain.Models.Util;
 using BOL.API.Service.Interfaces.Utilization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,9 @@ namespace bol.api.Controllers.Util
 
         // GET: api/values
         [HttpGet]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<UtilReasGrp>>> Get()
         {
             try
@@ -39,6 +43,9 @@ namespace bol.api.Controllers.Util
 
         // GET api/values/5
         [HttpGet("{reasGrpId}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<UtilReasGrp>> Get(int reasGrpId)
         {
             try
@@ -55,6 +62,9 @@ namespace bol.api.Controllers.Util
 
         // POST api/values
         [HttpPost]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] UtilReasGrp utilReasGrp)
         {
             try
@@ -78,35 +88,57 @@ namespace bol.api.Controllers.Util
 
         // PUT api/values/5
         [HttpPut("{reasGrpId}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Put(int reasGrpId, [FromBody] UtilReasGrp utilReasGrp)
         {
-            if (reasGrpId != utilReasGrp.ReasGrpId)
-                return BadRequest("StateCd mismatch");
+            try
+            {
+                if (reasGrpId != utilReasGrp.ReasGrpId)
+                    return BadRequest("StateCd mismatch");
 
-            var utilStateToUpdate = await _utilReasGrpService.GetAsync(reasGrpId);
+                var utilStateToUpdate = await _utilReasGrpService.GetAsync(reasGrpId);
 
-            if (utilStateToUpdate == null)
-                return NotFound($"UtilReasGrp with ReasGrpId = {reasGrpId} not found");
+                if (utilStateToUpdate == null)
+                    return NotFound($"UtilReasGrp with ReasGrpId = {reasGrpId} not found");
 
-            utilReasGrp.LastEditAt = DateTime.Now.ToUniversalTime();
-            if (ClaimsPrincipal.Current != null)
-                utilReasGrp.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                utilReasGrp.LastEditAt = DateTime.Now.ToUniversalTime();
+                if (ClaimsPrincipal.Current != null)
+                    utilReasGrp.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-            var data = await _utilReasGrpService.UpdateAsync(utilReasGrp);
-            return Ok(data);
+                var data = await _utilReasGrpService.UpdateAsync(utilReasGrp);
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
         }
 
         // DELETE api/values/5
         [HttpDelete("{reasGrpId}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete(int reasGrpId)
         {
-            var utilStateToDelete = await _utilReasGrpService.GetAsync(reasGrpId);
+            try
+            {
+                var utilStateToDelete = await _utilReasGrpService.GetAsync(reasGrpId);
 
-            if (utilStateToDelete == null)
-                return NotFound($"UtilReasGrp with ReasGrpId = {reasGrpId} not found");
+                if (utilStateToDelete == null)
+                    return NotFound($"UtilReasGrp with ReasGrpId = {reasGrpId} not found");
 
-            var data = await _utilReasGrpService.DeleteAsync(utilStateToDelete);
-            return Ok(data);
+                var data = await _utilReasGrpService.DeleteAsync(utilStateToDelete);
+                return NoContent();
+            }
+            catch(Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
         }
     }
 }

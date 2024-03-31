@@ -58,6 +58,8 @@ public static class ServiceExtension
         services.AddScoped<IUtilReasGrpRepository, UtilReasGrpRepository>();
         services.AddScoped<IUtilLogRepository, UtilLogRepository>();
         services.AddScoped<IUtilReasRepository, UtilReasRepository>();
+        services.AddScoped<IUtilReasLinkRepository, UtilReasLinkRepository>();
+        services.AddScoped<IUtilRawReasRepository, UtilRawReasRepository>();
 
         return services;
     }

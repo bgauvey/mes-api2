@@ -6,23 +6,21 @@ using System.Threading.Tasks;
 using BOL.API.Domain.Models.Util;
 using BOL.API.Service.Interfaces.Utilization;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace bol.api.Controllers.Util
 {
-    [Route("util/utilreas")]
-    [EnableCors("AllowAnyOrigin")]
-    public class UtilReasController : ControllerBase
+    [Route("util/utilrawreas")]
+    public class UtilRawReasController : Controller
     {
-        private readonly IUtilReasService _utilReasService;
+        private readonly IUtilRawReasService _utilRawReasService;
         private readonly ILogger _logger;
-        public UtilReasController(IUtilReasService UtilReasService, ILoggerFactory loggerFactory)
+        public UtilRawReasController(IUtilRawReasService UtilRawReasService, ILoggerFactory loggerFactory)
         {
-            _utilReasService = UtilReasService;
-            _logger = loggerFactory.CreateLogger(nameof(UtilReasController));
+            _utilRawReasService = UtilRawReasService;
+            _logger = loggerFactory.CreateLogger(nameof(UtilRawReasController));
         }
 
         // GET: api/values
@@ -30,11 +28,11 @@ namespace bol.api.Controllers.Util
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<List<UtilReas>>> Get()
+        public async Task<ActionResult<List<UtilRawReas>>> Get()
         {
             try
             {
-                var data = await _utilReasService.GetAllAsync();
+                var data = await _utilRawReasService.GetAllAsync();
                 return Ok(data);
             }
             catch (Exception exp)
@@ -45,15 +43,15 @@ namespace bol.api.Controllers.Util
         }
 
         // GET api/values/5
-        [HttpGet("{ReasCd}")]
+        [HttpGet("{rowId}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<UtilReas>> Get(int reasCd)
+        public async Task<ActionResult<UtilRawReas>> Get(int rowId)
         {
             try
             {
-                var data = await _utilReasService.GetAsync(reasCd);
+                var data = await _utilRawReasService.GetAsync(rowId);
                 return Ok(data);
             }
             catch (Exception exp)
@@ -68,18 +66,18 @@ namespace bol.api.Controllers.Util
         [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post([FromBody] UtilReas utilReas)
+        public async Task<IActionResult> Post([FromBody] UtilRawReas utilRawReas)
         {
             try
             {
-                if (utilReas == null)
+                if (utilRawReas == null)
                     return BadRequest();
 
-                utilReas.LastEditAt = DateTime.Now.ToUniversalTime();
+                utilRawReas.LastEditAt = DateTime.Now.ToUniversalTime();
                 if (ClaimsPrincipal.Current != null)
-                    utilReas.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                    utilRawReas.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-                await _utilReasService.CreateAsync(utilReas);
+                await _utilRawReasService.CreateAsync(utilRawReas);
                 return Created();
             }
             catch (Exception exp)
@@ -90,27 +88,27 @@ namespace bol.api.Controllers.Util
         }
 
         // PUT api/values/5
-        [HttpPut("{reasCd}")]
+        [HttpPut("{rowId}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Put(int reasCd, [FromBody] UtilReas utilReas)
+        public async Task<IActionResult> Put(int rowId, [FromBody] UtilRawReas utilRawReas)
         {
             try
             {
-                if (reasCd != utilReas.ReasCd)
+                if (rowId != utilRawReas.RowId)
                     return BadRequest("ReasCd mismatch");
 
-                var utilReasToUpdate = await _utilReasService.GetAsync(reasCd);
+                var utilRawReasToUpdate = await _utilRawReasService.GetAsync(rowId);
 
-                if (utilReasToUpdate == null)
-                    return NotFound($"UtilReas with ReasCd = {reasCd} not found");
+                if (utilRawReasToUpdate == null)
+                    return NotFound($"UtilRawReas with RowId = {rowId} not found");
 
-                utilReas.LastEditAt = DateTime.Now.ToUniversalTime();
+                utilRawReas.LastEditAt = DateTime.Now.ToUniversalTime();
                 if (ClaimsPrincipal.Current != null)
-                    utilReas.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                    utilRawReas.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-                var data = await _utilReasService.UpdateAsync(utilReas);
+                var data = await _utilRawReasService.UpdateAsync(utilRawReas);
                 return Ok(data);
             }
             catch (Exception exp)
@@ -121,20 +119,20 @@ namespace bol.api.Controllers.Util
         }
 
         // DELETE api/values/5
-        [HttpDelete("{reasCd}")]
+        [HttpDelete("{rowId}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Delete(int reasCd)
+        public async Task<IActionResult> Delete(int rowId)
         {
             try
             {
-                var utilReasToDelete = await _utilReasService.GetAsync(reasCd);
+                var UtilRawReasToDelete = await _utilRawReasService.GetAsync(rowId);
 
-                if (utilReasToDelete == null)
-                    return NotFound($"UtilReas with ReasCd = {reasCd} not found");
+                if (UtilRawReasToDelete == null)
+                    return NotFound($"UtilRawReas with RowId = {rowId} not found");
 
-                var data = await _utilReasService.DeleteAsync(utilReasToDelete);
+                var data = await _utilRawReasService.DeleteAsync(UtilRawReasToDelete);
                 return NoContent();
             }
             catch (Exception exp)

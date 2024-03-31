@@ -19,6 +19,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using BOL.API.Service.Interfaces.Utilization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,7 +38,9 @@ namespace bol.api.Controllers.Util
         }
 
         [HttpGet("GetAvailableReasons")]
-        //[Authorize]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAvailableReasons(int inEntId, int inRawReasCode)
         {
             try
@@ -55,7 +58,9 @@ namespace bol.api.Controllers.Util
         }
 
         [HttpGet("GetOldAvailableReasons")]
-        //[Authorize]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetOldAvailableReasons(int entId, int reasCode)
         {
             try
@@ -73,14 +78,16 @@ namespace bol.api.Controllers.Util
         }
 
         [HttpPost("SetPendingReason")]
-        //[Authorize]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SetPendingReason(int entId, int finalReasCode, int logId, int periodAffected, int oldReasCode, string comments)
         {
             try
             {
                 var i = await _utilizationService.SetPendingReasonAsync(entId, finalReasCode, logId, periodAffected, oldReasCode, comments);
 
-                return Ok(i);
+                return NoContent();
 
             }
             catch (Exception exp)
@@ -92,14 +99,16 @@ namespace bol.api.Controllers.Util
 
 
         [HttpPost("SetRawReas")]
-        //[Authorize]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SetRawReas(int entId, int rawReasCode, DateTime newReasStart, string comments)
         {
             try
             {
                 var i = await _utilizationService.SetRawReasAsync(entId, rawReasCode, newReasStart, comments);
 
-                return Ok(i);
+                return NoContent();
 
             }
             catch (Exception exp)
@@ -111,7 +120,9 @@ namespace bol.api.Controllers.Util
 
 
         [HttpPost("SetReason")]
-        //[Authorize]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SetReason(int entId, int newReasCode, DateTime newReasStartLocal, bool reasPending, string comments)
         {
             try
@@ -119,7 +130,7 @@ namespace bol.api.Controllers.Util
 
                 var i = await _utilizationService.SetReasonAsync(entId, newReasCode, newReasStartLocal, reasPending, comments);
 
-                return Ok(i);
+                return NoContent();
 
             }
             catch (Exception exp)
@@ -131,14 +142,16 @@ namespace bol.api.Controllers.Util
 
 
         [HttpPost("UpdateDurations")]
-        //[Authorize]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateDurations(int entId)
         {
             try
             {
                 var i = await _utilizationService.UpdateDurationsAsync(entId);
 
-                return Ok(i);
+                return NoContent();
 
             }
             catch (Exception exp)

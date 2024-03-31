@@ -73,5 +73,10 @@ public class EntService : IEntService
 
         return entityAttrs;
     }
+
+    public async Task<string> GetStatusInfoByUserAsync(int sessionId, string userId)
+    {
+        return await _entRepository.GetStatusInfoByUserAsync(sessionId, userId);
+    }
 }
 

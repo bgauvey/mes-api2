@@ -13,5 +13,6 @@ public interface IEntService
 
     IEnumerable<EntFile> GetFiles(int id);
     IEnumerable<EntityAttribute> GetAttrs(int id);
+    Task<string> GetStatusInfoByUserAsync(int sessionId, string userId);
 }
 

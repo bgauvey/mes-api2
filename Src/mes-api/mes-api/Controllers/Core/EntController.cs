@@ -1,5 +1,7 @@
 ﻿using System.Net.Mime;
+using System.Security.Claims;
 using BOL.API.Domain.Models.Core;
+using BOL.API.Domain.Models.Util;
 using BOL.API.Service.Interfaces;
 using BOL.API.Service.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -40,14 +42,14 @@ namespace bol.api.Controllers.Core
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
+        [HttpGet("{entId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Ent> Get(int id)
+        public ActionResult<Ent> Get(int entId)
         {
             try
             {
-                var ent = _entService.GetEntById(id);
+                var ent = _entService.GetEntById(entId);
                 return Ok(ent);
 
             }
@@ -68,6 +70,13 @@ namespace bol.api.Controllers.Core
         {
             try
             {
+                if (entity == null)
+                    return BadRequest();
+
+                entity.LastEditAt = DateTime.Now.ToUniversalTime();
+                if (ClaimsPrincipal.Current != null)
+                    entity.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+
                 _entService.Create(entity);
                 return Created();
             }
@@ -79,15 +88,27 @@ namespace bol.api.Controllers.Core
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
+        [HttpPut("{entId}")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize]
-        public IActionResult Put(int id, [FromBody] Ent entity)
+        public IActionResult Put(int entId, [FromBody] Ent entity)
         {
             try
             {
+                if (entId != entity.EntId)
+                    return BadRequest("EntId mismatch");
+
+                var entToUpdate =  _entService.GetEntById(entId);
+
+                if (entToUpdate == null)
+                    return NotFound($"Entity with EntId = {entId} not found");
+
+                entity.LastEditAt = DateTime.Now.ToUniversalTime();
+                if (ClaimsPrincipal.Current != null)
+                    entity.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+
                 _entService.Update(entity);
                 return Created();
             }
@@ -99,15 +120,20 @@ namespace bol.api.Controllers.Core
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{entId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int entId)
         {
             try
             {
-                _entService.Delete(id);
+                var entToDelete = _entService.GetEntById(entId);
+
+                if (entToDelete == null)
+                    return NotFound($"Entity with EntId = {entId} not found");
+
+                _entService.Delete(entId);
                 return NoContent();
             }
             catch (Exception exp)
@@ -118,14 +144,19 @@ namespace bol.api.Controllers.Core
         }
 
         // GET ent/files/5
-        [HttpGet("files/{id}")]
+        [HttpGet("files/{entId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<IEnumerable<EntFile>> GetFiles(int id)
+        public ActionResult<IEnumerable<EntFile>> GetFiles(int entId)
         {
             try
             {
-                var files = _entService.GetFiles(id);
+                var ent = _entService.GetEntById(entId);
+
+                if (ent == null)
+                    return NotFound($"Entity with EntId = {entId} not found");
+
+                var files = _entService.GetFiles(entId);
                 return Ok(files);
             }
             catch (Exception exp)
@@ -137,14 +168,19 @@ namespace bol.api.Controllers.Core
 
 
         // GET ent/attrs/5
-        [HttpGet("attrs/{id}")]
+        [HttpGet("attrs/{entId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<IEnumerable<EntityAttribute>> GetAttrs(int id)
+        public ActionResult<IEnumerable<EntityAttribute>> GetAttrs(int entId)
         {
             try
             {
-                var attrs = _entService.GetAttrs(id);
+                var ent = _entService.GetEntById(entId);
+
+                if (ent == null)
+                    return NotFound($"Entity with EntId = {entId} not found");
+
+                var attrs = _entService.GetAttrs(entId);
                 return Ok(attrs);
             }
             catch (Exception exp)
@@ -155,17 +191,20 @@ namespace bol.api.Controllers.Core
         }
 
 
-        [HttpGet("GetStatusInfoByUser")]
-        //[Authorize]
+        [HttpGet("GetStatusInfoByUser/{userid}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetStatusInfoByUser([FromBody] object value)
+        public async Task<IActionResult> GetStatusInfoByUser(string userId)
         {
             try
             {
-                //var i = await _entService.GetStatusInfoByUserAsync();
+                var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                           .Select(c => Convert.ToInt32(c.Value)).SingleOrDefault();
 
-                return Ok(value);
+                var data = await _entService.GetStatusInfoByUserAsync(sessionId, userId);
+
+                return Ok(data);
 
             }
             catch (Exception exp)

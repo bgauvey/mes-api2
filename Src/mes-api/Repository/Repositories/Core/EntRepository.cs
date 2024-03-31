@@ -19,14 +19,14 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
         _CommandProcessor = new CommandProcessor(_Configuration);
     }
 
-    public async Task<string> GetStatusInfoByUser(string userId = "")
+    public async Task<string> GetStatusInfoByUserAsync(int sessionId, string userId = "")
     {
-        int sessionId = 0;
-
-        var parameters = new List<KeyValuePair<string, object>>();
-        parameters.Add(new KeyValuePair<string, object>("session_id", sessionId));
-        parameters.Add(new KeyValuePair<string, object>("user_id", userId));
-        parameters.Add(new KeyValuePair<string, object>("time_zone_bias_value", null));
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("session_id", sessionId),
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
         Command command = new Command()
         {
             Cmd = "GetStatusByUser",

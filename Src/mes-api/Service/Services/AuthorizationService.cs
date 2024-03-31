@@ -108,6 +108,9 @@ public class AuthorizationService : IAuthorizationService
 
     private User Authenticate(string userName, string password)
     {
+        if (_userNameRepository.GetByCondition(x => x.UserId.Equals(userName)).Count() == 0)
+            throw new UnauthorizedAccessException("Username or password invalid");
+
         var user =  _userNameRepository.GetByCondition(x => x.UserId.Equals(userName)).Single();
         if (user?.Pw == password)
         {

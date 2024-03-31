@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BOL.API.Domain.Models.Util;
 using BOL.API.Service.Interfaces.Utilization;
 using BOL.API.Service.Services.Utilization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,9 @@ namespace bol.api.Controllers.Util
 
         // GET: api/values
         [HttpGet]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Get(DateTime eventTime)
         {
             try
@@ -44,6 +48,9 @@ namespace bol.api.Controllers.Util
 
         // GET api/values/5
         [HttpGet("{logId}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<UtilLog>> Get(int logId)
         {
             try
@@ -60,6 +67,9 @@ namespace bol.api.Controllers.Util
 
         // PUT api/values/5
         [HttpPut("{logId}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Put(int logId, [FromBody]UtilLog utilLog)
         {
             try
@@ -88,6 +98,9 @@ namespace bol.api.Controllers.Util
 
         // DELETE api/values/5
         [HttpDelete("{logId}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete(int logId)
         {
             try
@@ -98,7 +111,7 @@ namespace bol.api.Controllers.Util
                     return NotFound($"UtilLog with LogId = {logId} not found");
 
                 var data = await _utilLogService.DeleteAsync(utilLogToDelete);
-                return Ok(data);
+                return NoContent();
             }
             catch (Exception exp)
             {
@@ -108,12 +121,15 @@ namespace bol.api.Controllers.Util
         }
 
         [HttpPost("AdjustDuration")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AdjustDurationAsync(int entId, DateTime eventTimeLocal, double newDuration)
         {
             try
             {
                 var data = await _utilLogService.AdjustDurationAsync(entId, eventTimeLocal, newDuration);
-                return Ok(data);
+                return NoContent();
             }
             catch (Exception exp)
             {
@@ -123,6 +139,9 @@ namespace bol.api.Controllers.Util
         }
 
         [HttpGet("GetAllByPeriod")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllByPeriodAsync(int entId, DateTime startTimeLocal, DateTime endTimeLocal)
         {
             try
@@ -138,12 +157,15 @@ namespace bol.api.Controllers.Util
         }
 
         [HttpPost("Split")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SplitAsync(int entId, DateTime eventTimeLocal, double newDuration, int shiftId, DateTime shiftStartLocal, int reasCd, bool reasPending, string comments, string rawReasCd)
         {
             try
             {
                 var data = await _utilLogService.SplitAsync(entId, eventTimeLocal, newDuration, shiftId, shiftStartLocal, reasCd, reasPending, comments, rawReasCd);
-                return Ok(data);
+                return NoContent();
             }
             catch (Exception exp)
             {

@@ -13,16 +13,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace bol.api.Controllers.Util
 {
-    [Route("util/utilreas")]
+    [Route("util/utilreaslink")]
     [EnableCors("AllowAnyOrigin")]
-    public class UtilReasController : ControllerBase
+    public class UtilReasLinkController : ControllerBase
     {
-        private readonly IUtilReasService _utilReasService;
+        private readonly IUtilReasLinkService _utilReasLinkService;
         private readonly ILogger _logger;
-        public UtilReasController(IUtilReasService UtilReasService, ILoggerFactory loggerFactory)
+
+        public UtilReasLinkController(IUtilReasLinkService utilReasLinkService, ILoggerFactory loggerFactory)
         {
-            _utilReasService = UtilReasService;
-            _logger = loggerFactory.CreateLogger(nameof(UtilReasController));
+            _utilReasLinkService = utilReasLinkService;
+            _logger = loggerFactory.CreateLogger(nameof(UtilReasLinkController));
         }
 
         // GET: api/values
@@ -30,11 +31,11 @@ namespace bol.api.Controllers.Util
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<List<UtilReas>>> Get()
+        public async Task<ActionResult<IEnumerable<UtilReasLink>>> Get()
         {
             try
             {
-                var data = await _utilReasService.GetAllAsync();
+                var data = await _utilReasLinkService.GetAllAsync();
                 return Ok(data);
             }
             catch (Exception exp)
@@ -45,15 +46,15 @@ namespace bol.api.Controllers.Util
         }
 
         // GET api/values/5
-        [HttpGet("{ReasCd}")]
+        [HttpGet("{rowId}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<UtilReas>> Get(int reasCd)
+        public async Task<ActionResult<UtilReasLink>> Get(int rowId)
         {
             try
             {
-                var data = await _utilReasService.GetAsync(reasCd);
+                var data = await _utilReasLinkService.GetAsync(rowId);
                 return Ok(data);
             }
             catch (Exception exp)
@@ -68,18 +69,18 @@ namespace bol.api.Controllers.Util
         [Authorize]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post([FromBody] UtilReas utilReas)
+        public async Task<IActionResult> Post([FromBody] UtilReasLink utilReasLink)
         {
             try
             {
-                if (utilReas == null)
+                if (utilReasLink == null)
                     return BadRequest();
 
-                utilReas.LastEditAt = DateTime.Now.ToUniversalTime();
+                utilReasLink.LastEditAt = DateTime.Now.ToUniversalTime();
                 if (ClaimsPrincipal.Current != null)
-                    utilReas.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                    utilReasLink.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-                await _utilReasService.CreateAsync(utilReas);
+                await _utilReasLinkService.CreateAsync(utilReasLink);
                 return Created();
             }
             catch (Exception exp)
@@ -90,27 +91,27 @@ namespace bol.api.Controllers.Util
         }
 
         // PUT api/values/5
-        [HttpPut("{reasCd}")]
+        [HttpPut("{rowId}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Put(int reasCd, [FromBody] UtilReas utilReas)
+        public async Task<IActionResult> Put(int rowId, [FromBody] UtilReasLink utilReasLink)
         {
             try
             {
-                if (reasCd != utilReas.ReasCd)
-                    return BadRequest("ReasCd mismatch");
+                if (rowId != utilReasLink.RowId)
+                    return BadRequest("StateCd mismatch");
 
-                var utilReasToUpdate = await _utilReasService.GetAsync(reasCd);
+                var utilReasLinkToUpdate = await _utilReasLinkService.GetAsync(rowId);
 
-                if (utilReasToUpdate == null)
-                    return NotFound($"UtilReas with ReasCd = {reasCd} not found");
+                if (utilReasLinkToUpdate == null)
+                    return NotFound($"UtilReasLink with RowId = {rowId} not found");
 
-                utilReas.LastEditAt = DateTime.Now.ToUniversalTime();
+                utilReasLink.LastEditAt = DateTime.Now.ToUniversalTime();
                 if (ClaimsPrincipal.Current != null)
-                    utilReas.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                    utilReasLink.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-                var data = await _utilReasService.UpdateAsync(utilReas);
+                var data = await _utilReasLinkService.UpdateAsync(utilReasLink);
                 return Ok(data);
             }
             catch (Exception exp)
@@ -121,20 +122,20 @@ namespace bol.api.Controllers.Util
         }
 
         // DELETE api/values/5
-        [HttpDelete("{reasCd}")]
+        [HttpDelete("{rowId}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Delete(int reasCd)
+        public async Task<IActionResult> Delete(int rowId)
         {
             try
             {
-                var utilReasToDelete = await _utilReasService.GetAsync(reasCd);
+                var utilReasLinkToDelete = await _utilReasLinkService.GetAsync(rowId);
 
-                if (utilReasToDelete == null)
-                    return NotFound($"UtilReas with ReasCd = {reasCd} not found");
+                if (utilReasLinkToDelete == null)
+                    return NotFound($"UtilReasLink with RowId = {rowId} not found");
 
-                var data = await _utilReasService.DeleteAsync(utilReasToDelete);
+                var data = await _utilReasLinkService.DeleteAsync(utilReasLinkToDelete);
                 return NoContent();
             }
             catch (Exception exp)

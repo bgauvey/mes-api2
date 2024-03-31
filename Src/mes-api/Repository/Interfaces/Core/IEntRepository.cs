@@ -5,6 +5,6 @@ namespace BOL.API.Repository.Interfaces.Core;
 
 public interface IEntRepository : IRepositoryBase<Ent>
 {
-    public Task<string> GetStatusInfoByUser(string userId);
+    public Task<string> GetStatusInfoByUserAsync(int sessionId, string userId);
 }
 

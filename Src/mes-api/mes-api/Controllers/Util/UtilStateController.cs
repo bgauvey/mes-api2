@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using BOL.API.Domain.Models.Util;
 using BOL.API.Service.Interfaces.Utilization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,9 @@ namespace bol.api.Controllers.Util
 
         // GET: api/values
         [HttpGet]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<List<UtilState>>> Get()
         {
             try
@@ -38,6 +42,9 @@ namespace bol.api.Controllers.Util
 
         // GET api/values/5
         [HttpGet("{stateCd}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<UtilState>> Get(int stateCd)
         {
             try
@@ -54,6 +61,9 @@ namespace bol.api.Controllers.Util
 
         // POST api/values
         [HttpPost]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody]UtilState utilState)
         {
             try
@@ -77,6 +87,9 @@ namespace bol.api.Controllers.Util
 
         // PUT api/values/5
         [HttpPut("{stateCd}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Put(int stateCd, [FromBody]UtilState utilState)
         {
             try
@@ -105,6 +118,9 @@ namespace bol.api.Controllers.Util
 
         // DELETE api/values/5
         [HttpDelete("{stateCd}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete(int stateCd)
         {
             try
@@ -115,7 +131,7 @@ namespace bol.api.Controllers.Util
                     return NotFound($"UtilState with StateCd = {stateCd} not found");
 
                 var data = await _utilStateService.DeleteAsync(utilStateToDelete);
-                return Ok(data);
+                return NoContent();
             }
             catch (Exception exp)
             {
