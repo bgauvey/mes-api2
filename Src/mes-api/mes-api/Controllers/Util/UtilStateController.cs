@@ -1,10 +1,8 @@
 ﻿using System.Security.Claims;
 using BOL.API.Domain.Models.Util;
-using BOL.API.Service.Interfaces;
-using BOL.API.Service.Services;
+using BOL.API.Service.Interfaces.Utilization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

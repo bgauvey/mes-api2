@@ -23,14 +23,13 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
 using BOL.API.Domain.Models.Util;
 using BOL.API.Repository.Interfaces.Util;
-using BOL.API.Service.Interfaces;
+using BOL.API.Service.Interfaces.Utilization;
 
 namespace BOL.API.Service.Services.Utilization
 {
-	public class UtilReasGrpService : IUtilReasGrpService
+    public class UtilReasGrpService : IUtilReasGrpService
 	{
         private readonly IUtilReasGrpRepository _utilReasGrpRepository;
         private readonly ILogger _logger;

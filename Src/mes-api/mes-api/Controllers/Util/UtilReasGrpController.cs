@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using BOL.API.Domain.Models.Util;
-using BOL.API.Service.Interfaces;
+using BOL.API.Service.Interfaces.Utilization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 

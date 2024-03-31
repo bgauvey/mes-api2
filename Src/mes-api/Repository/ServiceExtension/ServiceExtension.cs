@@ -56,6 +56,7 @@ public static class ServiceExtension
         services.AddScoped<IUtilExecRepository, UtilExecRepository>();
         services.AddScoped<IUtilStateRepository, UtilStateRepository>();
         services.AddScoped<IUtilReasGrpRepository, UtilReasGrpRepository>();
+        services.AddScoped<IUtilLogRepository, UtilLogRepository>();
 
         return services;
     }

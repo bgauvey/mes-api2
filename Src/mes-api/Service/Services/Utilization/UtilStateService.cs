@@ -25,7 +25,7 @@
 // THE SOFTWARE.
 using BOL.API.Domain.Models.Util;
 using BOL.API.Repository.Interfaces.Util;
-using BOL.API.Service.Interfaces;
+using BOL.API.Service.Interfaces.Utilization;
 
 namespace BOL.API.Service.Services.Utilization
 {
