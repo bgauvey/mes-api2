@@ -42,6 +42,7 @@ public class FactelligenceContext : DbContext
     public DbSet<UtilExec> UtilExecs { get; set; }
     public DbSet<UtilLog> UtilLogs { get; set; }
     public DbSet<UtilRawReas> UtilRawReasons { get; set; }
+    public DbSet<UtilReas> UtilReasons { get; set; }
     public DbSet<UtilReasCorrActionLink> UtilReasCorrActionLinks { get; set; }
     public DbSet<UtilReasGrp> UtilReasGrps { get; set; }
     public DbSet<UtilReasGrpClass> UtilReasGrpClasses { get; set; }

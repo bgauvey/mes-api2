@@ -18,6 +18,7 @@ namespace bol.api
             services.AddScoped<IUtilStateService, UtilStateService>();
             services.AddScoped<IUtilReasGrpService, UtilReasGrpService>();
             services.AddScoped<IUtilLogService, UtilLogService>();
+            services.AddScoped<IUtilReasService, UtilReasService>();
         }
     }
 }

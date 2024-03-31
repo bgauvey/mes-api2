@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BOL.API.Domain.Models.Util;
 
 [Table("util_reas")]
-public partial class UtilRea
+public partial class UtilReas
 {
     [Column("reas_desc")]
     [StringLength(80)]

@@ -219,12 +219,6 @@
         "_name": "UTIL_EXEC.UPDATEDURATIONS"
       },
       {
-        "_name": "UTIL_EXEC.UPDATESPECIFIC"
-      },
-      {
-        "_name": "UTIL_LOG.UPDATESPECIFIC"
-      },
-      {
         "_name": "WEB.HANDLEWEBREQUEST"
       }
     ]
@@ -1079,10 +1073,7 @@
         "_name": "UTIL_LOG.ADDUTIL",
         "_value": "SP_I_UTIL_LOG_ADDUTIL"
       },
-      {
-        "_name": "UTIL_LOG.GETALLBYPERIOD",
-        "_value": "SP_SA_UTIL_LOG_BYPERIOD"
-      },
+
       {
         "_name": "UTIL_LOG.GETJOBUTILCOUNT",
         "_value": "SP_SA_UTIL_LOG_GETJOBUTILCOUNT"
