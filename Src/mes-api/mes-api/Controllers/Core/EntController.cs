@@ -1,4 +1,5 @@
-﻿using System.Net.Mime;
+﻿using System;
+using System.Net.Mime;
 using System.Security.Claims;
 using BOL.API.Domain.Models.Core;
 using BOL.API.Service.Interfaces;
@@ -343,7 +344,7 @@ namespace bol.api.Controllers.Core
             }
         }
 
-        [HttpGet("RefreshShiftSched")]
+        [HttpPost("RefreshShiftSched")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -392,6 +393,25 @@ namespace bol.api.Controllers.Core
                 var data = await _entService.GetShiftSchedulesAsync(entId, startTime, endTime);
 
                 return Ok(data);
+
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        [HttpPost("Clone")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Ent>> CloneAsync(int entId, string newEntName)
+        {
+            try
+            {
+                var data = await _entService.CloneAsync(entId, newEntName);
+
+                return Created(Url.RouteUrl(data.EntId), data);
 
             }
             catch (Exception exp)

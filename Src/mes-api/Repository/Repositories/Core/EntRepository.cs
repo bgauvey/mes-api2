@@ -163,9 +163,6 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
         return data;
     }
 
-
-
-
     public async Task<int> DoAutoShiftChangesAsync(int entId)
     {
         var parameters = new List<KeyValuePair<string, object>>
@@ -331,11 +328,4 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
 
         return data;
     }
-    /*
-     * 
-      {
-        "_name": "ENT.CLONE"
-      },
-
-    */
 }

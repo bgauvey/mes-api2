@@ -1,4 +1,5 @@
-﻿using BOL.API.Domain.Models.Core;
+﻿using System.Security.Claims;
+using BOL.API.Domain.Models.Core;
 using BOL.API.Domain.Models.Security;
 using BOL.API.Repository.Interfaces.Core;
 using BOL.API.Service.Interfaces;
@@ -127,6 +128,24 @@ public class EntService : IEntService
     public async Task<string> GetShiftSchedulesAsync(int inEntId, DateTime startTime, DateTime endTime)
     {
         return await _entRepository.GetShiftSchedulesAsync(inEntId, startTime, endTime);
+    }
+
+    public async Task<Ent> CloneAsync(int fromEntId, string newEntName)
+    {
+        var newEntity = GetEntById(fromEntId);
+        newEntity.EntName = newEntName;
+        newEntity.LastEditAt = DateTime.Now.ToUniversalTime();
+        newEntity.EntId = 0;
+        if (ClaimsPrincipal.Current != null)
+        {
+            var userId = ClaimsPrincipal.Current.Identity.Name;
+            newEntity.LastEditBy = userId;
+        }
+
+        Create(newEntity);
+
+        return await _entRepository.GetByConditionAsync(t => t.EntName == newEntName);
+            
     }
 }
 

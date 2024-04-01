@@ -26,5 +26,7 @@ public interface IEntService
     Task<string> RefreshShiftSchedAsync(int inEntId, DateTime inStartTime, int inDaysAhead);
     Task<string> GetRefreshShiftSchedAsync(int inEntId, DateTime inStartTime, int inDaysAhead);
     Task<string> GetShiftSchedulesAsync(int inEntId, DateTime startTime, DateTime endTime);
+
+    Task<Ent> CloneAsync(int fromEntId, string newEntName);
 }
 
