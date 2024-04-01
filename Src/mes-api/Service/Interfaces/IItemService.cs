@@ -1,13 +1,16 @@
 ﻿using BOL.API.Domain.Models.Prod;
+using BOL.API.Service.Models;
 
 namespace BOL.API.Service.Interfaces;
 
 public interface IItemService
 {
-    Task<List<Item>> GetItemsAsync();
+    Task<IEnumerable<Item>> GetItemsAsync();
     Task<Item> GetItemAsync(string itemId);
-    Task<string> CreateAsync(Item item);
+    Task<int> CreateAsync(Item item);
     Task<int> UpdateAsync(Item item);
-    void Delete(string itemId);
+    Task<int> DeleteAsync(string itemId);
+    Task<IEnumerable<ItemAttribute>> GetAttrsAsync(string itemId);
+    Task<IEnumerable<ItemFile>> GetFiles(string itemId);
 }
 

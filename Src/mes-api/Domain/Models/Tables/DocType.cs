@@ -55,49 +55,4 @@ public partial class DocType
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [InverseProperty("AssocFileTypeNavigation")]
-    public virtual ICollection<BomItemOperSpec> BomItemOperSpecs { get; set; } = new List<BomItemOperSpec>();
-
-    [InverseProperty("DocTypeNavigation")]
-    public virtual ICollection<FileDesc> FileDescs { get; set; } = new List<FileDesc>();
-
-    [InverseProperty("DocTypeNavigation")]
-    public virtual ICollection<FileType> FileTypes { get; set; } = new List<FileType>();
-
-    [InverseProperty("FileTypeNavigation")]
-    public virtual ICollection<FolderFile> FolderFiles { get; set; } = new List<FolderFile>();
-
-    [InverseProperty("FileTypeNavigation")]
-    public virtual ICollection<ItemFile> ItemFiles { get; set; } = new List<ItemFile>();
-
-    [InverseProperty("AssocFileTypeNavigation")]
-    public virtual ICollection<JobStepFile> JobStepFiles { get; set; } = new List<JobStepFile>();
-
-    [InverseProperty("AssocFileTypeNavigation")]
-    public virtual ICollection<OperEntSpec> OperEntSpecs { get; set; } = new List<OperEntSpec>();
-
-    [InverseProperty("AssocFileTypeNavigation")]
-    public virtual ICollection<OperStepFile> OperStepFiles { get; set; } = new List<OperStepFile>();
-
-    [InverseProperty("AssocFileTypeNavigation")]
-    public virtual ICollection<Oper> Opers { get; set; } = new List<Oper>();
-
-    [InverseProperty("AssocFileTypeNavigation")]
-    public virtual ICollection<SpcCharJob> SpcCharJobs { get; set; } = new List<SpcCharJob>();
-
-    [InverseProperty("AssocFileTypeNavigation")]
-    public virtual ICollection<SpcChar> SpcChars { get; set; } = new List<SpcChar>();
-
-    [InverseProperty("AssocFileTypeNavigation")]
-    public virtual ICollection<StdOperEntSpec> StdOperEntSpecs { get; set; } = new List<StdOperEntSpec>();
-
-    [InverseProperty("AssocFileTypeNavigation")]
-    public virtual ICollection<StdOperStepFile> StdOperStepFiles { get; set; } = new List<StdOperStepFile>();
-
-    [InverseProperty("AssocFileTypeNavigation")]
-    public virtual ICollection<StdOper> StdOpers { get; set; } = new List<StdOper>();
-
-    [InverseProperty("FileTypeNavigation")]
-    public virtual ICollection<WoFile> WoFiles { get; set; } = new List<WoFile>();
 }

@@ -63,7 +63,7 @@ namespace BOL.API.Service.Services.Utilization
 
         public async Task<UtilLog> GetAsync(int logId)
         {
-            return await _utilLogRepository.GetByConditionAsync(t => t.LogId == logId);
+            return await _utilLogRepository.GetSingleByConditionAsync(t => t.LogId == logId);
         }
 
         public async Task<int> SplitAsync(int entId, DateTime eventTimeLocal, double newDuration, int shiftId, DateTime shiftStartLocal, int reasCd, bool reasPending, string comments, string rawReasCd)

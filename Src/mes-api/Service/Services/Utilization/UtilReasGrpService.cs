@@ -57,7 +57,7 @@ namespace BOL.API.Service.Services.Utilization
 
         public async Task<UtilReasGrp> GetAsync(int reasGrpId)
         {
-            return await _utilReasGrpRepository.GetByConditionAsync(t => t.ReasGrpId == reasGrpId);
+            return await _utilReasGrpRepository.GetSingleByConditionAsync(t => t.ReasGrpId == reasGrpId);
         }
 
         public async Task<int> UpdateAsync(UtilReasGrp utilReasGrp)

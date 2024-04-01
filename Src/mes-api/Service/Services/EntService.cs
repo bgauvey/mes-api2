@@ -58,8 +58,8 @@ public class EntService : IEntService
 
     public IEnumerable<EntityAttribute> GetAttrs(int id)
     {
-        var attrs = _attrRepository.GetAll();
-        var entAttrs = _entAttrRepository.GetByCondition(x => x.EntId == id);
+        var attrs = _attrRepository.GetAll().ToList();
+        var entAttrs = _entAttrRepository.GetByCondition(x => x.EntId == id).ToList();
 
         var entityAttrs = entAttrs
             .Join(attrs, e => e.AttrId, a => a.AttrId,
@@ -144,7 +144,7 @@ public class EntService : IEntService
 
         Create(newEntity);
 
-        return await _entRepository.GetByConditionAsync(t => t.EntName == newEntName);
+        return await _entRepository.GetSingleByConditionAsync(t => t.EntName == newEntName);
             
     }
 }

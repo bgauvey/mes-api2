@@ -45,9 +45,14 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
         return await _Context.Set<T>().ToListAsync();
     }
 
-    public async Task<T> GetByConditionAsync(Expression<Func<T, bool>> expression)
+    public async Task<IEnumerable<T>> GetListByConditionAsync(Expression<Func<T, bool>> expression)
     {
-        return await _Context.Set<T>().Where(expression).AsNoTracking().SingleAsync();
+        return await _Context.Set<T>().Where(expression).ToListAsync();
+    }
+
+    public async Task<T> GetSingleByConditionAsync(Expression<Func<T, bool>> expression)
+    {
+        return await _Context.Set<T>().Where(expression).SingleOrDefaultAsync();
     }
 
     public async Task<int> CreateAsync(T entity)

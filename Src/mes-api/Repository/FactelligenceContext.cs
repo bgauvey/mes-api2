@@ -25,6 +25,7 @@ public class FactelligenceContext : DbContext
 
     //Prod Models
     public DbSet<Item> Items { get; set; }
+    public DbSet<ItemAttr> ItemAttrs { get; set; }
     public DbSet<JobExec> JobExecs { get; set; }
 
     // Security Models

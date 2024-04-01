@@ -11,7 +11,8 @@ public interface IRepositoryBase<T>
     void Delete(T entity);
 
     Task<IEnumerable<T>> GetAllAsync();
-    Task<T> GetByConditionAsync(Expression<Func<T, bool>> expression);
+    Task<IEnumerable<T>> GetListByConditionAsync(Expression<Func<T, bool>> expression);
+    Task<T> GetSingleByConditionAsync(Expression<Func<T, bool>> expression);
     Task<int> CreateAsync(T entity);
     Task<int> UpdateAsync(T entity);
     Task<int> DeleteAsync(T entity);

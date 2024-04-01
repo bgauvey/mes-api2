@@ -18,8 +18,12 @@
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+using BOL.API.Domain.Models.Core;
 using BOL.API.Domain.Models.Prod;
+using BOL.API.Domain.Models.Util;
 using BOL.API.Service.Interfaces;
+using BOL.API.Service.Models;
+using BOL.API.Service.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +43,8 @@ namespace bol.api.Controllers.Prod
         }
 
         [HttpGet]
-        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Get()
         {
             try
@@ -55,7 +60,8 @@ namespace bol.api.Controllers.Prod
         }
 
         [HttpGet("{itemId}")]
-        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Get(string itemId)
         {
             try
@@ -98,22 +104,22 @@ namespace bol.api.Controllers.Prod
             }
         }
 
-
         [HttpDelete]
         [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Delete(string itemId)
         {
             try
             {
-                if (User.Identity == null)
-                {
-                    throw new Exception("User name not found.");
-                }
+                var itemToDelete = _itemService.GetItemAsync(itemId);
 
-                _itemService.Delete(itemId);
+                if (itemToDelete == null)
+                    return NotFound($"Item with ItemId {itemId} not found");
 
-                return Ok();
-
+                _itemService.DeleteAsync(itemId);
+                return NoContent();
             }
             catch (Exception exp)
             {
@@ -123,17 +129,29 @@ namespace bol.api.Controllers.Prod
         }
 
 
-        [HttpPost]
-        //[Authorize]
-        public async Task<IActionResult> Post([FromBody] Item value)
+        [HttpPost("{itemId}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Post(string itemId, [FromBody] Item value)
         {
             try
             {
+                if (!itemId.Equals(value.ItemId))
+                    return BadRequest("StateCd mismatch");
+
+                var itemToUpdate = await _itemService.GetItemAsync(itemId);
+
+                if (itemToUpdate == null)
+                    return NotFound($"Item with ItemId {itemId} not found");
+
+
                 if (User.Identity == null)
                 {
                     throw new Exception("User name not found.");
                 }
-                value.LastEditBy = User.Identity.Name.Split("\\")[1];
+                value.LastEditBy = User.Identity.Name;
 
                 var i = await _itemService.UpdateAsync(value);
 
@@ -146,6 +164,53 @@ namespace bol.api.Controllers.Prod
                 return BadRequest(new { Status = false, exp.Message });
             }
         }
+
+        [HttpGet("attrs/{itemId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<EntityAttribute>>> GetAttrs(string itemId)
+        {
+            try
+            {
+                var item = _itemService.GetItemAsync(itemId);
+
+                if (item == null)
+                    return NotFound($"Item with ItemId {itemId} not found");
+
+                var attrs = await _itemService.GetAttrsAsync(itemId);
+                return Ok(attrs);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        [HttpGet("files/{itemId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<ItemFile>>> GetFiles(string itemId)
+        {
+            try
+            {
+                var ent = await _itemService.GetItemAsync(itemId);
+
+                if (ent == null)
+                    return NotFound($"Item with ItemId {itemId} not found");
+
+                var files = _itemService.GetFiles(itemId);
+                return Ok(files);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
     }
 }
 

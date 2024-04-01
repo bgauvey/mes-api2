@@ -58,7 +58,7 @@ namespace BOL.API.Service.Services.Utilization
 
         public async Task<UtilRawReas> GetAsync(int rowId)
         {
-            return await _UtilRawReasRepository.GetByConditionAsync(t => t.RowId == rowId);
+            return await _UtilRawReasRepository.GetSingleByConditionAsync(t => t.RowId == rowId);
         }
 
         public async Task<int> UpdateAsync(UtilRawReas utilRawReas)

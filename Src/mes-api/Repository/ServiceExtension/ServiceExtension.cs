@@ -24,7 +24,8 @@ public static class ServiceExtension
         services.AddDbContext<FactelligenceContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-        });
+        },
+        ServiceLifetime.Transient);
 
         // Add repositories
         // Core
@@ -44,6 +45,8 @@ public static class ServiceExtension
 
         // Prod
         services.AddScoped<IItemRepository, ItemRepository>();
+        services.AddScoped<IItemAttrRepository, ItemAttrRepository>();
+        services.AddScoped<IItemFileRepository, ItemFileRepository>();
         services.AddScoped<IJobExecRepository, JobExecRepository>();
 
         // Security

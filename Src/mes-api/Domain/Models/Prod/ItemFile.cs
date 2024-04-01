@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Models;
+namespace BOL.API.Domain.Models.Prod;
 
 [PrimaryKey("ItemId", "FilePath")]
 [Table("item_file")]
@@ -70,8 +70,4 @@ public partial class ItemFile
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("FileType")]
-    [InverseProperty("ItemFiles")]
-    public virtual DocType FileTypeNavigation { get; set; } = null!;
 }

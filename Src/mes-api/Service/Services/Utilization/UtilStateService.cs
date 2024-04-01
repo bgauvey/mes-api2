@@ -57,7 +57,7 @@ namespace BOL.API.Service.Services.Utilization
 
         public async Task<UtilState> GetAsync(int stateCd)
         {
-            return await _utilStateRepository.GetByConditionAsync(t => t.StateCd == stateCd);
+            return await _utilStateRepository.GetSingleByConditionAsync(t => t.StateCd == stateCd);
         }
 
         public async Task<int> UpdateAsync(UtilState utilState)
