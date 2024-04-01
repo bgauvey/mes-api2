@@ -40,7 +40,7 @@ public class GenericRepository : IGenericRepository
         _Logger = loggerFactory.CreateLogger( nameof(GenericRepository) );
     }
 
-    public async Task<int> ExecuteCommand(Command command)
+    public async Task<int> ExecuteCommandAsync(Command command)
     {
         string sqlCmd = parseCommandAsScalar(command);
         return await _Context.Database.ExecuteSqlRawAsync(sqlCmd);
@@ -49,7 +49,7 @@ public class GenericRepository : IGenericRepository
         // return await _Context.Database.ExecuteSqlInterpolatedAsync(sql);
     }
 
-    public async Task<object> GetFromCommand(Command command)
+    public async Task<object> GetFromCommandAsync(Command command)
     {
         var dataSet = await Task.Run(() =>
         {

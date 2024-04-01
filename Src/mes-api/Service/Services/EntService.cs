@@ -98,5 +98,35 @@ public class EntService : IEntService
     {
         return await _entRepository.GetStatusInfoByUserAsync(sessionId, userId);
     }
+
+    public async Task<int> DoAutoShiftChangesAsync(int entId)
+    {
+        return await _entRepository.DoAutoShiftChangesAsync(entId);
+    }
+
+    public async Task<int> DoPastShiftChangesAsync()
+    {
+        return await _entRepository.DoPastShiftChangesAsync();
+    }
+
+    public async Task<int> StartShiftAsync(int entId, int shiftId, DateTime shiftStart)
+    {
+        return await _entRepository.StartShiftAsync(entId, shiftId, shiftStart);
+    }
+
+    public async Task<string> RefreshShiftSchedAsync(int inEntId, DateTime inStartTime, int inDaysAhead)
+    {
+        return await _entRepository.RefreshShiftSchedAsync(inEntId, inStartTime, inDaysAhead);
+    }
+
+    public async Task<string> GetRefreshShiftSchedAsync(int inEntId, DateTime inStartTime, int inDaysAhead)
+    {
+        return await _entRepository.GetRefreshShiftSchedAsync(inEntId, inStartTime, inDaysAhead);
+    }
+
+    public async Task<string> GetShiftSchedulesAsync(int inEntId, DateTime startTime, DateTime endTime)
+    {
+        return await _entRepository.GetShiftSchedulesAsync(inEntId, startTime, endTime);
+    }
 }
 

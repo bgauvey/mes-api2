@@ -26,6 +26,6 @@ namespace BOL.API.Repository.Interfaces.Generic;
 public interface IGenericRepository
 {
 
-	Task<object> GetFromCommand(Command command);
-	Task<int> ExecuteCommand(Command command);
+	Task<object> GetFromCommandAsync(Command command);
+	Task<int> ExecuteCommandAsync(Command command);
 }

@@ -88,7 +88,15 @@ namespace BOL.API.Repository.Helper
                     foreach (var p in cmd.parmaeters)
                     {
                         var dbParameter = sqlCommand.CreateParameter();
-                        dbParameter.ParameterName = p.Key;
+                        if (p.Key.Contains(" OUTPUT"))
+                        {
+                            dbParameter.ParameterName = p.Key.Replace(" OUTPUT", "");
+                            dbParameter.Direction = ParameterDirection.Output;
+                        }
+                        else
+                        {
+                            dbParameter.ParameterName = p.Key;
+                        }
                         if (p.Value != null)
                         {
                             var t = p.Value.GetType();

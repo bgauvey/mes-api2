@@ -10,5 +10,13 @@ public interface IEntRepository : IRepositoryBase<Ent>
     Task<string> GetShiftSchedEntitiesAsync(int entId);
     Task<string> GetStatusInfoAsync(int entId, int childLevels);
     Task<string> GetShiftTemplatesAsync(int entId, DateTime startDate, DateTime endDate);
+
+    Task<int> DoAutoShiftChangesAsync(int entId);
+    Task<int> DoPastShiftChangesAsync();
+    Task<int> StartShiftAsync(int entId, int shiftId, DateTime shiftStart);
+    Task<string> RefreshShiftSchedAsync(int inEntId, DateTime inStartTime, int inDaysAhead);
+    Task<string> GetRefreshShiftSchedAsync(int inEntId, DateTime inStartTime, int inDaysAhead);
+    Task<string> GetShiftSchedulesAsync(int inEntId, DateTime startTime, DateTime endTime);
 }
+
 

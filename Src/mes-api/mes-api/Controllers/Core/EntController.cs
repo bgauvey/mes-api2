@@ -282,5 +282,123 @@ namespace bol.api.Controllers.Core
                 return BadRequest(new { Status = false, exp.Message });
             }
         }
+
+        [HttpPost("DoAutoShiftChanges/{entId}")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DoAutoShiftChangesAsync(int entId)
+        {
+            try
+            {
+                await _entService.DoAutoShiftChangesAsync(entId);
+
+                return NoContent();
+
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+        
+        [HttpPost("DoPastShiftChanges")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DoPastShiftChangesAsync()
+        {
+            try
+            {
+                var data = await _entService.DoPastShiftChangesAsync();
+
+                return NoContent();
+
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        [HttpPost("StartShift")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> StartShiftAsync(int entId, int shiftId, DateTime shiftStart)
+        {
+            try
+            {
+                var data = await _entService.StartShiftAsync(entId, shiftId, shiftStart);
+
+                return NoContent();
+
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        [HttpGet("RefreshShiftSched")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RefreshShiftSchedAsync(int entId, DateTime startTime, int daysAhead)
+        {
+            try
+            {
+                var data = await _entService.RefreshShiftSchedAsync(entId, startTime, daysAhead);
+
+                return Ok(data);
+
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        [HttpGet("GetRefreshShiftSched")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetRefreshShiftSchedAsync(int entId, DateTime startTime, int daysAhead)
+        {
+            try
+            {
+                var data = await _entService.GetRefreshShiftSchedAsync(entId, startTime, daysAhead);
+
+                return Ok(data);
+
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        [HttpGet("GetShiftSchedules")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetShiftSchedulesAsync(int entId, DateTime startTime, DateTime endTime)
+        {
+            try
+            {
+                var data = await _entService.GetShiftSchedulesAsync(entId, startTime, endTime);
+
+                return Ok(data);
+
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
     }
 }

@@ -71,30 +71,8 @@
       {
         "_name": "DX_SCHED_RUN.TESTQUERY"
       },
-      {
-        "_name": "ENT.CLONE"
-      },
-      {
-        "_name": "ENT.DOAUTOSHIFTCHANGES"
-      },
-      {
-        "_name": "ENT.DOPASTSHIFTCHANGES"
-      },
-      {
-        "_name": "ENT.GETAVAILENDTIME"
-      },
-      {
-        "_name": "ENT.GETREFRESHEDSHIFTSCHED"
-      },
-      {
-        "_name": "ENT.GETSHIFTSCHED"
-      },
-      {
-        "_name": "ENT.REFRESHSHIFTSCHED"
-      },
-      {
-        "_name": "ENT.STARTSHIFT"
-      },
+
+
       {
         "_name": "JOB.SETCONCURRENTLINK"
       },
