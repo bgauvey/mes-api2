@@ -68,12 +68,4 @@ public partial class StdOperStepFile
     /// </summary>
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("AssocFileType")]
-    [InverseProperty("StdOperStepFiles")]
-    public virtual DocType AssocFileTypeNavigation { get; set; } = null!;
-
-    [ForeignKey("OperId, StepNo")]
-    [InverseProperty("StdOperStepFiles")]
-    public virtual StdOperStep StdOperStep { get; set; } = null!;
 }

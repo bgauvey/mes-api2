@@ -102,36 +102,4 @@ public partial class Oper
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("AssocFileType")]
-    [InverseProperty("Opers")]
-    public virtual DocType? AssocFileTypeNavigation { get; set; }
-
-    [InverseProperty("Oper")]
-    public virtual ICollection<BomItemOperLink> BomItemOperLinks { get; set; } = new List<BomItemOperLink>();
-
-    [InverseProperty("Oper")]
-    public virtual ICollection<DataLogGrpOperLink> DataLogGrpOperLinks { get; set; } = new List<DataLogGrpOperLink>();
-
-    [InverseProperty("Oper")]
-    public virtual ICollection<OperAttr> OperAttrs { get; set; } = new List<OperAttr>();
-
-    [InverseProperty("Oper")]
-    public virtual ICollection<OperEntItemLink> OperEntItemLinks { get; set; } = new List<OperEntItemLink>();
-
-    [InverseProperty("Oper")]
-    public virtual ICollection<OperEntLink> OperEntLinks { get; set; } = new List<OperEntLink>();
-
-    [InverseProperty("Oper")]
-    public virtual ICollection<OperSpecVer> OperSpecVers { get; set; } = new List<OperSpecVer>();
-
-    [InverseProperty("Oper")]
-    public virtual ICollection<OperStepGrp> OperStepGrps { get; set; } = new List<OperStepGrp>();
-
-    [ForeignKey("ProcessId")]
-    [InverseProperty("Opers")]
-    public virtual Process Process { get; set; } = null!;
-
-    [InverseProperty("Oper")]
-    public virtual ICollection<SpcCharOperLink> SpcCharOperLinks { get; set; } = new List<SpcCharOperLink>();
 }

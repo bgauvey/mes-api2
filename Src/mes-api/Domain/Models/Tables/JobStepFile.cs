@@ -50,8 +50,4 @@ public partial class JobStepFile
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("AssocFileType")]
-    [InverseProperty("JobStepFiles")]
-    public virtual DocType AssocFileTypeNavigation { get; set; } = null!;
 }

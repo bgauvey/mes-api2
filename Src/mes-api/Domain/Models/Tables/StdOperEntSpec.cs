@@ -124,16 +124,4 @@ public partial class StdOperEntSpec
     /// </summary>
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("AssocFileType")]
-    [InverseProperty("StdOperEntSpecs")]
-    public virtual DocType? AssocFileTypeNavigation { get; set; }
-
-    [ForeignKey("OperId, EntId")]
-    [InverseProperty("StdOperEntSpecs")]
-    public virtual StdOperEntLink StdOperEntLink { get; set; } = null!;
-
-    [ForeignKey("OperId, VerId")]
-    [InverseProperty("StdOperEntSpecs")]
-    public virtual StdOperSpecVer StdOperSpecVer { get; set; } = null!;
 }

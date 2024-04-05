@@ -70,8 +70,4 @@ public partial class WoFile
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("FileType")]
-    [InverseProperty("WoFiles")]
-    public virtual DocType FileTypeNavigation { get; set; } = null!;
 }

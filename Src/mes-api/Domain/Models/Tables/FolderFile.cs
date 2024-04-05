@@ -84,12 +84,4 @@ public partial class FolderFile
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("FileType")]
-    [InverseProperty("FolderFiles")]
-    public virtual DocType FileTypeNavigation { get; set; } = null!;
-
-    [ForeignKey("ItemId, OperId, EntId, VerId")]
-    [InverseProperty("FolderFiles")]
-    public virtual Folder Folder { get; set; } = null!;
 }

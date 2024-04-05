@@ -81,16 +81,4 @@ public partial class OperEntSpec
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("AssocFileType")]
-    [InverseProperty("OperEntSpecs")]
-    public virtual DocType? AssocFileTypeNavigation { get; set; }
-
-    [ForeignKey("ProcessId, OperId, EntId")]
-    [InverseProperty("OperEntSpecs")]
-    public virtual OperEntLink OperEntLink { get; set; } = null!;
-
-    [ForeignKey("ProcessId, OperId, VerId")]
-    [InverseProperty("OperEntSpecs")]
-    public virtual OperSpecVer OperSpecVer { get; set; } = null!;
 }

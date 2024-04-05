@@ -186,11 +186,4 @@ public partial class SpcCharJob
     [Key]
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("AssocFileType")]
-    [InverseProperty("SpcCharJobs")]
-    public virtual DocType? AssocFileTypeNavigation { get; set; }
-
-    [InverseProperty("Row")]
-    public virtual SpcStat? SpcStat { get; set; }
 }

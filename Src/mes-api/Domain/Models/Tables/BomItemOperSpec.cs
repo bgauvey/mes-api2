@@ -91,12 +91,4 @@ public partial class BomItemOperSpec
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("AssocFileType")]
-    [InverseProperty("BomItemOperSpecs")]
-    public virtual DocType? AssocFileTypeNavigation { get; set; }
-
-    [ForeignKey("ProcessId, OperId, SpecVerId")]
-    [InverseProperty("BomItemOperSpecs")]
-    public virtual OperSpecVer OperSpecVer { get; set; } = null!;
 }

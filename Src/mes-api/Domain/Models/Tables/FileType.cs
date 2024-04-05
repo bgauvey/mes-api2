@@ -35,8 +35,4 @@ public partial class FileType
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("DocType")]
-    [InverseProperty("FileTypes")]
-    public virtual DocType DocTypeNavigation { get; set; } = null!;
 }

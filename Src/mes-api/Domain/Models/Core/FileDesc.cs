@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Models;
+namespace BOL.API.Domain.Models.Core;
 
 [PrimaryKey("DocType", "FileDesc1")]
 [Table("file_desc")]
@@ -33,8 +33,4 @@ public partial class FileDesc
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("DocType")]
-    [InverseProperty("FileDescs")]
-    public virtual DocType DocTypeNavigation { get; set; } = null!;
 }

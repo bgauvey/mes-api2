@@ -111,20 +111,4 @@ public partial class SpcChar
     [Key]
     [Column("char_id")]
     public int CharId { get; set; }
-
-    [ForeignKey("AssocFileType")]
-    [InverseProperty("SpcChars")]
-    public virtual DocType? AssocFileTypeNavigation { get; set; }
-
-    [InverseProperty("Char")]
-    public virtual ICollection<SpcCharOperLink> SpcCharOperLinks { get; set; } = new List<SpcCharOperLink>();
-
-    [InverseProperty("Char")]
-    public virtual ICollection<SpcCharStdOperLink> SpcCharStdOperLinks { get; set; } = new List<SpcCharStdOperLink>();
-
-    [InverseProperty("Char")]
-    public virtual ICollection<SpcItemCharLink> SpcItemCharLinks { get; set; } = new List<SpcItemCharLink>();
-
-    [InverseProperty("Char")]
-    public virtual ICollection<SpcItemClassCharLink> SpcItemClassCharLinks { get; set; } = new List<SpcItemClassCharLink>();
 }

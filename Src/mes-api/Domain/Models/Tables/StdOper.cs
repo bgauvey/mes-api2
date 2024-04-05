@@ -80,23 +80,4 @@ public partial class StdOper
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("AssocFileType")]
-    [InverseProperty("StdOpers")]
-    public virtual DocType? AssocFileTypeNavigation { get; set; }
-
-    [InverseProperty("Oper")]
-    public virtual ICollection<SpcCharStdOperLink> SpcCharStdOperLinks { get; set; } = new List<SpcCharStdOperLink>();
-
-    [InverseProperty("Oper")]
-    public virtual ICollection<StdOperAttr> StdOperAttrs { get; set; } = new List<StdOperAttr>();
-
-    [InverseProperty("Oper")]
-    public virtual ICollection<StdOperEntLink> StdOperEntLinks { get; set; } = new List<StdOperEntLink>();
-
-    [InverseProperty("Oper")]
-    public virtual ICollection<StdOperSpecVer> StdOperSpecVers { get; set; } = new List<StdOperSpecVer>();
-
-    [InverseProperty("Oper")]
-    public virtual ICollection<StdOperStepGrp> StdOperStepGrps { get; set; } = new List<StdOperStepGrp>();
 }

@@ -46,12 +46,4 @@ public partial class OperStepFile
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("AssocFileType")]
-    [InverseProperty("OperStepFiles")]
-    public virtual DocType AssocFileTypeNavigation { get; set; } = null!;
-
-    [ForeignKey("ProcessId, OperId, StepNo")]
-    [InverseProperty("OperStepFiles")]
-    public virtual OperStep OperStep { get; set; } = null!;
 }
