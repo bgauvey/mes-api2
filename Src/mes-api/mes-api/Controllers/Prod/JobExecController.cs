@@ -33,7 +33,7 @@ namespace bol.api.Controllers.Prod
     /// </summary>
     [Route("prod/jobexec")]
     [EnableCors("AllowAnyOrigin")]
-    [Authorize]
+    //[Authorize]
     public class JobExecController : Controller
     {
         private readonly IJobExecService _JobExecService;
@@ -281,11 +281,11 @@ namespace bol.api.Controllers.Prod
         /// <returns></returns>
         [HttpPost("CancelAllJobs", Name = "CancelAllJobs")]
         [Authorize]
-        public IActionResult CancelAllJobs(string woId)
+        public async Task<IActionResult>  CancelAllJobs(string woId)
         {
             try
             {
-                _JobExecService.CancelAllJobsAsync(woId);
+                await _JobExecService.CancelAllJobsAsync(woId);
 
                 return NoContent();
             }
@@ -295,6 +295,172 @@ namespace bol.api.Controllers.Prod
                 return BadRequest(new { Status = false, exp.Message });
             }
         }
+
+        /// <summary>
+        /// To allow a user to sign off on a job, a job step, production, or consumption that requires a certification sign off, or to change the status of a process if such
+        /// changes require signoffs.
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="seqNo"></param>
+        /// <param name="stepNo"></param>
+        /// <param name="lotNo"></param>
+        /// <param name="prodLogId"></param>
+        /// <param name="consLogId"></param>
+        /// <param name="processId"></param>
+        /// <param name="processStatus"></param>
+        /// <param name="active"></param>
+        /// <param name="certName"></param>
+        /// <param name="signOffLocal"></param>
+        /// <param name="comments"></param>
+        /// <param name="refRowId"></param>
+        /// <returns></returns>
+        [HttpPost("CertSignOff", Name = "CertSignOff")]
+        [Authorize]
+        public async Task< IActionResult> CertSignOffAsync(string woId, string operId, int seqNo, int? stepNo, string lotNo, int prodLogId, int consLogId, string processId, int processStatus,
+        bool active, string certName, DateTime? signOffLocal, string? comments, int refRowId)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+
+                var data = await _JobExecService.CertSignOffAsync(woId, operId, seqNo, stepNo, lotNo, prodLogId, consLogId, processId, processStatus, active, certName, userId,
+                    signOffLocal, comments, refRowId);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To find out whether a job or a job step may be signed off by a specific user based on the user’s certifications and any of the required certification(s) linked
+        /// to either the operation or the step.
+        /// </summary>
+        /// <param name="processId"></param>
+        /// <param name="operId"></param>
+        /// <param name="stepNo"></param>
+        /// <param name="certName"></param>
+        /// <returns></returns>
+        [HttpPost("CertSignOffAllowed", Name = "CertSignOffAllowed")]
+        [Authorize]
+        public async Task<IActionResult> CertSignoffAllowedAsync(string processId, string operId, int? stepNo, string? certName)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+
+                var rc = await _JobExecService.CertSignoffAllowedAsync(userId, processId, operId, stepNo, certName);
+
+                return Ok(rc);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To find out whether a job or a job step that requires one or more audit-type certification(s) has been signed off or not.
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="seqNo"></param>
+        /// <param name="stepNo"></param>
+        /// <param name="certName"></param>
+        /// <param name="lotNo"></param>
+        /// <param name="prodLogId"></param>
+        /// <param name="consLogId"></param>
+        /// <param name="processId"></param>
+        /// <param name="processStatus"></param>
+        /// <param name="active"></param>
+        /// <returns></returns>
+        [HttpPost("CertSignOffDone", Name = "CertSignOffDone")]
+        [Authorize]
+        public async Task<IActionResult> CertSignoffDoneAsync(string woId, string operId, int seqNo, int? stepNo, string? certName, string? lotNo, int? prodLogId, int? consLogId,
+            string? processId, int? processStatus, bool? active)
+        {
+            try
+            {
+                var data = await _JobExecService.CertSignoffDoneAsync(woId, operId, seqNo, stepNo, certName, lotNo, prodLogId, consLogId, processId, processStatus, active);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To find out whether a job or a job step requires a certification sign off by a certified user.
+        /// </summary>
+        /// <param name="processId"></param>
+        /// <param name="operId"></param>
+        /// <param name="stepNo"></param>
+        /// <returns></returns>
+        [HttpPost("CertSignOffReqd", Name = "CertSignOffReqd")]
+        [Authorize]
+        public async Task<IActionResult> CertSignoffReqdAsync(string processId, string operId, int? stepNo)
+        {
+            try
+            {
+                var data = await _JobExecService.CertSignoffReqdAsync(processId, operId, stepNo);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To find out whether a job or a job step may be started by a specific user based on the user’s certifications and any of the required certification(s)
+        /// linked to either the operation, step or item.
+        /// </summary>
+        /// <param name="processId"></param>
+        /// <param name="operId"></param>
+        /// <param name="stepNo"></param>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        [HttpPost("CertStartAllowed", Name = "CertStartAllowed")]
+        //[Authorize]
+        public async Task<IActionResult> CertStartAllowedAsync(string? processId, string? operId, int? stepNo, string? itemId)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+                var rc = await _JobExecService.CertStartAllowedAsync(userId, processId, operId, stepNo, itemId);
+
+                return Ok(rc);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /// <summary>
         /// To return a list of all jobs in a work order

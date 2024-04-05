@@ -147,8 +147,8 @@ public class AuthorizationService : IAuthorizationService
     {
         List<string> roles = new List<string>();
 
-        var userGrpLinks = _userGrpLinkRepository.GetByCondition(x => x.UserId.Equals(userName));
-        var grpNames = _grpNameRepository.GetAll();
+        var userGrpLinks = _userGrpLinkRepository.GetByCondition(x => x.UserId.Equals(userName)).ToList();
+        var grpNames = _grpNameRepository.GetAll().ToList();
 
         var groups = userGrpLinks
             .Join(grpNames,

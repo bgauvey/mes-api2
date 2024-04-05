@@ -54,16 +54,20 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
 
     Task<int> CancelAllJobsAsync(string woId);
 
-    Task<string> GetJobQueueAsync(string woId, string itemId);
+    Task<string> CertSignoffAsync(string woId, string operId, int seqNo, int? stepNo, string lotNo, int prodLogId, int consLogId, string processId, int processStatus,
+        bool active, string certName, string userId, DateTime? signOffLocal, string? comments, int refRowId);
 
-    Task<string> GetQueueAsync(int entId, int? jobState, DateTime? reqdByTime, int? job_Priority, int? maxRows);
+    Task<int> CertSignoffAllowedAsync(string userId, string processId, string operId, int? stepNo, string? certName);
 
-    Task<string> CancelAllJobsAsync();
-    Task<string> CertSignoffAsync();
-    Task<string> CertSignoffAllowedAsync();
-    Task<string> CertSignoffDoneAsync();
-    Task<string> CertSignoffReqdAsync();
-    Task<string> CertStartAllowedAsync();
+    Task<string> CertSignoffDoneAsync(string woId, string operId, int seqNo, int? stepNo, string? certName, string? lotNo, int? prodLogId, int? consLogId,
+        string? processId, int? processStatus, bool? active);
+
+    Task<string> CertSignoffReqdAsync(string processId, string operId, int? stepNo);
+
+    Task<int> CertStartAllowedAsync(string userId, string? processId, string? operId, int? stepNo, string? itemId);
+
+
+
     Task<string> ChangeJobStatesAsync();
     Task<string> ChangeSpecValueAsync();
     Task<string> ChangeSpecValuesAsync();
@@ -80,8 +84,8 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
     Task<string> GetAvailLotsAsync();
     Task<string> GetCurrJobPosAsync();
     Task<string> GetJobBOMStepQuantitiesAsync();
-    Task<string> GetJobQueueAsync();
-    Task<string> GetQueueAsync();
+    Task<string> GetJobQueueAsync(string woId, string itemId);
+    Task<string> GetQueueAsync(int entId, int? jobState, DateTime? reqdByTime, int? job_Priority, int? maxRows);
     Task<string> GetReqdCertSignoffsAsync();
     Task<string> GetRunnableEntitiesAsync();
     Task<string> GetSchedEntsByWindowAsync();
@@ -111,29 +115,8 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
     Task<string> UpdateStepDataAsync();
     Task<string> UpdateTemplateSpecValuesAsync();
     Task<string> VerifyProcessAsync();
+
     /*
-
-      {
-        "_name": "JOB_EXEC.CERTSIGNOFF",
-        "_value": "SP_CERT_SIGNOFF"
-      },
-      {
-        "_name": "JOB_EXEC.CERTSIGNOFFALLOWED",
-        "_value": "SP_CERT_SIGNOFF_ALLOWED"
-      },
-      {
-        "_name": "JOB_EXEC.CERTSIGNOFFDONE",
-        "_value": "SP_CERT_SIGNOFF_DONE"
-      },
-      {
-        "_name": "JOB_EXEC.CERTSIGNOFFREQD",
-        "_value": "SP_CERT_SIGNOFF_REQD"
-      },
-      {
-        "_name": "JOB_EXEC.CERTSTARTALLOWED",
-        "_value": "SP_CERT_START_ALLOWED"
-      },
-
       {
         "_name": "JOB_EXEC.CHANGESPECVALUE",
         "_value": "SP_U_JOB_SPEC_CHANGESPECVALUE"
@@ -142,7 +125,6 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
         "_name": "JOB_EXEC.CHANGESPECVALUES",
         "_value": "SP_U_JOB_SPEC_CHANGESPECVALUES"
       },
-
       {
         "_name": "JOB_EXEC.CHANGEWOQTYS",
         "_value": "SP_ALLOC_JOB_QTY"
@@ -159,7 +141,6 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
         "_name": "JOB_EXEC.CLONEWO",
         "_value": "SP_I_JOB_EXEC_CLONEWO"
       },
-
       {
         "_name": "JOB_EXEC.CREATEJOBSFROMSTDOPS",
         "_value": "SP_I_JOB_EXEC_CRTJOBSFROMSTDOP"
@@ -172,7 +153,6 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
         "_name": "JOB_EXEC.CREATEWOFROMPROCESSQTYS",
         "_value": "SP_I_JOB_EXEC_CWOFP_QTY"
       },
-
       {
         "_name": "JOB_EXEC.ENDJOB",
         "_value": "SP_U_JOB_EXEC_ENDBATCHJOBS"

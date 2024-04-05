@@ -146,7 +146,7 @@ namespace BOL.API.Repository.Helper
         private string getSpFromCommand(Command command)
         {
             string schema = String.IsNullOrEmpty(command.Schema) ? "dbo" : command.Schema;
-            string messageType = "U_";
+            string messageType = "";
             switch (command.MsgType.ToLower())
             {
                 case "exec":

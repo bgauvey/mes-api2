@@ -59,6 +59,37 @@ public class JobExecService : IJobExecService
         return await _jobExecRepository.CancelAllJobsAsync(woId);
     }
 
+    public async Task<string> CertSignOffAsync(string woId, string operId, int seqNo, int? stepNo, string lotNo, int prodLogId, int consLogId, string processId, int processStatus,
+        bool active, string certName, string userId, DateTime? signOffLocal, string? comments, int refRowId)
+    {
+        return await _jobExecRepository.CertSignoffAsync(woId, operId, seqNo, stepNo, lotNo, prodLogId, consLogId, processId, processStatus, active, certName, userId,
+            signOffLocal, comments, refRowId);
+    }
+
+    public async Task<int> CertSignoffAllowedAsync(string userId, string processId, string operId, int? stepNo, string? certName)
+    {
+        return await _jobExecRepository.CertSignoffAllowedAsync(userId, processId, operId, stepNo, certName);
+    }
+
+    public async Task<string> CertSignoffDoneAsync(string woId, string operId, int seqNo, int? stepNo, string? certName, string? lotNo, int? prodLogId, int? consLogId,
+        string? processId, int? processStatus, bool? active)
+    {
+        return await _jobExecRepository.CertSignoffDoneAsync(woId, operId, seqNo, stepNo, certName, lotNo, prodLogId, consLogId, processId, processStatus, active);
+    }
+
+    public async Task<string> CertSignoffReqdAsync(string processId, string operId, int? stepNo)
+    {
+        return await _jobExecRepository.CertSignoffReqdAsync(processId, operId, stepNo);
+    }
+
+    public async Task<int> CertStartAllowedAsync(string userId, string? processId, string? operId, int? stepNo, string? itemId)
+    {
+        return await _jobExecRepository.CertStartAllowedAsync(userId, processId, operId, stepNo, itemId);
+    }
+
+
+
+
     public List<object> GetJobQueue(string woId, string itemId)
     {
         throw new NotImplementedException();

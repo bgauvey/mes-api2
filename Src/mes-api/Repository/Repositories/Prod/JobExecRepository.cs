@@ -20,6 +20,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Data;
 using System.Diagnostics;
 using api.Models;
@@ -322,29 +323,180 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         return rowsAffected;
     }
 
-    public async Task<string> CertSignoffAsync()
+    public async Task<string> CertSignoffAsync(string woId, string operId, int seqNo, int? stepNo, string lotNo, int prodLogId, int consLogId, string processId, int processStatus,
+        bool active, string certName, string userId, DateTime? signOffLocal, string? comments, int refRowId)
     {
+        int rowId = 0;
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("seq_no", seqNo),
+            new KeyValuePair<string, object>("step_no", stepNo),
+            new KeyValuePair<string, object>("lot_no", lotNo),
+            new KeyValuePair<string, object>("prod_log_id", prodLogId),
+            new KeyValuePair<string, object>("cons_log_id", consLogId),
+            new KeyValuePair<string, object>("process_id", processId),
+            new KeyValuePair<string, object>("process_status", processStatus),
+            new KeyValuePair<string, object>("active", active),
+            new KeyValuePair<string, object>("cert_name", certName),
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("sign_off_local", signOffLocal),
+            new KeyValuePair<string, object>("comments", comments),
+            new KeyValuePair<string, object>("ref_row_id", refRowId),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("row_id OUTPUT", rowId),            
+        };
+        Command command = new Command()
+        {
+            Cmd = "SignOff",
+            MsgType = "",
+            Object = "Cert",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
         throw new NotImplementedException();
+        // SP_CERT_SIGNOFF
     }
 
-    public async Task<string> CertSignoffAllowedAsync()
+    public async Task<int> CertSignoffAllowedAsync(string userId, string processId, string operId, int? stepNo, string? certName)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("process_id", processId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("step_no", stepNo),
+            new KeyValuePair<string, object>("cert_name", certName),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "SignOff_Allowed",
+            MsgType = "",
+            Object = "Cert",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+
+        return data;
     }
 
-    public async Task<string> CertSignoffDoneAsync()
+    public async Task<string> CertSignoffDoneAsync(string woId, string operId, int seqNo, int? stepNo, string? certName, string? lotNo, int? prodLogId, int? consLogId,
+        string? processId, int? processStatus, bool? active)
     {
-        throw new NotImplementedException();
+        int success = 0;
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("seq_no", seqNo),
+            new KeyValuePair<string, object>("step_no", stepNo),
+            new KeyValuePair<string, object>("cert_name", certName),
+            new KeyValuePair<string, object>("lot_no", lotNo),
+            new KeyValuePair<string, object>("prod_log_id", prodLogId),
+            new KeyValuePair<string, object>("cons_log_id", consLogId),
+            new KeyValuePair<string, object>("process_id", processId),
+            new KeyValuePair<string, object>("process_status", processStatus),
+            new KeyValuePair<string, object>("active", active),
+            new KeyValuePair<string, object>("success OUTPUT", success),
+        };
+        Command command = new Command()
+        {
+            Cmd = "SignOff_Done",
+            MsgType = "",
+            Object = "Cert",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
-    public async Task<string> CertSignoffReqdAsync()
+    public async Task<string> CertSignoffReqdAsync(string processId, string operId, int? stepNo)
     {
-        throw new NotImplementedException();
+        int success = 0;
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("process_id", processId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("step_no", stepNo),
+            new KeyValuePair<string, object>("success OUTPUT", success),
+        };
+        Command command = new Command()
+        {
+            Cmd = "SignOff_Reqd",
+            MsgType = "",
+            Object = "Cert",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
-    public async Task<string> CertStartAllowedAsync()
+    public async Task<int> CertStartAllowedAsync(string userId, string? processId, string? operId, int? stepNo, string? itemId)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("process_id", processId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("step_no", stepNo),
+            new KeyValuePair<string, object>("item_id", itemId),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "Start_Allowed",
+            MsgType = "",
+            Object = "Cert",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+
+        return data;
     }
 
     public async Task<string> ChangeJobStatesAsync()
@@ -427,12 +579,12 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         throw new NotImplementedException();
     }
 
-    public Task<string> GetJobQueueAsync()
+    public Task<string> GetJobQueueAsync(string woId, string itemId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<string> GetQueueAsync()
+    public Task<string> GetQueueAsync(int entId, int? jobState, DateTime? reqdByTime, int? job_Priority, int? maxRows)
     {
         throw new NotImplementedException();
         // SP_SA_JOB_EXEC_GETQUEUE

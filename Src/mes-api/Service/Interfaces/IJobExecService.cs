@@ -25,6 +25,19 @@ public interface IJobExecService
 
     Task<int> CancelAllJobsAsync(string woId);
 
+    Task<string> CertSignOffAsync(string woId, string operId, int seqNo, int? stepNo, string lotNo, int prodLogId, int consLogId, string processId, int processStatus,
+        bool active, string certName, string userId, DateTime? signOffLocal, string? comments, int refRowId);
+
+    Task<int> CertSignoffAllowedAsync(string userId, string processId, string operId, int? stepNo, string? certName);
+
+    Task<string> CertSignoffDoneAsync(string woId, string operId, int seqNo, int? stepNo, string? certName, string? lotNo, int? prodLogId, int? consLogId,
+        string? processId, int? processStatus, bool? active);
+
+    Task<string> CertSignoffReqdAsync(string processId, string operId, int? stepNo);
+
+    Task<int> CertStartAllowedAsync(string userId, string? processId, string? operId, int? stepNo, string? itemId);
+
+
     List<object> GetJobQueue(string woId, string itemId);
 
     List<object> GetQueue(int entId, int? jobState, DateTime? reqdByTime, int? job_Priority, int? maxRows);
