@@ -66,11 +66,14 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
 
     Task<int> CertStartAllowedAsync(string userId, string? processId, string? operId, int? stepNo, string? itemId);
 
+    Task<string> ChangeJobStatesAsync(int rowId, int? stateCd, DateTime? reqFinishTimeLocal, int? jobPriority, int? applyToAllJobs);
 
+    Task<int> ChangeSpecValueAsync(string userId, int entId, string specId, string newSpecValue, bool updateTemplate, int bomPos, string? bomVerId, string? comments, int jobPos);
 
-    Task<string> ChangeJobStatesAsync();
-    Task<string> ChangeSpecValueAsync();
-    Task<string> ChangeSpecValuesAsync();
+    Task<int> ChangeSpecValuesAsync(int sessionId, string userId, int entId, string? newSpecValue, string? newMinValue, string? newMaxValue, bool updateTemplate, int checkPrivs,
+        int bomPos, string? bomVerId, string comments, int jobPos);
+
+    
     Task<string> ChangeWOPriorityAsync();
     Task<string> ChangeWOQtysAsync();
     Task<string> ChangeWOReqdFinishTimeAsync();

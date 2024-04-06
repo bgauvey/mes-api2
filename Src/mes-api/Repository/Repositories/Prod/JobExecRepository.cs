@@ -23,6 +23,7 @@
 using System;
 using System.Data;
 using System.Diagnostics;
+using System.Xml.Linq;
 using api.Models;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Core;
@@ -499,20 +500,114 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         return data;
     }
 
-    public async Task<string> ChangeJobStatesAsync()
+    public async Task<string> ChangeJobStatesAsync(int rowId, int? stateCd, DateTime? reqFinishTimeLocal, int? jobPriority, int? applyToAllJobs = 0)
+    {
+        string result = String.Empty;
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("row_id", rowId),
+            new KeyValuePair<string, object>("state_cd", stateCd),
+            new KeyValuePair<string, object>("req_finish_time_local", reqFinishTimeLocal),
+            new KeyValuePair<string, object>("job_priority", jobPriority),
+            new KeyValuePair<string, object>("apply_to_all_jobs", applyToAllJobs),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("result OUTPUT", result),
+        };
+        Command command = new Command()
+        {
+            Cmd = "ChangeJobStates",
+            MsgType = "exec",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
+    }
+
+    public Task<string> ChangeSpecValueAsync()
     {
         throw new NotImplementedException();
     }
 
-    public async Task<string> ChangeSpecValueAsync()
+    public async Task<int> ChangeSpecValueAsync(string userId, int entId, string specId, string newSpecValue, bool updateTemplate, int bomPos = 0, string? bomVerId = null, string? comments = null, int jobPos = 0)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("spec_id", specId),
+            new KeyValuePair<string, object>("new_spec_value", newSpecValue),
+            new KeyValuePair<string, object>("update_template", updateTemplate),
+            new KeyValuePair<string, object>("bom_pos", bomPos),
+            new KeyValuePair<string, object>("bom_ver_id", bomVerId),
+            new KeyValuePair<string, object>("comments", comments),
+            new KeyValuePair<string, object>("job_pos", jobPos),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "ChangeSpecValue",
+            MsgType = "exec",
+            Object = "Job_Spec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+        return data;
     }
 
-    public Task<string> ChangeSpecValuesAsync()
+    public async Task<int> ChangeSpecValuesAsync(int sessionId, string userId, int entId, string? newSpecValue, string? newMinValue, string? newMaxValue, bool updateTemplate = false, int checkPrivs = 0,
+        int bomPos = 0, string? bomVerId = null, string comments = "", int jobPos = 0)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("session_id", sessionId),
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("new_spec_value", newSpecValue),
+            new KeyValuePair<string, object>("new_min_value", newMinValue),
+            new KeyValuePair<string, object>("new_max_value", newMaxValue),
+            new KeyValuePair<string, object>("update_template", updateTemplate),
+            new KeyValuePair<string, object>("check_privs", checkPrivs),
+            new KeyValuePair<string, object>("bom_pos", bomPos),
+            new KeyValuePair<string, object>("bom_ver_id", bomVerId),
+            new KeyValuePair<string, object>("comments", comments),
+            new KeyValuePair<string, object>("job_pos", jobPos),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "ChangeSpecValues",
+            MsgType = "exec",
+            Object = "Job_Spec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+        return data;
     }
+
+
 
     public Task<string> ChangeWOPriorityAsync()
     {

@@ -87,6 +87,23 @@ public class JobExecService : IJobExecService
         return await _jobExecRepository.CertStartAllowedAsync(userId, processId, operId, stepNo, itemId);
     }
 
+    public async Task<string> ChangeJobStatesAsync(int rowId, int? stateCd, DateTime? reqFinishTimeLocal, int? jobPriority, int? applyToAllJobs)
+    {
+        return await _jobExecRepository.ChangeJobStatesAsync(rowId, stateCd, reqFinishTimeLocal, jobPriority, applyToAllJobs);
+    }
+
+    public async Task<int> ChangeSpecValueAsync(string userId, int entId, string specId, string newSpecValue, bool updateTemplate, int bomPos = 0, string? bomVerId = null, string? comments = null, int jobPos = 0)
+    {
+        return await _jobExecRepository.ChangeSpecValueAsync(userId, entId, specId, newSpecValue, updateTemplate, bomPos, bomVerId, comments, jobPos);
+    }
+
+    public async Task<int> ChangeSpecValuesAsync(int sessionId, string userId, int entId, string? newSpecValue, string? newMinValue, string? newMaxValue, bool updateTemplate = false, int checkPrivs = 0,
+        int bomPos = 0, string? bomVerId = null, string comments = "", int jobPos = 0)
+    {
+        return await _jobExecRepository.ChangeSpecValuesAsync(sessionId, userId, entId, newSpecValue, newMinValue, newMaxValue, updateTemplate, checkPrivs, bomPos, bomVerId, comments, jobPos);
+    }
+
+
 
 
 

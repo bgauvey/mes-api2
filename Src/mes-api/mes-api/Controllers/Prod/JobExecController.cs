@@ -21,7 +21,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Security.Claims;
+using api.Models;
 using BOL.API.Service.Interfaces;
+using BOL.API.Service.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -431,7 +433,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="itemId"></param>
         /// <returns></returns>
         [HttpPost("CertStartAllowed", Name = "CertStartAllowed")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> CertStartAllowedAsync(string? processId, string? operId, int? stepNo, string? itemId)
         {
             try
@@ -448,12 +450,100 @@ namespace bol.api.Controllers.Prod
             }
         }
 
+        /// <summary>
+        /// To change the state, required finish time, and/or job priority of a list of jobs.
+        /// </summary>
+        /// <param name="rowId"></param>
+        /// <param name="stateCd"></param>
+        /// <param name="reqFinishTimeLocal"></param>
+        /// <param name="jobPriority"></param>
+        /// <param name="applyToAllJobs"></param>
+        /// <returns></returns>
+        [HttpPost("ChangeJobStates", Name = "ChangeJobStates")]
+        [Authorize]
+        public async Task<IActionResult> ChangeJobStatesAsync(int rowId, int? stateCd, DateTime? reqFinishTimeLocal, int? jobPriority, int? applyToAllJobs)
+        {
+            try
+            {
+                var rc = await _JobExecService.ChangeJobStatesAsync(rowId, stateCd, reqFinishTimeLocal, jobPriority, applyToAllJobs);
 
+                return Ok(rc);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
 
+        /// <summary>
+        /// To change a specific spec parameter’s value for the current running job and optionally the operation from which this job was created (if defined).
+        /// This allows for runtime changing of spec values by users with appropriate privileges based on the job currently running on an entity.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="specId"></param>
+        /// <param name="newSpecValue"></param>
+        /// <param name="updateTemplate"></param>
+        /// <param name="bomPos"></param>
+        /// <param name="bomVerId"></param>
+        /// <param name="comments"></param>
+        /// <param name="jobPos"></param>
+        /// <returns></returns>
+        [HttpPost("ChangeSpecValue", Name = "ChangeSpecValue")]
+        [Authorize]
+        public async Task<IActionResult> ChangeSpecValueAsync(int entId, string specId, string newSpecValue, bool updateTemplate, int bomPos = 0, string? bomVerId = null, string? comments = null, int jobPos = 0)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
 
+                var rc = await _JobExecService.ChangeSpecValueAsync(userId, entId, specId, newSpecValue, updateTemplate, bomPos, bomVerId, comments, jobPos);
 
+                return NoContent();
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
 
+        /// <summary>
+        /// To change a specific spec parameter’s value for the current running job and optionally the Operation from which this job was created (if defined).
+        /// This allows for runtime changing of spec values by users with appropriate privileges based on the job currently running on an entity.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="newSpecValue"></param>
+        /// <param name="newMinValue"></param>
+        /// <param name="newMaxValue"></param>
+        /// <param name="updateTemplate"></param>
+        /// <param name="checkPrivs"></param>
+        /// <param name="bomPos"></param>
+        /// <param name="bomVerId"></param>
+        /// <param name="comments"></param>
+        /// <param name="jobPos"></param>
+        /// <returns></returns>
+        [HttpPost("ChangeSpecValues", Name = "ChangeSpecValues")]
+        [Authorize]
+        public async Task<IActionResult> ChangeSpecValuesAsync(int entId, string? newSpecValue, string? newMinValue, string? newMaxValue, bool updateTemplate = false, int checkPrivs = 0,
+        int bomPos = 0, string? bomVerId = null, string comments = "", int jobPos = 0)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+                var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                                           .Select(c => Convert.ToInt32(c.Value)).SingleOrDefault();
 
+                var rc = await _JobExecService.ChangeSpecValuesAsync(sessionId, userId, entId, newSpecValue, newMinValue, newMaxValue, updateTemplate, checkPrivs, bomPos, bomVerId, comments, jobPos);
+
+                return NoContent();
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
 
 
 
