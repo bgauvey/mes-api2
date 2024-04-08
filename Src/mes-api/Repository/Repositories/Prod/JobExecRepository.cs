@@ -31,6 +31,8 @@ using Newtonsoft.Json;
 using BOL.API.Domain.Models.EnProd;
 using System.Diagnostics;
 using static Azure.Core.HttpHeader;
+using BOL.API.Domain.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace BOL.API.Repository.Repositories.Prod;
 
@@ -888,26 +890,116 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         return data;
     }
 
-
-
-
-
-
-
-    public Task<string> GetAvailJobPosAsync()
+    public async Task<string> GetAvailJobPosAsync(int entId)
     {
-        throw new NotImplementedException();
+        var jobPos = 0;
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("job_pos OUTPUT", jobPos)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetAvailJobPos",
+            MsgType = "getall",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
-    public Task<string> GetAvailLotsAsync()
+    public async Task<string> GetAvailLotsAsync(string woId, string operId, int seqNo, int entId)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("seq_no", seqNo),
+            new KeyValuePair<string, object>("ent_id", entId)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetAvailLots",
+            MsgType = "getall",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
-    public Task<string> GetCurrJobPosAsync()
+    public async Task<string> GetCurrJobPosAsync(int entId, string woId, string operId, int seqNo)
     {
+        /*
+         * @ent_id	INT32
+            ,@wo_id		STRING80
+            ,@oper_id	STRING80
+            ,@seq_no	INT32
+            ,@job_pos	INT32 OUTPUT
+         * 
+         * 
+         * */
+        int jobPos = -1;
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("seq_no", seqNo),
+            new KeyValuePair<string, object>("job_pos OUTPUT", entId)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetCurrJobPos",
+            MsgType = "getall",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
+
+
         throw new NotImplementedException();
+        // sp_SA_Job_Exec_GetCurrJobPos
     }
+
+
+
+
+
+
+
 
     public Task<string> GetJobBOMStepQuantitiesAsync()
     {

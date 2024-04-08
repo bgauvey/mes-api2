@@ -65,11 +65,11 @@ public interface IJobExecService
     Task<int> EndJobAsync(int entId, string woId, string operId, int seqNo, int jobPos, string? statusNotes, string? userId, int? checkPrivs, int? checkCerts, int clientType,
     int noPropogation, int checkAutoJobStart, DateTime? actFinishTimeLocal);
 
+    Task<string> GetAvailJobPosAsync(int entId);
 
+    Task<string> GetAvailLotsAsync(string woId, string operId, int seqNo, int entId);
 
-
-
-
+    Task<string> GetCurrJobPosAsync(int entId, string woId, string operId, int seqNo);
 
 
 

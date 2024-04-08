@@ -152,6 +152,20 @@ public class JobExecService : IJobExecService
         return await _jobExecRepository.EndJobAsync(entId, woId, operId, seqNo, jobPos, statusNotes, userId, checkPrivs, checkCerts, clientType, noPropogation, checkAutoJobStart, actFinishTimeLocal);
     }
 
+    public async Task<string> GetAvailJobPosAsync(int entId)
+    {
+        return await _jobExecRepository.GetAvailJobPosAsync(entId);
+    }
+
+    public async Task<string> GetAvailLotsAsync(string woId, string operId, int seqNo, int entId)
+    {
+        return await _jobExecRepository.GetAvailLotsAsync(woId, operId, seqNo, entId);
+    }
+
+    public async Task<string> GetCurrJobPosAsync(int entId, string woId, string operId, int seqNo)
+    {
+        return await _jobExecRepository.GetCurrJobPosAsync(entId, woId, operId, seqNo);
+    }
 
 
 
@@ -160,10 +174,7 @@ public class JobExecService : IJobExecService
 
 
 
-
-
-
-    public List<object> GetJobQueue(string woId, string itemId)
+        public List<object> GetJobQueue(string woId, string itemId)
     {
         throw new NotImplementedException();
     }

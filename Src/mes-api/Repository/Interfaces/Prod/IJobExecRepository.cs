@@ -95,11 +95,20 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
     Task<int> EndJobAsync(int entId, string woId, string operId, int seqNo, int jobPos, string? statusNotes, string? userId, int? checkPrivs, int? checkCerts, int clientType,
         int noPropogation, int checkAutoJobStart, DateTime? actFinishTimeLocal);
 
+    Task<string> GetAvailJobPosAsync(int entId);
+
+    Task<string> GetAvailLotsAsync(string woId, string operId, int seqNo, int entId);
+
+    Task<string> GetCurrJobPosAsync(int entId, string woId, string operId, int seqNo);
 
 
-    Task<string> GetAvailJobPosAsync();
-    Task<string> GetAvailLotsAsync();
-    Task<string> GetCurrJobPosAsync();
+
+
+
+
+
+
+
     Task<string> GetJobBOMStepQuantitiesAsync();
     Task<string> GetJobQueueAsync(string woId, string itemId);
     Task<string> GetQueueAsync(int entId, int? jobState, DateTime? reqdByTime, int? job_Priority, int? maxRows);

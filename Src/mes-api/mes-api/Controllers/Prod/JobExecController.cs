@@ -814,6 +814,77 @@ namespace bol.api.Controllers.Prod
             }
         }
 
+        /// <summary>
+        /// To find the first unused job position on an entity that can run multiple jobs.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <returns></returns>
+        [HttpGet("GetAvailJobPos", Name = "GetAvailJobPos")]
+        [Authorize]
+        public async Task<IActionResult> GetAvailJobPosAsync(int entId)
+        {
+            try
+            {
+                var jobPos = await _JobExecService.GetAvailJobPosAsync(entId);
+                return Ok(jobPos);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To get all the eligible values for production lot numbers for a running job.
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="seqNo"></param>
+        /// <param name="entId"></param>
+        /// <returns></returns>
+        [HttpGet("GetAvailLots", Name = "GetAvailLots")]
+        [Authorize]
+        public async Task<IActionResult> GetAvailLotsAsync(string woId, string operId, int seqNo, int entId)
+        {
+            try
+            {
+                var lots = await _JobExecService.GetAvailLotsAsync(woId, operId, seqNo, entId);
+                return Ok(lots);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To determine which job position a running job occupies on an entity.
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="seqNo"></param>
+        /// <param name="entId"></param>
+        /// <returns></returns>
+        [HttpGet("GetCurrJobPos", Name = "GetCurrJobPos")]
+        [Authorize]
+        public async Task<IActionResult> GetCurrJobPosAsync(string woId, string operId, int seqNo, int entId)
+        {
+            try
+            {
+                var lots = await _JobExecService.GetCurrJobPosAsync(entId, woId, operId, seqNo);
+                return Ok(lots);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+
+
 
 
 
