@@ -20,6 +20,7 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Diagnostics;
 using System.Security.Claims;
 using api.Models;
 using BOL.API.Service.Interfaces;
@@ -497,7 +498,7 @@ namespace bol.api.Controllers.Prod
             {
                 var userId = User.Identity.Name;
 
-                var rc = await _JobExecService.ChangeSpecValueAsync(userId, entId, specId, newSpecValue, updateTemplate, bomPos, bomVerId, comments, jobPos);
+                await _JobExecService.ChangeSpecValueAsync(userId, entId, specId, newSpecValue, updateTemplate, bomPos, bomVerId, comments, jobPos);
 
                 return NoContent();
             }
@@ -534,7 +535,7 @@ namespace bol.api.Controllers.Prod
                 var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
                                            .Select(c => Convert.ToInt32(c.Value)).SingleOrDefault();
 
-                var rc = await _JobExecService.ChangeSpecValuesAsync(sessionId, userId, entId, newSpecValue, newMinValue, newMaxValue, updateTemplate, checkPrivs, bomPos, bomVerId, comments, jobPos);
+                await _JobExecService.ChangeSpecValuesAsync(sessionId, userId, entId, newSpecValue, newMinValue, newMaxValue, updateTemplate, checkPrivs, bomPos, bomVerId, comments, jobPos);
 
                 return NoContent();
             }
@@ -544,6 +545,275 @@ namespace bol.api.Controllers.Prod
                 return BadRequest(new { Status = false, exp.Message });
             }
         }
+
+        /// <summary>
+        /// Change priority for all the jobs in a work order.
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="newPriority"></param>
+        /// <returns></returns>
+        [HttpPost("ChangeWOPriority", Name = "ChangeWOPriority")]
+        [Authorize]
+        public async Task<IActionResult> ChangeWOPriorityAsync(string woId, int newPriority)
+        {
+            try
+            {
+                await _JobExecService.ChangeWOPriorityAsync(woId, newPriority);
+
+                return NoContent();
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// Change starting and required quantities for a work order.
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="reqQty"></param>
+        /// <param name="processId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="startQty"></param>
+        /// <param name="reqFinishTime"></param>
+        /// <param name="releaseTime"></param>
+        /// <returns></returns>
+        [HttpPost("ChangeWOQtys", Name = "ChangeWOQtys")]
+        [Authorize]
+        public async Task<IActionResult> ChangeWOQtysAsync(string woId, double reqQty, string? processId = null, string? itemId = null, double? startQty = null, DateTime? reqFinishTime = null, DateTime? releaseTime = null)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+
+                await _JobExecService.ChangeWOQtysAsync(userId, woId, reqQty, processId, itemId, startQty, reqFinishTime, releaseTime);
+
+                return NoContent();
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// Changes the required finish time for all the jobs in a Work Order. 
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="reqFinishTimeLocal"></param>
+        /// <returns></returns>
+        [HttpPost("ChangeWOReqdFinishTime", Name = "ChangeWOReqdFinishTime")]
+        [Authorize]
+        public async Task<IActionResult> ChangeWOReqdFinishTimeAsync(string woId, DateTime reqFinishTimeLocal)
+        {
+            try
+            {
+                await _JobExecService.ChangeWOReqdFinishTimeAsync(woId, reqFinishTimeLocal);
+
+                return NoContent();
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// The same as ChangeWOPriority, ChangeWOQtys, and ChangeWOReqdFinishTime, all together in a single transaction. 
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="priority"></param>
+        /// <param name="reqFinishTimeLocal"></param>
+        /// <param name="qtyReqd"></param>
+        /// <param name="qtyAtStart"></param>
+        /// <returns></returns>
+        [HttpPost("ChangeWOValues", Name = "ChangeWOValues")]
+        [Authorize]
+        public async Task<IActionResult> ChangeWOValuesAsync(string woId, int priority, DateTime reqFinishTimeLocal, double qtyReqd, double qtyAtStart)
+        {
+            try
+            {
+                await _JobExecService.ChangeWOValuesAsync(woId, priority, reqFinishTimeLocal, qtyReqd, qtyAtStart);
+
+                return NoContent();
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To clone a job and all of its dependent data. 
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="seqNo"></param>
+        /// <param name="newWoId"></param>
+        /// <param name="newOperId"></param>
+        /// <param name="newSeqNo"></param>
+        /// <param name="reqQty"></param>
+        /// <param name="startQty"></param>
+        /// <param name="reqFinishTimeLocal"></param>
+        /// <returns></returns>
+        [HttpPost("CloneJob", Name = "CloneJob")]
+        [Authorize]
+        public async Task<IActionResult> CloneJobAsync(string woId, string operId, int seqNo, string? newWoId, string? newOperId, int? newSeqNo, double? reqQty, double? startQty, DateTime? reqFinishTimeLocal)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+
+                var result = await _JobExecService.CloneJobAsync(userId, woId, operId, seqNo, newWoId, newOperId, newSeqNo, reqQty, startQty, reqFinishTimeLocal);
+
+                return NoContent();
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To clone a work order and all its instance specific data based on an existing work order. 
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="newWoId"></param>
+        /// <param name="reqQty"></param>
+        /// <param name="woDesc"></param>
+        /// <param name="releaseTimeLocal"></param>
+        /// <param name="reqFinishTimeLocal"></param>
+        /// <param name="woPriority"></param>
+        /// <param name="custInfo"></param>
+        /// <param name="moId"></param>
+        /// <param name="notes"></param>
+        /// <returns></returns>
+        [HttpPost("CloneWo", Name = "CloneWo")]
+        [Authorize]
+        public async Task<IActionResult> CloneWoAsync(string woId, string newWoId, double? reqQty, string? woDesc, DateTime? releaseTimeLocal, DateTime? reqFinishTimeLocal, int? woPriority, string? custInfo, string? moId, string? notes)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+
+                var result = await _JobExecService.CloneWoAsync(userId, woId, newWoId, reqQty, woDesc, releaseTimeLocal, reqFinishTimeLocal, woPriority, custInfo, moId, notes);
+
+                return NoContent();
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To create instance data for a work order based on a given process_id and other work order instance specific data. 
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="processId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="reqQty"></param>
+        /// <param name="startQty"></param>
+        /// <param name="initWoState"></param>
+        /// <param name="woDesc"></param>
+        /// <param name="releaseTime"></param>
+        /// <param name="reqFinishTime"></param>
+        /// <param name="woPriority"></param>
+        /// <param name="custInfo"></param>
+        /// <param name="moId"></param>
+        /// <param name="notes"></param>
+        /// <param name="bomVerId"></param>
+        /// <param name="forFirstOp"></param>
+        /// <param name="specVerId"></param>
+        /// <param name="mayOverrideRoute"></param>
+        /// <returns></returns>
+        [HttpPost("CreateWoFromProcess", Name = "CreateWoFromProcess")]
+        [Authorize]
+        public async Task<IActionResult> CreateWoFromProcessAsync(string woId, string processId, string itemId, double reqQty, double? startQty = null, int? initWoState = 1,
+        string? woDesc = null, DateTime? releaseTime = null, DateTime? reqFinishTime = null, int? woPriority = 1, string? custInfo = null, string? moId = null, string? notes = "",
+        string? bomVerId = null, bool forFirstOp = false, string? specVerId = null, bool mayOverrideRoute = false)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+
+                var result = await _JobExecService.CreateWoFromProcessAsync(userId, woId, processId, itemId, reqQty, startQty, initWoState, woDesc, releaseTime, reqFinishTime, woPriority,
+                                    custInfo, moId, notes, bomVerId, forFirstOp, specVerId, mayOverrideRoute);
+                return NoContent();
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To allow the downloading of specifications to the process via the Factory Connector on demand.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="seqNo"></param>
+        /// <param name="stepNo"></param>
+        /// <returns></returns>
+        [HttpPost("DownloadSpecs", Name = "DownloadSpecs")]
+        [Authorize]
+        public async Task<IActionResult> DownloadSpecsAsync(int entId, string woId, string operId, int seqNo, int? stepNo)
+        {
+            try
+            {
+                var result = await _JobExecService.DownloadSpecsAsync(entId, woId, operId, seqNo, stepNo);
+                return NoContent();
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To end a job on an entity.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="seqNo"></param>
+        /// <param name="jobPos"></param>
+        /// <param name="statusNotes"></param>
+        /// <param name="userId"></param>
+        /// <param name="checkPrivs"></param>
+        /// <param name="checkCerts"></param>
+        /// <param name="clientType"></param>
+        /// <param name="noPropogation"></param>
+        /// <param name="checkAutoJobStart"></param>
+        /// <param name="actFinishTimeLocal"></param>
+        /// <returns></returns>
+        [HttpPost("EndJob", Name = "EndJob")]
+        [Authorize]
+        public async Task<IActionResult> EndJobAsync(int entId, string woId, string operId, int seqNo, int jobPos = 0, string? statusNotes = null, string? userId = null, int? checkPrivs = null,
+        int? checkCerts = null, int clientType = 37, int noPropogation = 0, int checkAutoJobStart = 1, DateTime? actFinishTimeLocal = null)
+        {
+            try
+            {
+                var result = await _JobExecService.EndJobAsync(entId, woId, operId, seqNo, jobPos, statusNotes, userId, checkPrivs, checkCerts, clientType, noPropogation, checkAutoJobStart, actFinishTimeLocal);
+                return NoContent();
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
 
 
 

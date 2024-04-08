@@ -73,16 +73,30 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
     Task<int> ChangeSpecValuesAsync(int sessionId, string userId, int entId, string? newSpecValue, string? newMinValue, string? newMaxValue, bool updateTemplate, int checkPrivs,
         int bomPos, string? bomVerId, string comments, int jobPos);
 
-    
-    Task<string> ChangeWOPriorityAsync();
-    Task<string> ChangeWOQtysAsync();
-    Task<string> ChangeWOReqdFinishTimeAsync();
-    Task<string> ChangeWOValuesAsync();
-    Task<string> CloneJobAsync();
-    Task<string> CloneWOAsync();
-    Task<string> CreateWOFromProcessAsync();
-    Task<string> DownloadSpecsAsync();
-    Task<string> EndJobAsync();
+    Task<int> ChangeWOPriorityAsync(string woId, int newPriority);
+
+    Task<int> ChangeWOQtysAsync(string userId, string woId, double reqQty, string? processId, string? itemId, double? startQty, DateTime? reqFinishTime, DateTime? releaseTime);
+
+    Task<int> ChangeWOReqdFinishTimeAsync(string woId, DateTime reqFinishTimeLocal);
+
+    Task<int> ChangeWOValuesAsync(string woId, int priority, DateTime reqFinishTimeLocal, double qtyReqd, double qtyAtStart);
+
+    Task<int> CloneJobAsync(string userId, string woId, string operId, int seqNo, string? newWoId, string? newOperId, int? newSeqNo, double? reqQty, double? startQty,
+        DateTime? reqFinishTimeLocal);
+
+    Task<int> CloneWoAsync(string userId, string woId, string newWoId, double? reqQty, string? woDesc, DateTime? releaseTimeLocal, DateTime? reqFinishTimeLocal, int? woPriority,
+        string? custInfo, string? moId, string? notes);
+
+    Task<int> CreateWoFromProcessAsync(string userId, string woId, string processId, string itemId, double reqQty, double? startQty, int? initWoState,
+        string? woDesc, DateTime? releaseTime, DateTime? reqFinishTime, int? woPriority, string? custInfo, string? moId, string? notes, string? bomVerId, bool forFirstOp, string? specVerId, bool mayOverrideRoute);
+
+    Task<int> DownloadSpecsAsync(int entId, string woId, string operId, int seqNo, int? stepNo);
+
+    Task<int> EndJobAsync(int entId, string woId, string operId, int seqNo, int jobPos, string? statusNotes, string? userId, int? checkPrivs, int? checkCerts, int clientType,
+        int noPropogation, int checkAutoJobStart, DateTime? actFinishTimeLocal);
+
+
+
     Task<string> GetAvailJobPosAsync();
     Task<string> GetAvailLotsAsync();
     Task<string> GetCurrJobPosAsync();
@@ -120,38 +134,14 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
     Task<string> VerifyProcessAsync();
 
     /*
-      {
-        "_name": "JOB_EXEC.CHANGESPECVALUE",
-        "_value": "SP_U_JOB_SPEC_CHANGESPECVALUE"
-      },
-      {
-        "_name": "JOB_EXEC.CHANGESPECVALUES",
-        "_value": "SP_U_JOB_SPEC_CHANGESPECVALUES"
-      },
-      {
-        "_name": "JOB_EXEC.CHANGEWOQTYS",
-        "_value": "SP_ALLOC_JOB_QTY"
-      },
-      {
-        "_name": "JOB_EXEC.CHANGEWOREQFINISHTIME",
-        "_value": "SP_U_JOB_EXEC_CHWOREQFINTIME"
-      },
-      {
-        "_name": "JOB_EXEC.CLONEJOB",
-        "_value": "SP_I_JOB_EXEC_CLONEJOB"
-      },
-      {
-        "_name": "JOB_EXEC.CLONEWO",
-        "_value": "SP_I_JOB_EXEC_CLONEWO"
-      },
+
+
       {
         "_name": "JOB_EXEC.CREATEJOBSFROMSTDOPS",
         "_value": "SP_I_JOB_EXEC_CRTJOBSFROMSTDOP"
       },
-      {
-        "_name": "JOB_EXEC.CREATEWOFROMPROCESS",
-        "_value": "SP_I_JOB_EXEC_CWOFP_STACK"
-      },
+
+
       {
         "_name": "JOB_EXEC.CREATEWOFROMPROCESSQTYS",
         "_value": "SP_I_JOB_EXEC_CWOFP_QTY"

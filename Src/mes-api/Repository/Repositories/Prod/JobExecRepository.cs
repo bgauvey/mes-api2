@@ -20,19 +20,17 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Data;
-using System.Diagnostics;
-using System.Xml.Linq;
 using api.Models;
+using System.Xml.Linq;
 using BOL.API.Domain.Models;
-using BOL.API.Domain.Models.Core;
-using BOL.API.Domain.Models.EnProd;
 using BOL.API.Domain.Models.Prod;
 using BOL.API.Repository.Helper;
 using BOL.API.Repository.Interfaces.Prod;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using BOL.API.Domain.Models.EnProd;
+using System.Diagnostics;
+using static Azure.Core.HttpHeader;
 
 namespace BOL.API.Repository.Repositories.Prod;
 
@@ -534,11 +532,6 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         return data;
     }
 
-    public Task<string> ChangeSpecValueAsync()
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<int> ChangeSpecValueAsync(string userId, int entId, string specId, string newSpecValue, bool updateTemplate, int bomPos = 0, string? bomVerId = null, string? comments = null, int jobPos = 0)
     {
         var parameters = new List<KeyValuePair<string, object>>
@@ -607,52 +600,299 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         return data;
     }
 
-
-
-    public Task<string> ChangeWOPriorityAsync()
+    public async Task<int> ChangeWOPriorityAsync(string woId, int newPriority)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("new_priority", newPriority)
+        };
+        Command command = new Command()
+        {
+            Cmd = "ChangeWOPriority",
+            MsgType = "exec",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+        return data;
     }
 
-    public Task<string> ChangeWOQtysAsync()
+    public async Task<int> ChangeWOQtysAsync(string userId, string woId, double reqQty, string? processId = null, string? itemId = null, double? startQty = null, DateTime? reqFinishTime = null, DateTime? releaseTime = null)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("process_id", processId),
+            new KeyValuePair<string, object>("item_id", itemId),
+            new KeyValuePair<string, object>("req_qty", reqQty),
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("start_qty", startQty),
+            new KeyValuePair<string, object>("req_finish_time", reqFinishTime),
+            new KeyValuePair<string, object>("release_time", releaseTime),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+        };
+        Command command = new Command()
+        {
+            Cmd = "Job_Qty",
+            MsgType = "",
+            Object = "Alloc",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+        return data;
     }
 
-    public Task<string> ChangeWOReqdFinishTimeAsync()
+    public async Task<int> ChangeWOReqdFinishTimeAsync(string woId, DateTime reqFinishTimeLocal)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("req_finish_time_local", reqFinishTimeLocal),
+      
+        };
+        Command command = new Command()
+        {
+            Cmd = "ChWOReqFinTime",
+            MsgType = "exec",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+        return data;
     }
 
-    public Task<string> ChangeWOValuesAsync()
+    public async Task<int> ChangeWOValuesAsync(string woId, int priority, DateTime reqFinishTimeLocal, double qtyReqd, double qtyAtStart)
     {
-        throw new NotImplementedException();
+        string modId = String.Empty;
+
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("priority", priority),
+            new KeyValuePair<string, object>("req_finish_time_local", reqFinishTimeLocal),
+            new KeyValuePair<string, object>("qty_reqd", qtyReqd),
+            new KeyValuePair<string, object>("qty_at_start", qtyAtStart),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("mod_id OUTPUT", modId)
+
+        };
+        Command command = new Command()
+        {
+            Cmd = "ChangeWOValues",
+            MsgType = "exec",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+        return data;
     }
 
-    public Task<string> CloneJobAsync()
+    public async Task<int> CloneJobAsync(string userId, string woId, string operId, int seqNo, string? newWoId, string? newOperId, int? newSeqNo, double? reqQty, double? startQty, DateTime? reqFinishTimeLocal)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("seq_no", seqNo),
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("new_wo_id", newWoId),
+            new KeyValuePair<string, object>("new_oper_id", newOperId),
+            new KeyValuePair<string, object>("new_seq_no", newSeqNo),
+            new KeyValuePair<string, object>("req_qty", reqQty),
+            new KeyValuePair<string, object>("start_qty", startQty),
+            new KeyValuePair<string, object>("req_finish_time_local", reqFinishTimeLocal),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "Clone",
+            MsgType = "exec",
+            Object = "Job",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+        return data;
     }
 
-    public Task<string> CloneWOAsync()
+    public async Task<int> CloneWoAsync(string userId, string woId, string newWoId, double? reqQty, string? woDesc, DateTime? releaseTimeLocal, DateTime? reqFinishTimeLocal, int? woPriority, string? custInfo, string? moId, string? notes)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("new_wo_id", newWoId),
+            new KeyValuePair<string, object>("existing_wo_id", woId),
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("req_qty", reqQty),
+            new KeyValuePair<string, object>("wo_desc", woDesc),
+            new KeyValuePair<string, object>("release_time_local", releaseTimeLocal),
+            new KeyValuePair<string, object>("req_finish_time_local", reqFinishTimeLocal),
+            new KeyValuePair<string, object>("wo_priority", woPriority),
+            new KeyValuePair<string, object>("cust_info", custInfo),
+            new KeyValuePair<string, object>("mo_id", moId),
+            new KeyValuePair<string, object>("notes", notes),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "CloneWO",
+            MsgType = "exec",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+        return data;
     }
 
-    public Task<string> CreateWOFromProcessAsync()
+    public async Task<int> CreateWoFromProcessAsync(string userId, string woId, string processId, string itemId, double reqQty, double? startQty = null, int? initWoState = 1,
+        string? woDesc = null, DateTime? releaseTime = null, DateTime? reqFinishTime = null, int? woPriority = 1, string? custInfo = null, string? moId = null, string? notes = "",
+        string? bomVerId = null,  bool forFirstOp = false, string? specVerId = null, bool mayOverrideRoute = false)
     {
-        throw new NotImplementedException();
+        if (woDesc == null) woDesc = woId;
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+           
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("process_id", processId),
+            new KeyValuePair<string, object>("item_id", itemId),
+            new KeyValuePair<string, object>("req_qty", reqQty),
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("start_qty", startQty),
+            new KeyValuePair<string, object>("init_wo_state", initWoState),
+            new KeyValuePair<string, object>("wo_desc", woDesc),
+            new KeyValuePair<string, object>("release_time", releaseTime),
+            new KeyValuePair<string, object>("req_finish_time", reqFinishTime),
+            new KeyValuePair<string, object>("wo_priority", woPriority),
+            new KeyValuePair<string, object>("cust_info", custInfo),
+            new KeyValuePair<string, object>("mo_id", moId),
+            new KeyValuePair<string, object>("notes", notes),
+            new KeyValuePair<string, object>("bom_ver_id", bomVerId),
+            new KeyValuePair<string, object>("for_first_op", forFirstOp),
+            new KeyValuePair<string, object>("spec_ver_id", specVerId),
+            new KeyValuePair<string, object>("may_override_route", mayOverrideRoute),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "CWOFP_Stack",
+            MsgType = "add",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+        return data;
     }
 
-    public Task<string> DownloadSpecsAsync()
+    public async Task<int> DownloadSpecsAsync(int entId, string woId, string operId, int seqNo, int? stepNo = -1)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("existing_wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("seq_no", seqNo),
+            new KeyValuePair<string, object>("step_no", stepNo)
+        };
+        Command command = new Command()
+        {
+            Cmd = "DownloadSpecs",
+            MsgType = "exec",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+        return data;
     }
 
-    public Task<string> EndJobAsync()
+    public async Task<int> EndJobAsync(int entId, string woId, string operId, int seqNo, int jobPos = 0, string? statusNotes = null, string? userId = null, int? checkPrivs = null,
+        int? checkCerts = null, int clientType = 37, int noPropogation = 0, int checkAutoJobStart = 1, DateTime? actFinishTimeLocal = null)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("seq_no", seqNo),
+            new KeyValuePair<string, object>("job_pos", jobPos),
+            new KeyValuePair<string, object>("status_notes", statusNotes),
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("check_privs", checkPrivs),
+            new KeyValuePair<string, object>("check_certs", checkCerts),
+            new KeyValuePair<string, object>("client_type", clientType),
+            new KeyValuePair<string, object>("no_propogation", noPropogation),
+            new KeyValuePair<string, object>("check_auto_job_start", checkAutoJobStart),
+            new KeyValuePair<string, object>("act_finish_time_local", actFinishTimeLocal),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "EndJob",
+            MsgType = "exec",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+        return data;
     }
+
+
+
+
+
+
 
     public Task<string> GetAvailJobPosAsync()
     {
