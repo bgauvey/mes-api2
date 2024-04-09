@@ -147,9 +147,9 @@ public class JobExecService : IJobExecService
     }
 
     public async Task<int> EndJobAsync(int entId, string woId, string operId, int seqNo, int jobPos = 0, string? statusNotes = null, string? userId = null, int? checkPrivs = null,
-        int? checkCerts = null, int clientType = 37, int noPropogation = 0, int checkAutoJobStart = 1, DateTime? actFinishTimeLocal = null)
+        int? checkCerts = null, int clientType = 37, int noPropogation = 0, int checkAutoJobStart = 1)
     {
-        return await _jobExecRepository.EndJobAsync(entId, woId, operId, seqNo, jobPos, statusNotes, userId, checkPrivs, checkCerts, clientType, noPropogation, checkAutoJobStart, actFinishTimeLocal);
+        return await _jobExecRepository.EndJobAsync(entId, woId, operId, seqNo, jobPos, statusNotes, userId, checkPrivs, checkCerts, clientType, noPropogation, checkAutoJobStart);
     }
 
     public async Task<string> GetAvailJobPosAsync(int entId)
@@ -167,21 +167,29 @@ public class JobExecService : IJobExecService
         return await _jobExecRepository.GetCurrJobPosAsync(entId, woId, operId, seqNo);
     }
 
-
-
-
-
-
-
-
-        public List<object> GetJobQueue(string woId, string itemId)
+    public async Task<string> GetJobBOMStepQuantitiesAsync(string woId, string operId, int seqNo, int stepNo)
     {
-        throw new NotImplementedException();
+        return await _jobExecRepository.GetJobBOMStepQuantitiesAsync(woId, operId, seqNo, stepNo);
     }
 
-    public List<object> GetQueue(int entId, int? jobState, DateTime? reqdByTime, int? job_Priority, int? maxRows)
+    public async Task<string> GetJobQueueAsync(string woId, string itemId)
     {
-        throw new NotImplementedException();
+        return await _jobExecRepository.GetJobQueueAsync(woId, itemId);
+    }
+
+    public async Task<string> GetJobQueueByFilterAsync(string entFilter, string jobFilter)
+    {
+        return await _jobExecRepository.GetJobQueueByFilterAsync(entFilter, jobFilter);
+    }
+
+    public async Task<string> GetReqdCertSignoffsAsync(string woId, string operId, int stepNo)
+    {
+        return await _jobExecRepository.GetReqdCertSignoffsAsync(woId, operId, stepNo);
+    }
+
+    public async Task<string> GetRunnableEntitiesAsync(int entId)
+    {
+        return await _jobExecRepository.GetRunnableEntitiesAsync(entId);
     }
 }
 

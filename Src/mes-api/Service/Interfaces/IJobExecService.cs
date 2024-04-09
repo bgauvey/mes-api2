@@ -63,7 +63,7 @@ public interface IJobExecService
     Task<int> DownloadSpecsAsync(int entId, string woId, string operId, int seqNo, int? stepNo);
 
     Task<int> EndJobAsync(int entId, string woId, string operId, int seqNo, int jobPos, string? statusNotes, string? userId, int? checkPrivs, int? checkCerts, int clientType,
-    int noPropogation, int checkAutoJobStart, DateTime? actFinishTimeLocal);
+    int noPropogation, int checkAutoJobStart);
 
     Task<string> GetAvailJobPosAsync(int entId);
 
@@ -71,11 +71,14 @@ public interface IJobExecService
 
     Task<string> GetCurrJobPosAsync(int entId, string woId, string operId, int seqNo);
 
+    Task<string> GetJobBOMStepQuantitiesAsync(string woId, string operId, int seqNo, int stepNo);
 
+    Task<string> GetJobQueueAsync(string woId, string itemId);
 
+    Task<string> GetJobQueueByFilterAsync(string entFilter, string jobFilter);
 
-    List<object> GetJobQueue(string woId, string itemId);
+    Task<string> GetReqdCertSignoffsAsync(string woId, string operId, int stepNo);
 
-    List<object> GetQueue(int entId, int? jobState, DateTime? reqdByTime, int? job_Priority, int? maxRows);
+    Task<string> GetRunnableEntitiesAsync(int entId);
 }
 

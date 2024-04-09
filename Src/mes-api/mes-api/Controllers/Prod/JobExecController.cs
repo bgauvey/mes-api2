@@ -23,6 +23,7 @@
 using System.Diagnostics;
 using System.Security.Claims;
 using api.Models;
+using BOL.API.Domain.Models.Core;
 using BOL.API.Service.Interfaces;
 using BOL.API.Service.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -795,16 +796,15 @@ namespace bol.api.Controllers.Prod
         /// <param name="clientType"></param>
         /// <param name="noPropogation"></param>
         /// <param name="checkAutoJobStart"></param>
-        /// <param name="actFinishTimeLocal"></param>
         /// <returns></returns>
         [HttpPost("EndJob", Name = "EndJob")]
         [Authorize]
         public async Task<IActionResult> EndJobAsync(int entId, string woId, string operId, int seqNo, int jobPos = 0, string? statusNotes = null, string? userId = null, int? checkPrivs = null,
-        int? checkCerts = null, int clientType = 37, int noPropogation = 0, int checkAutoJobStart = 1, DateTime? actFinishTimeLocal = null)
+        int? checkCerts = null, int clientType = 37, int noPropogation = 0, int checkAutoJobStart = 1)
         {
             try
             {
-                var result = await _JobExecService.EndJobAsync(entId, woId, operId, seqNo, jobPos, statusNotes, userId, checkPrivs, checkCerts, clientType, noPropogation, checkAutoJobStart, actFinishTimeLocal);
+                var result = await _JobExecService.EndJobAsync(entId, woId, operId, seqNo, jobPos, statusNotes, userId, checkPrivs, checkCerts, clientType, noPropogation, checkAutoJobStart);
                 return NoContent();
             }
             catch (Exception exp)
@@ -825,8 +825,8 @@ namespace bol.api.Controllers.Prod
         {
             try
             {
-                var jobPos = await _JobExecService.GetAvailJobPosAsync(entId);
-                return Ok(jobPos);
+                var data = await _JobExecService.GetAvailJobPosAsync(entId);
+                return Ok(data);
             }
             catch (Exception exp)
             {
@@ -844,13 +844,12 @@ namespace bol.api.Controllers.Prod
         /// <param name="entId"></param>
         /// <returns></returns>
         [HttpGet("GetAvailLots", Name = "GetAvailLots")]
-        [Authorize]
         public async Task<IActionResult> GetAvailLotsAsync(string woId, string operId, int seqNo, int entId)
         {
             try
             {
-                var lots = await _JobExecService.GetAvailLotsAsync(woId, operId, seqNo, entId);
-                return Ok(lots);
+                var data = await _JobExecService.GetAvailLotsAsync(woId, operId, seqNo, entId);
+                return Ok(data);
             }
             catch (Exception exp)
             {
@@ -868,13 +867,12 @@ namespace bol.api.Controllers.Prod
         /// <param name="entId"></param>
         /// <returns></returns>
         [HttpGet("GetCurrJobPos", Name = "GetCurrJobPos")]
-        [Authorize]
         public async Task<IActionResult> GetCurrJobPosAsync(string woId, string operId, int seqNo, int entId)
         {
             try
             {
-                var lots = await _JobExecService.GetCurrJobPosAsync(entId, woId, operId, seqNo);
-                return Ok(lots);
+                var data = await _JobExecService.GetCurrJobPosAsync(entId, woId, operId, seqNo);
+                return Ok(data);
             }
             catch (Exception exp)
             {
@@ -883,15 +881,28 @@ namespace bol.api.Controllers.Prod
             }
         }
 
-
-
-
-
-
-
-
-
-
+        /// <summary>
+        /// To return a single recordset containing details of quantities related to the step for a given job, including BOM data IF a BOM item is linked to this step. 
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="seqNo"></param>
+        /// <param name="stepNo"></param>
+        /// <returns></returns>
+        [HttpGet("GetJobBOMStepQuantities", Name = "GetJobBOMStepQuantities")]
+        public async Task<IActionResult> GetJobBOMStepQuantitiesAsync(string woId, string operId, int seqNo, int stepNo)
+        {
+            try
+            {
+                var data = await _JobExecService.GetJobBOMStepQuantitiesAsync(woId, operId, seqNo, stepNo);
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
 
         /// <summary>
         /// To return a list of all jobs in a work order
@@ -900,12 +911,12 @@ namespace bol.api.Controllers.Prod
         /// <param name="itemId"></param>
         /// <returns></returns>
         [HttpGet("GetJobQueue", Name = "GetJobQueue")]
-        public IActionResult GetJobQueue(string woId, string itemId)
+        public async Task<IActionResult> GetJobQueue(string woId, string itemId)
         {
             try
             {
-                _JobExecService.GetJobQueue(woId, itemId);
-                return Ok();
+                var data = await _JobExecService.GetJobQueueAsync(woId, itemId);
+                return Ok(data);
             }
             catch (Exception exp)
             {
@@ -915,22 +926,64 @@ namespace bol.api.Controllers.Prod
         }
 
         /// <summary>
-        /// To retrieve the job schedule or job queue available to a specific entity.
+        /// To return a list of all jobs as applied by filters
         /// </summary>
-        /// <param name="entId"></param>
-        /// <param name="jobState"></param>
-        /// <param name="reqdByTime"></param>
-        /// <param name="job_Priority"></param>
-        /// <param name="maxRows"></param>
+        /// <param name="entFilter"></param>
+        /// <param name="jobFilter"></param>
         /// <returns></returns>
-        [HttpGet("GetQueue", Name = "GetQueue")]
-        public IActionResult GetQueue(int entId, int? jobState, DateTime? reqdByTime, int? job_Priority, int? maxRows)
+        [HttpGet("GetJobQueueByFilter", Name = "GetJobQueueByFilter")]
+        public async Task<IActionResult> GetJobQueueByFilterAsync(string entFilter, string jobFilter)
         {
             try
             {
-                _JobExecService.GetQueue(entId, jobState, reqdByTime, job_Priority, maxRows);
+                var data = await _JobExecService.GetJobQueueByFilterAsync(entFilter, jobFilter);
 
-                return Ok();
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To return a recordset containing details of all certifications that require signoff for a given job and / or step. 
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="stepNo"></param>
+        /// <returns></returns>
+        [HttpGet("GetReqdCertSignoffs", Name = "GetReqdCertSignoffs")]
+        public async Task<IActionResult> GetReqdCertSignoffsAsync(string woId, string operId, int stepNo)
+        {
+            try
+            {
+                var data = await _JobExecService.GetReqdCertSignoffsAsync(woId, operId, stepNo);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+
+        }
+
+        /// <summary>
+        /// To return an entity and a list of all descendent entities that can run jobs.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <returns></returns>
+        [HttpGet("GetRunnableEntities", Name = "GetRunnableEntities")]
+        public async Task<IActionResult> GetRunnableEntitiesAsync(int entId)
+        {
+            try
+            {
+                var data = await _JobExecService.GetRunnableEntitiesAsync(entId);
+
+                return Ok(data);
             }
             catch (Exception exp)
             {

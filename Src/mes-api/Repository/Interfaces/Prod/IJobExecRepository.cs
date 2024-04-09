@@ -93,7 +93,7 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
     Task<int> DownloadSpecsAsync(int entId, string woId, string operId, int seqNo, int? stepNo);
 
     Task<int> EndJobAsync(int entId, string woId, string operId, int seqNo, int jobPos, string? statusNotes, string? userId, int? checkPrivs, int? checkCerts, int clientType,
-        int noPropogation, int checkAutoJobStart, DateTime? actFinishTimeLocal);
+        int noPropogation, int checkAutoJobStart);
 
     Task<string> GetAvailJobPosAsync(int entId);
 
@@ -101,28 +101,27 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
 
     Task<string> GetCurrJobPosAsync(int entId, string woId, string operId, int seqNo);
 
+    Task<string> GetJobBOMStepQuantitiesAsync(string woId, string operId, int seqNo, int stepNo);
 
-
-
-
-
-
-
-
-    Task<string> GetJobBOMStepQuantitiesAsync();
     Task<string> GetJobQueueAsync(string woId, string itemId);
-    Task<string> GetQueueAsync(int entId, int? jobState, DateTime? reqdByTime, int? job_Priority, int? maxRows);
-    Task<string> GetReqdCertSignoffsAsync();
-    Task<string> GetRunnableEntitiesAsync();
+
+    Task<string> GetJobQueueByFilterAsync(string entFilter, string jobFilter);
+
+    Task<string> GetReqdCertSignoffsAsync(string woId, string operId, int stepNo);
+
+    Task<string> GetRunnableEntitiesAsync(int entId);
+
     Task<string> GetSchedEntsByWindowAsync();
     Task<string> GetSchedulableEntitiesAsync();
     Task<string> GetSchedulableEntityAsync();
     Task<string> GetSchedulableParentsAsync();
     Task<string> GetStepBOMDataAsync();
+
     Task<string> InsertProdViaFCAsync();
     Task<string> LogJobEventAsync();
     Task<string> PauseJobAsync();
     Task<string> RejectProdAsync();
+
     Task<string> SetActualSpecValueAsync();
     Task<string> SetAttrAsync();
     Task<string> SetCurLotDataAsync();
@@ -137,31 +136,20 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
     Task<string> StepLoginAsync();
     Task<string> StepLogoutAsync();
     Task<string> StopStepAsync();
+
     Task<string> TransQtyToCurJobAsync();
     Task<string> UpdateStepDataAsync();
     Task<string> UpdateTemplateSpecValuesAsync();
     Task<string> VerifyProcessAsync();
 
     /*
-
-
       {
         "_name": "JOB_EXEC.CREATEJOBSFROMSTDOPS",
         "_value": "SP_I_JOB_EXEC_CRTJOBSFROMSTDOP"
       },
-
-
       {
         "_name": "JOB_EXEC.CREATEWOFROMPROCESSQTYS",
         "_value": "SP_I_JOB_EXEC_CWOFP_QTY"
-      },
-      {
-        "_name": "JOB_EXEC.ENDJOB",
-        "_value": "SP_U_JOB_EXEC_ENDBATCHJOBS"
-      },
-      {
-        "_name": "JOB_EXEC.GETAVAILJOBPOS",
-        "_value": "SP_SA_JOB_EXEC_GETAVAILJOBPOS"
       },
       {
         "_name": "JOB_EXEC.GETITEMSPRODBYDSTRMJOB",
@@ -171,10 +159,8 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
         "_name": "JOB_EXEC.GETJOBBOMSTEPQUANTITIES",
         "_value": "SP_SA_JOB_EXEC_GETJBSTEPQUANTS"
       },
-      {
-        "_name": "JOB_EXEC.GETREQDCERTSIGNOFFS",
-        "_value": "SP_SA_JOB_EXEC_GETREQDSIGNOFFS"
-      },
+
+
       {
         "_name": "JOB_EXEC.GETRUNNABLEENTITIES",
         "_value": "SP_SA_ENT_GETRUNNABLEENTITIES"

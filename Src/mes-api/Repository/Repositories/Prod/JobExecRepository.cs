@@ -22,17 +22,11 @@
 
 using System.Data;
 using api.Models;
-using System.Xml.Linq;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Prod;
 using BOL.API.Repository.Helper;
 using BOL.API.Repository.Interfaces.Prod;
 using Newtonsoft.Json;
-using BOL.API.Domain.Models.EnProd;
-using System.Diagnostics;
-using static Azure.Core.HttpHeader;
-using BOL.API.Domain.Enums;
-using Microsoft.AspNetCore.Http;
 
 namespace BOL.API.Repository.Repositories.Prod;
 
@@ -282,7 +276,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("spare3", spare3),
             new KeyValuePair<string, object>("spare4", spare4),
             new KeyValuePair<string, object>("time_zone_bias_value", 0)
-            
+
         };
         Command command = new Command()
         {
@@ -346,7 +340,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("comments", comments),
             new KeyValuePair<string, object>("ref_row_id", refRowId),
             new KeyValuePair<string, object>("time_zone_bias_value", 0),
-            new KeyValuePair<string, object>("row_id OUTPUT", rowId),            
+            new KeyValuePair<string, object>("row_id OUTPUT", rowId),
         };
         Command command = new Command()
         {
@@ -663,7 +657,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         {
             new KeyValuePair<string, object>("wo_id", woId),
             new KeyValuePair<string, object>("req_finish_time_local", reqFinishTimeLocal),
-      
+
         };
         Command command = new Command()
         {
@@ -783,12 +777,12 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
 
     public async Task<int> CreateWoFromProcessAsync(string userId, string woId, string processId, string itemId, double reqQty, double? startQty = null, int? initWoState = 1,
         string? woDesc = null, DateTime? releaseTime = null, DateTime? reqFinishTime = null, int? woPriority = 1, string? custInfo = null, string? moId = null, string? notes = "",
-        string? bomVerId = null,  bool forFirstOp = false, string? specVerId = null, bool mayOverrideRoute = false)
+        string? bomVerId = null, bool forFirstOp = false, string? specVerId = null, bool mayOverrideRoute = false)
     {
         if (woDesc == null) woDesc = woId;
         var parameters = new List<KeyValuePair<string, object>>
         {
-           
+
             new KeyValuePair<string, object>("wo_id", woId),
             new KeyValuePair<string, object>("process_id", processId),
             new KeyValuePair<string, object>("item_id", itemId),
@@ -854,7 +848,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
     }
 
     public async Task<int> EndJobAsync(int entId, string woId, string operId, int seqNo, int jobPos = 0, string? statusNotes = null, string? userId = null, int? checkPrivs = null,
-        int? checkCerts = null, int clientType = 37, int noPropogation = 0, int checkAutoJobStart = 1, DateTime? actFinishTimeLocal = null)
+        int? checkCerts = null, int clientType = 37, int noPropogation = 0, int checkAutoJobStart = 1)
     {
         var parameters = new List<KeyValuePair<string, object>>
         {
@@ -870,12 +864,11 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("client_type", clientType),
             new KeyValuePair<string, object>("no_propogation", noPropogation),
             new KeyValuePair<string, object>("check_auto_job_start", checkAutoJobStart),
-            new KeyValuePair<string, object>("act_finish_time_local", actFinishTimeLocal),
             new KeyValuePair<string, object>("time_zone_bias_value", 0)
         };
         Command command = new Command()
         {
-            Cmd = "EndJob",
+            Cmd = "EndBatchJobs",
             MsgType = "exec",
             Object = "Job_Exec",
             Parameters = parameters,
@@ -951,15 +944,6 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
 
     public async Task<string> GetCurrJobPosAsync(int entId, string woId, string operId, int seqNo)
     {
-        /*
-         * @ent_id	INT32
-            ,@wo_id		STRING80
-            ,@oper_id	STRING80
-            ,@seq_no	INT32
-            ,@job_pos	INT32 OUTPUT
-         * 
-         * 
-         * */
         int jobPos = -1;
         var parameters = new List<KeyValuePair<string, object>>
         {
@@ -967,7 +951,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("wo_id", woId),
             new KeyValuePair<string, object>("oper_id", operId),
             new KeyValuePair<string, object>("seq_no", seqNo),
-            new KeyValuePair<string, object>("job_pos OUTPUT", entId)
+            new KeyValuePair<string, object>("job_pos OUTPUT", jobPos)
         };
         Command command = new Command()
         {
@@ -988,43 +972,153 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         });
 
         return data;
-
-
-        throw new NotImplementedException();
-        // sp_SA_Job_Exec_GetCurrJobPos
     }
 
-
-
-
-
-
-
-
-    public Task<string> GetJobBOMStepQuantitiesAsync()
+    public async Task<string> GetJobBOMStepQuantitiesAsync(string woId, string operId, int seqNo, int stepNo)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("seq_no", seqNo),
+            new KeyValuePair<string, object>("step_no", stepNo)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetJBStepQuants",
+            MsgType = "getall",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
-    public Task<string> GetJobQueueAsync(string woId, string itemId)
+    public async Task<string> GetJobQueueAsync(string woId, string itemId)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("item_id", itemId),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetJobQueue",
+            MsgType = "getall",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
-    public Task<string> GetQueueAsync(int entId, int? jobState, DateTime? reqdByTime, int? job_Priority, int? maxRows)
+    public async Task<string> GetJobQueueByFilterAsync(string entFilter, string jobFilter)
     {
-        throw new NotImplementedException();
-        // SP_SA_JOB_EXEC_GETQUEUE
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_filter", entFilter),
+            new KeyValuePair<string, object>("job_filter", jobFilter),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetJobQueueByFilter",
+            MsgType = "getall",
+            Object = "Job",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
-    public Task<string> GetReqdCertSignoffsAsync()
+    public async Task<string> GetReqdCertSignoffsAsync(string woId, string operId, int stepNo)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("step_no", stepNo)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetReqdSignoffs",
+            MsgType = "getall",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
-    public Task<string> GetRunnableEntitiesAsync()
+    public async Task<string> GetRunnableEntitiesAsync(int entId)
     {
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetRunnableEntities",
+            MsgType = "getall",
+            Object = "Ent",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
+
         throw new NotImplementedException();
+        //sp_SA_Ent_GetRunnableEntities
     }
 
     public Task<string> GetSchedEntsByWindowAsync()
