@@ -70,7 +70,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="spare3"></param>
         /// <param name="spare4"></param>
         /// <returns></returns>
-        [HttpPost("AddCons", Name = "AddCons")]
+        [HttpPut("AddCons", Name = "AddCons")]
         [Authorize]
         public async Task<IActionResult> AddCons(int entId, int jobPos, int bomPos, double qtyCons, int? reasCd, string? lotNo, string? fgLotNo, string? sublotNo, string? fgSublotNo,
         int? fromEntId, string? itemId, string extRef, bool applyScalingFactor, string spare1, string spare2, string spare3, string spare4)
@@ -120,7 +120,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="spare3"></param>
         /// <param name="spare4"></param>
         /// <returns></returns>
-        [HttpPost("AddConsDirect", Name = "AddConsDirect")]
+        [HttpPut("AddConsDirect", Name = "AddConsDirect")]
         [Authorize]
         public async Task<IActionResult> AddConsDirect(int fromEntId, string itemId, string lotNo, string sublotNo, double qtyCons, int reasCd, int gradeCd, int statusCd, string userId,
                     string? woId, string? operId, int? seqNo, DateTime? shiftStartLocal, string? fgLotNo, string? fgSublotNo, int itemScrapped,
@@ -167,7 +167,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="spare3"></param>
         /// <param name="spare4"></param>
         /// <returns></returns>
-        [HttpPost("AddConsPostExec", Name = "AddConsPostExec")]
+        [HttpPut("AddConsPostExec", Name = "AddConsPostExec")]
         [Authorize]
         public async Task<IActionResult> AddConsPostExec(int entId, int? bomPos, double qtyCons, string woId, string operId, int seqNo, DateTime shiftStartLocal,
             int shiftId, string? itemId, int? reasCd, string? lotNo, string? fgLotNo, string? sublotNo, string? fgSublotNo, string? extRef, string spare1, string spare2, string spare3, string spare4)
@@ -209,7 +209,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="spare4"></param>
         /// <param name="jobPos"></param>
         /// <returns></returns>
-        [HttpPost("AddProd", Name = "AddProd")]
+        [HttpPut("AddProd", Name = "AddProd")]
         [Authorize]
         public async Task<IActionResult> AddProd(int entId, double qtyProd,
         int? reasCd, string? lotNo, string? sublotNo, int? toEntId, string? itemId, int? byproductBomPos,
@@ -255,7 +255,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="spare3"></param>
         /// <param name="spare4"></param>
         /// <returns></returns>
-        [HttpPost("AddProdPostExec", Name = "AddProdPostExec")]
+        [HttpPut("AddProdPostExec", Name = "AddProdPostExec")]
         [Authorize]
         public async Task<IActionResult> AddProdPostExec(int entId, double qtyProd, string woId, string operId, int seqNo, DateTime shiftStartLocal,
         int shiftId, string? itemId, int? reasCd, string? lotNo, string? sublotNo, int? toEntId, bool? processed, bool? byproduct, string extRef, int? moveStatus,
@@ -283,7 +283,7 @@ namespace bol.api.Controllers.Prod
         /// </summary>
         /// <param name="woId"></param>
         /// <returns></returns>
-        [HttpPost("CancelAllJobs", Name = "CancelAllJobs")]
+        [HttpPut("CancelAllJobs", Name = "CancelAllJobs")]
         [Authorize]
         public async Task<IActionResult>  CancelAllJobs(string woId)
         {
@@ -319,7 +319,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="comments"></param>
         /// <param name="refRowId"></param>
         /// <returns></returns>
-        [HttpPost("CertSignOff", Name = "CertSignOff")]
+        [HttpPut("CertSignOff", Name = "CertSignOff")]
         [Authorize]
         public async Task< IActionResult> CertSignOffAsync(string woId, string operId, int seqNo, int? stepNo, string lotNo, int prodLogId, int consLogId, string processId, int processStatus,
         bool active, string certName, DateTime? signOffLocal, string? comments, int refRowId)
@@ -349,7 +349,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="stepNo"></param>
         /// <param name="certName"></param>
         /// <returns></returns>
-        [HttpPost("CertSignOffAllowed", Name = "CertSignOffAllowed")]
+        [HttpPut("CertSignOffAllowed", Name = "CertSignOffAllowed")]
         [Authorize]
         public async Task<IActionResult> CertSignoffAllowedAsync(string processId, string operId, int? stepNo, string? certName)
         {
@@ -383,7 +383,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="processStatus"></param>
         /// <param name="active"></param>
         /// <returns></returns>
-        [HttpPost("CertSignOffDone", Name = "CertSignOffDone")]
+        [HttpPut("CertSignOffDone", Name = "CertSignOffDone")]
         [Authorize]
         public async Task<IActionResult> CertSignoffDoneAsync(string woId, string operId, int seqNo, int? stepNo, string? certName, string? lotNo, int? prodLogId, int? consLogId,
             string? processId, int? processStatus, bool? active)
@@ -408,7 +408,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="operId"></param>
         /// <param name="stepNo"></param>
         /// <returns></returns>
-        [HttpPost("CertSignOffReqd", Name = "CertSignOffReqd")]
+        [HttpPut("CertSignOffReqd", Name = "CertSignOffReqd")]
         [Authorize]
         public async Task<IActionResult> CertSignoffReqdAsync(string processId, string operId, int? stepNo)
         {
@@ -434,7 +434,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="stepNo"></param>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        [HttpPost("CertStartAllowed", Name = "CertStartAllowed")]
+        [HttpPut("CertStartAllowed", Name = "CertStartAllowed")]
         [Authorize]
         public async Task<IActionResult> CertStartAllowedAsync(string? processId, string? operId, int? stepNo, string? itemId)
         {
@@ -461,7 +461,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="jobPriority"></param>
         /// <param name="applyToAllJobs"></param>
         /// <returns></returns>
-        [HttpPost("ChangeJobStates", Name = "ChangeJobStates")]
+        [HttpPut("ChangeJobStates", Name = "ChangeJobStates")]
         [Authorize]
         public async Task<IActionResult> ChangeJobStatesAsync(int rowId, int? stateCd, DateTime? reqFinishTimeLocal, int? jobPriority, int? applyToAllJobs)
         {
@@ -491,7 +491,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="comments"></param>
         /// <param name="jobPos"></param>
         /// <returns></returns>
-        [HttpPost("ChangeSpecValue", Name = "ChangeSpecValue")]
+        [HttpPut("ChangeSpecValue", Name = "ChangeSpecValue")]
         [Authorize]
         public async Task<IActionResult> ChangeSpecValueAsync(int entId, string specId, string newSpecValue, bool updateTemplate, int bomPos = 0, string? bomVerId = null, string? comments = null, int jobPos = 0)
         {
@@ -525,7 +525,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="comments"></param>
         /// <param name="jobPos"></param>
         /// <returns></returns>
-        [HttpPost("ChangeSpecValues", Name = "ChangeSpecValues")]
+        [HttpPut("ChangeSpecValues", Name = "ChangeSpecValues")]
         [Authorize]
         public async Task<IActionResult> ChangeSpecValuesAsync(int entId, string? newSpecValue, string? newMinValue, string? newMaxValue, bool updateTemplate = false, int checkPrivs = 0,
         int bomPos = 0, string? bomVerId = null, string comments = "", int jobPos = 0)
@@ -553,7 +553,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="woId"></param>
         /// <param name="newPriority"></param>
         /// <returns></returns>
-        [HttpPost("ChangeWOPriority", Name = "ChangeWOPriority")]
+        [HttpPut("ChangeWOPriority", Name = "ChangeWOPriority")]
         [Authorize]
         public async Task<IActionResult> ChangeWOPriorityAsync(string woId, int newPriority)
         {
@@ -581,7 +581,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="reqFinishTime"></param>
         /// <param name="releaseTime"></param>
         /// <returns></returns>
-        [HttpPost("ChangeWOQtys", Name = "ChangeWOQtys")]
+        [HttpPut("ChangeWOQtys", Name = "ChangeWOQtys")]
         [Authorize]
         public async Task<IActionResult> ChangeWOQtysAsync(string woId, double reqQty, string? processId = null, string? itemId = null, double? startQty = null, DateTime? reqFinishTime = null, DateTime? releaseTime = null)
         {
@@ -606,7 +606,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="woId"></param>
         /// <param name="reqFinishTimeLocal"></param>
         /// <returns></returns>
-        [HttpPost("ChangeWOReqdFinishTime", Name = "ChangeWOReqdFinishTime")]
+        [HttpPut("ChangeWOReqdFinishTime", Name = "ChangeWOReqdFinishTime")]
         [Authorize]
         public async Task<IActionResult> ChangeWOReqdFinishTimeAsync(string woId, DateTime reqFinishTimeLocal)
         {
@@ -632,7 +632,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="qtyReqd"></param>
         /// <param name="qtyAtStart"></param>
         /// <returns></returns>
-        [HttpPost("ChangeWOValues", Name = "ChangeWOValues")]
+        [HttpPut("ChangeWOValues", Name = "ChangeWOValues")]
         [Authorize]
         public async Task<IActionResult> ChangeWOValuesAsync(string woId, int priority, DateTime reqFinishTimeLocal, double qtyReqd, double qtyAtStart)
         {
@@ -662,7 +662,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="startQty"></param>
         /// <param name="reqFinishTimeLocal"></param>
         /// <returns></returns>
-        [HttpPost("CloneJob", Name = "CloneJob")]
+        [HttpPut("CloneJob", Name = "CloneJob")]
         [Authorize]
         public async Task<IActionResult> CloneJobAsync(string woId, string operId, int seqNo, string? newWoId, string? newOperId, int? newSeqNo, double? reqQty, double? startQty, DateTime? reqFinishTimeLocal)
         {
@@ -695,7 +695,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="moId"></param>
         /// <param name="notes"></param>
         /// <returns></returns>
-        [HttpPost("CloneWo", Name = "CloneWo")]
+        [HttpPut("CloneWo", Name = "CloneWo")]
         [Authorize]
         public async Task<IActionResult> CloneWoAsync(string woId, string newWoId, double? reqQty, string? woDesc, DateTime? releaseTimeLocal, DateTime? reqFinishTimeLocal, int? woPriority, string? custInfo, string? moId, string? notes)
         {
@@ -765,7 +765,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="seqNo"></param>
         /// <param name="stepNo"></param>
         /// <returns></returns>
-        [HttpPost("DownloadSpecs", Name = "DownloadSpecs")]
+        [HttpPut("DownloadSpecs", Name = "DownloadSpecs")]
         [Authorize]
         public async Task<IActionResult> DownloadSpecsAsync(int entId, string woId, string operId, int seqNo, int? stepNo)
         {
@@ -797,7 +797,7 @@ namespace bol.api.Controllers.Prod
         /// <param name="noPropogation"></param>
         /// <param name="checkAutoJobStart"></param>
         /// <returns></returns>
-        [HttpPost("EndJob", Name = "EndJob")]
+        [HttpPut("EndJob", Name = "EndJob")]
         [Authorize]
         public async Task<IActionResult> EndJobAsync(int entId, string woId, string operId, int seqNo, int jobPos = 0, string? statusNotes = null, string? userId = null, int? checkPrivs = null,
         int? checkCerts = null, int clientType = 37, int noPropogation = 0, int checkAutoJobStart = 1)
@@ -982,6 +982,221 @@ namespace bol.api.Controllers.Prod
             try
             {
                 var data = await _JobExecService.GetRunnableEntitiesAsync(entId);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To return all the schedulable entities for a job.
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="windowId"></param>
+        /// <returns></returns>
+        [HttpGet("GetSchedEntsByWindow", Name = "GetSchedEntsByWindow")]
+        public async Task<IActionResult> GetSchedEntsByWindowAsync(string woId = null, string operId = null, int windowId = 0)
+        {
+            try
+            {
+                var data = await _JobExecService.GetSchedEntsByWindowAsync(woId, operId, windowId);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To return an entity that can schedule a job.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <returns></returns>
+        [HttpGet("GetSchedulableEntity", Name = "GetSchedulableEntity")]
+        public async Task<IActionResult> GetSchedulableEntityAsync(int entId)
+        {
+            try
+            {
+                var data = await _JobExecService.GetSchedulableEntityAsync(entId);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To return a list of all parent entities from an entity that can schedule jobs.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <returns></returns>
+        [HttpGet("GetSchedulableParents", Name = "GetSchedulableParents")]
+        public async Task<IActionResult> GetSchedulableParentsAsync(int entId)
+        {
+            try
+            {
+                var data = await _JobExecService.GetSchedulableParentsAsync(entId);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To return a single recordset containing details of all step data for a given job, including any BOM data IF a BOM item is linked to this step. 
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="seqNo"></param>
+        /// <param name="stepNo"></param>
+        /// <returns></returns>
+        [HttpGet("GetStepBOMData", Name = "GetStepBOMData")]
+        public async Task<IActionResult> GetStepBOMDataAsync(string woId, string operId, int seqNo, int? stepNo = null)
+        {
+            try
+            {
+                var data = await _JobExecService.GetStepBOMDataAsync(woId, operId, seqNo, stepNo);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To add a new row to the job_event table.  This allows multiple events to be logged for a given job or step.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="eventTimeLocal"></param>
+        /// <param name="jobPos"></param>
+        /// <param name="stepNo"></param>
+        /// <param name="eventType"></param>
+        /// <param name="bomPos"></param>
+        /// <param name="lotNo"></param>
+        /// <param name="sublotNo"></param>
+        /// <param name="itemId"></param>
+        /// <param name="certName"></param>
+        /// <param name="doneByUserId"></param>
+        /// <param name="checkedByUserId"></param>
+        /// <param name="sourceRowId"></param>
+        /// <param name="specId"></param>
+        /// <param name="comments"></param>
+        /// <param name="value1"></param>
+        /// <param name="value2"></param>
+        /// <param name="value3"></param>
+        /// <param name="value4"></param>
+        /// <param name="value5"></param>
+        /// <param name="value6"></param>
+        /// <param name="value7"></param>
+        /// <param name="value8"></param>
+        /// <param name="value9"></param>
+        /// <param name="value10"></param>
+        /// <param name="lastEditComment"></param>
+        /// <returns></returns>
+        [HttpPost("LogJobEvent", Name = "LogJobEvent")]
+        [Authorize]
+        public async Task<IActionResult> LogJobEventAsync(int entId, DateTime eventTimeLocal, int jobPos, int stepNo, string eventType, int bomPos, string lotNo, string sublotNo, string itemId, string certName, string doneByUserId,
+        string checkedByUserId, int sourceRowId, string specId, string comments, string value1, string value2, string value3, string value4, string value5, string value6, string value7, string value8, string value9,
+        string value10, string lastEditComment)
+        {
+            try
+            {
+                var data = await _JobExecService.LogJobEventAsync(entId, eventTimeLocal, jobPos, stepNo, eventType, bomPos, lotNo, sublotNo, itemId, certName, doneByUserId,
+                    checkedByUserId, sourceRowId, specId, comments, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, lastEditComment);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To Stop a RUNNING job on an entity. Used to Suspend, Put on Hold or return a Running job to the READY or NEW state.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="seqNo"></param>
+        /// <param name="pausedJobState"></param>
+        /// <param name="jobPos"></param>
+        /// <param name="statusNotes"></param>
+        /// <param name="actFinishTimeLocal"></param>
+        /// <returns></returns>
+        [HttpPut("PauseJob", Name = "PauseJob")]
+        [Authorize]
+        public async Task<IActionResult> PauseJobAsync(int entId, string woId, string operId, int seqNo, int pausedJobState, int jobPos = 0, string statusNotes = null, DateTime? actFinishTimeLocal = null)
+        {
+            try
+            {
+                var data = await _JobExecService.PauseJobAsync(entId, woId, operId, seqNo, pausedJobState, jobPos, statusNotes, actFinishTimeLocal);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To reject all or part of an existing row in the production transaction table (item_prod) for a specified reject reason.
+        /// The quantity that is rejected may result in a new row or it may simply add to another existing row if the primary key fields matches.
+        /// </summary>
+        /// <param name="oldRowId"></param>
+        /// <param name="splitQtyProd"></param>
+        /// <param name="newWoId"></param>
+        /// <param name="newOperId"></param>
+        /// <param name="newSeqNo"></param>
+        /// <param name="newShiftStartLocal"></param>
+        /// <param name="newItemId"></param>
+        /// <param name="newLotNo"></param>
+        /// <param name="newRmLotNo"></param>
+        /// <param name="newSublotNo"></param>
+        /// <param name="newRmSublotNo"></param>
+        /// <param name="newReasCd"></param>
+        /// <param name="newEntId"></param>
+        /// <param name="newShiftId"></param>
+        /// <param name="newToEntId"></param>
+        /// <param name="splitQtyProdErp"></param>
+        /// <param name="splitProcessedFlag"></param>
+        /// <param name="splitByproductFlag"></param>
+        /// <returns></returns>
+        [HttpPost("RejectProd", Name = "RejectProd")]
+        [Authorize]
+        public async Task<IActionResult> RejectProdAsync(int oldRowId, double splitQtyProd, string newWoId = null, string newOperId = null, int? newSeqNo = null, DateTime? newShiftStartLocal = null,
+                    string newItemId = null, string newLotNo = null, string newRmLotNo = null, string newSublotNo = null, string newRmSublotNo = null, int? newReasCd = null, int? newEntId = null,
+                    int? newShiftId = null, int? newToEntId = null, double? splitQtyProdErp = null, bool splitProcessedFlag = false, bool splitByproductFlag = false)
+        {
+            try
+            {
+                var newUserId = User.Identity.Name;
+                var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                                         .Select(c => Convert.ToInt32(c.Value)).SingleOrDefault();
+
+                var data = await _JobExecService.RejectProdAsync(sessionId, oldRowId, splitQtyProd, newWoId, newOperId, newSeqNo, newShiftStartLocal, newItemId, newLotNo, newRmLotNo,
+                    newSublotNo, newRmSublotNo, newReasCd, newUserId, newEntId, newShiftId, newToEntId, splitQtyProdErp, splitProcessedFlag, splitByproductFlag);
 
                 return Ok(data);
             }

@@ -22,10 +22,12 @@
 
 using System.Data;
 using api.Models;
+using BOL.API.Domain.Enums;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Prod;
 using BOL.API.Repository.Helper;
 using BOL.API.Repository.Interfaces.Prod;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
 namespace BOL.API.Repository.Repositories.Prod;
@@ -1116,54 +1118,252 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         });
 
         return data;
-
-        throw new NotImplementedException();
-        //sp_SA_Ent_GetRunnableEntities
     }
 
-    public Task<string> GetSchedEntsByWindowAsync()
+    public async Task<string> GetSchedEntsByWindowAsync(string woId = null, string operId = null, int windowId = 0)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("window_id", windowId)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetSchedEnts",
+            MsgType = "getall",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
-    public Task<string> GetSchedulableEntitiesAsync()
+    public async Task<string> GetSchedulableEntityAsync(int entId)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id OUTPUT", entId)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetSchedulableEntity",
+            MsgType = "getall",
+            Object = "Ent",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
-    public Task<string> GetSchedulableEntityAsync()
+    public async Task<string> GetSchedulableParentsAsync(int entId)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetSchedParents",
+            MsgType = "getall",
+            Object = "Ent",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
-    public Task<string> GetSchedulableParentsAsync()
+    public async Task<string> GetStepBOMDataAsync(string woId, string operId, int seqNo, int? stepNo = null)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("seq_no", seqNo),
+            new KeyValuePair<string, object>("step_no", stepNo)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetStepBOMData",
+            MsgType = "getall",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
-    public Task<string> GetStepBOMDataAsync()
+    public async Task<string> LogJobEventAsync(int entId, DateTime eventTimeLocal, int jobPos, int stepNo, string eventType, int bomPos, string lotNo,string sublotNo, string itemId, string certName, string doneByUserId,
+        string checkedByUserId, int sourceRowId, string specId, string comments, string value1, string value2, string value3, string value4, string value5, string value6, string value7, string value8, string value9,
+        string value10, string lastEditComment)
     {
-        throw new NotImplementedException();
+        int rowId = -1;
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("event_time_local", eventTimeLocal),
+            new KeyValuePair<string, object>("job_pos", jobPos),
+            new KeyValuePair<string, object>("step_no", stepNo),
+            new KeyValuePair<string, object>("event_type", eventType),
+            new KeyValuePair<string, object>("bom_pos", bomPos),
+            new KeyValuePair<string, object>("lot_no", lotNo),
+            new KeyValuePair<string, object>("sublot_no", sublotNo),
+            new KeyValuePair<string, object>("item_id", itemId),
+            new KeyValuePair<string, object>("cert_name", certName),
+            new KeyValuePair<string, object>("done_by_user_id", doneByUserId),
+            new KeyValuePair<string, object>("checked_by_user_id", checkedByUserId),
+            new KeyValuePair<string, object>("source_row_id", sourceRowId),
+            new KeyValuePair<string, object>("spec_id", specId),
+            new KeyValuePair<string, object>("comments", comments),
+            new KeyValuePair<string, object>("value1", value1),
+            new KeyValuePair<string, object>("value2", value2),
+            new KeyValuePair<string, object>("value3", value3),
+            new KeyValuePair<string, object>("value4", value4),
+            new KeyValuePair<string, object>("value5", value5),
+            new KeyValuePair<string, object>("value6", value6),
+            new KeyValuePair<string, object>("value7", value7),
+            new KeyValuePair<string, object>("value8", value8),
+            new KeyValuePair<string, object>("value9", value9),
+            new KeyValuePair<string, object>("value10", value10),
+            new KeyValuePair<string, object>("last_edit_comment", lastEditComment),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("row_id OUTPUT", rowId),
+        };
+        Command command = new Command()
+        {
+            Cmd = "",
+            MsgType = "add",
+            Object = "Job_Event",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
-    public Task<string> InsertProdViaFCAsync()
+    public async Task<int> PauseJobAsync(int entId, string woId, string operId, int seqNo, int pausedJobState, int jobPos = 0, string statusNotes = null, DateTime? actFinishTimeLocal = null)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("seq_no", seqNo),
+            new KeyValuePair<string, object>("paused_job_state", pausedJobState),
+            new KeyValuePair<string, object>("job_pos", jobPos),
+            new KeyValuePair<string, object>("status_notes", statusNotes),
+            new KeyValuePair<string, object>("act_finish_time_local", actFinishTimeLocal),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "PauseJob",
+            MsgType = "exec",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+        return data;
     }
 
-    public Task<string> LogJobEventAsync()
+    public async Task<int> RejectProdAsync(int sessionId, int oldRowId, double splitQtyProd, string newWoId = null, string newOperId = null, int? newSeqNo = null, DateTime? newShiftStartLocal = null,
+        string newItemId = null, string newLotNo = null, string newRmLotNo = null, string newSublotNo = null, string newRmSublotNo = null, int? newReasCd = null, string newUserId = null, int? newEntId = null,
+        int? newShiftId = null, int? newToEntId = null, double? splitQtyProdErp = null, bool splitProcessedFlag = false, bool splitByproductFlag = false)
     {
-        throw new NotImplementedException();
-    }
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("session_id", sessionId),
+            new KeyValuePair<string, object>("old_row_id", oldRowId),
+            new KeyValuePair<string, object>("split_qty_prod", splitQtyProd),
+            new KeyValuePair<string, object>("new_wo_id", newWoId),
+            new KeyValuePair<string, object>("new_oper_id", newOperId),
+            new KeyValuePair<string, object>("new_seq_no", newSeqNo),
+            new KeyValuePair<string, object>("new_shift_start_local", newShiftStartLocal),
+            new KeyValuePair<string, object>("new_item_id", newItemId),
+            new KeyValuePair<string, object>("new_lot_no", newLotNo),
+            new KeyValuePair<string, object>("new_rm_lot_no", newRmLotNo),
+            new KeyValuePair<string, object>("new_sublot_no", newSublotNo),
+            new KeyValuePair<string, object>("new_rm_sublot_no", newRmSublotNo),
+            new KeyValuePair<string, object>("new_reas_cd", newReasCd),
+            new KeyValuePair<string, object>("new_user_id", newUserId),
+            new KeyValuePair<string, object>("new_ent_id", newEntId),
+            new KeyValuePair<string, object>("new_shift_id", newShiftId),
+            new KeyValuePair<string, object>("new_to_ent_id", newToEntId),
+            new KeyValuePair<string, object>("split_qty_prod_erp", splitQtyProdErp),
+            new KeyValuePair<string, object>("split_processed_flag", splitProcessedFlag),
+            new KeyValuePair<string, object>("split_byproduct_flag", splitByproductFlag),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "Split",
+            MsgType = "exec",
+            Object = "Item_Prod",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
 
-    public Task<string> PauseJobAsync()
-    {
-        throw new NotImplementedException();
-    }
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
 
-    public Task<string> RejectProdAsync()
-    {
-        throw new NotImplementedException();
+        });
+        return data;
     }
 
     public Task<string> SetActualSpecValueAsync()
@@ -1202,11 +1402,6 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
     }
 
     public Task<string> StartJobAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<string> StartNextJobViaFCAsync()
     {
         throw new NotImplementedException();
     }

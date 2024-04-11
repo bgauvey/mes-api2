@@ -80,5 +80,22 @@ public interface IJobExecService
     Task<string> GetReqdCertSignoffsAsync(string woId, string operId, int stepNo);
 
     Task<string> GetRunnableEntitiesAsync(int entId);
+
+    Task<string> GetSchedEntsByWindowAsync(string woId, string operId, int windowId);
+
+    Task<string> GetSchedulableEntityAsync(int entId);
+
+    Task<string> GetSchedulableParentsAsync(int entId);
+
+    Task<string> GetStepBOMDataAsync(string woId, string operId, int seqNo, int? stepNo);
+
+    Task<string> LogJobEventAsync(int entId, DateTime eventTimeLocal, int jobPos, int stepNo, string eventType, int bomPos, string lotNo, string sublotNo, string itemId, string certName, string doneByUserId,
+        string checkedByUserId, int sourceRowId, string specId, string comments, string value1, string value2, string value3, string value4, string value5, string value6, string value7, string value8, string value9,
+        string value10, string lastEditComment);
+
+    Task<int> PauseJobAsync(int entId, string woId, string operId, int seqNo, int pausedJobState, int jobPos, string statusNotes, DateTime? actFinishTimeLocal);
+
+    Task<int> RejectProdAsync(int sessionId, int oldRowId, double splitQtyProd, string newWoId, string newOperId, int? newSeqNo, DateTime? newShiftStartLocal, string newItemId, string newLotNo,
+        string newRmLotNo, string newSublotNo, string newRmSublotNo, int? newReasCd, string newUserId, int? newEntId, int? newShiftId, int? newToEntId, double? splitQtyProdErp, bool splitProcessedFlag, bool splitByproductFlag);
 }
 

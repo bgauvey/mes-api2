@@ -191,5 +191,47 @@ public class JobExecService : IJobExecService
     {
         return await _jobExecRepository.GetRunnableEntitiesAsync(entId);
     }
+
+    public async Task<string> GetSchedEntsByWindowAsync(string woId = null, string operId = null, int windowId = 0)
+    {
+        return await _jobExecRepository.GetSchedEntsByWindowAsync(woId, operId, windowId);
+    }
+
+    public async Task<string> GetSchedulableEntityAsync(int entId)
+    {
+        return await _jobExecRepository.GetSchedulableEntityAsync(entId);
+    }
+
+    public async Task<string> GetSchedulableParentsAsync(int entId)
+    {
+        return await _jobExecRepository.GetSchedulableParentsAsync(entId);
+    }
+
+    public async Task<string> GetStepBOMDataAsync(string woId, string operId, int seqNo, int? stepNo = null)
+    {
+        return await _jobExecRepository.GetStepBOMDataAsync(woId, operId, seqNo, stepNo);
+    }
+
+    public async Task<string> LogJobEventAsync(int entId, DateTime eventTimeLocal, int jobPos, int stepNo, string eventType, int bomPos, string lotNo, string sublotNo, string itemId, string certName, string doneByUserId,
+        string checkedByUserId, int sourceRowId, string specId, string comments, string value1, string value2, string value3, string value4, string value5, string value6, string value7, string value8, string value9,
+        string value10, string lastEditComment)
+    {
+        return await _jobExecRepository.LogJobEventAsync(entId, eventTimeLocal, jobPos, stepNo, eventType, bomPos, lotNo, sublotNo, itemId, certName, doneByUserId,
+        checkedByUserId, sourceRowId, specId, comments, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, lastEditComment);
+    }
+
+    public async Task<int> PauseJobAsync(int entId, string woId, string operId, int seqNo, int pausedJobState, int jobPos = 0, string statusNotes = null, DateTime? actFinishTimeLocal = null)
+    {
+        return await _jobExecRepository.PauseJobAsync(entId, woId, operId, seqNo, pausedJobState, jobPos, statusNotes, actFinishTimeLocal);
+
+    }
+
+    public async Task<int> RejectProdAsync(int sessionId, int oldRowId, double splitQtyProd, string newWoId = null, string newOperId = null, int? newSeqNo = null, DateTime? newShiftStartLocal = null,
+    string newItemId = null, string newLotNo = null, string newRmLotNo = null, string newSublotNo = null, string newRmSublotNo = null, int? newReasCd = null, string newUserId = null, int? newEntId = null,
+    int? newShiftId = null, int? newToEntId = null, double? splitQtyProdErp = null, bool splitProcessedFlag = false, bool splitByproductFlag = false)
+    {
+        return await _jobExecRepository.RejectProdAsync(sessionId, oldRowId, splitQtyProd, newWoId, newOperId, newSeqNo, newShiftStartLocal, newItemId, newLotNo, newRmLotNo, newSublotNo,newRmSublotNo,
+            newReasCd, newUserId, newEntId, newShiftId, newToEntId, splitQtyProdErp, splitProcessedFlag, splitByproductFlag);
+    }
 }
 

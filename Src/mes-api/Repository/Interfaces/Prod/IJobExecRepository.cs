@@ -30,7 +30,6 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
       SETCURLOTDATA
       SETJOBQUEUE
       SETUISCREENTAGVALUES
-      STARTNEXTJOBVIAFC
       STARTSOME
     */
 
@@ -111,16 +110,22 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
 
     Task<string> GetRunnableEntitiesAsync(int entId);
 
-    Task<string> GetSchedEntsByWindowAsync();
-    Task<string> GetSchedulableEntitiesAsync();
-    Task<string> GetSchedulableEntityAsync();
-    Task<string> GetSchedulableParentsAsync();
-    Task<string> GetStepBOMDataAsync();
+    Task<string> GetSchedEntsByWindowAsync(string woId, string operId, int windowId);
 
-    Task<string> InsertProdViaFCAsync();
-    Task<string> LogJobEventAsync();
-    Task<string> PauseJobAsync();
-    Task<string> RejectProdAsync();
+    Task<string> GetSchedulableEntityAsync(int entId);
+
+    Task<string> GetSchedulableParentsAsync(int entId);
+
+    Task<string> GetStepBOMDataAsync(string woId, string operId, int seqNo, int? stepNo);
+
+    Task<string> LogJobEventAsync(int entId, DateTime eventTimeLocal, int jobPos, int stepNo, string eventType, int bomPos, string lotNo, string sublotNo, string itemId, string certName, string doneByUserId,
+        string checkedByUserId, int sourceRowId, string specId, string comments, string value1, string value2, string value3, string value4, string value5, string value6, string value7, string value8, string value9,
+        string value10, string lastEditComment);
+
+    Task<int> PauseJobAsync(int entId, string woId, string operId, int seqNo, int pausedJobState, int jobPos, string statusNotes, DateTime? actFinishTimeLocal);
+
+    Task<int> RejectProdAsync(int sessionId, int oldRowId, double splitQtyProd, string newWoId, string newOperId, int? newSeqNo, DateTime? newShiftStartLocal, string newItemId, string newLotNo,
+        string newRmLotNo, string newSublotNo, string newRmSublotNo, int? newReasCd, string newUserId, int? newEntId, int? newShiftId, int? newToEntId, double? splitQtyProdErp, bool splitProcessedFlag, bool splitByproductFlag);
 
     Task<string> SetActualSpecValueAsync();
     Task<string> SetAttrAsync();
@@ -130,7 +135,6 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
     Task<string> SplitJobAsync();
     Task<string> StartDataEntryJobAsync();
     Task<string> StartJobAsync();
-    Task<string> StartNextJobViaFCAsync();
     Task<string> StartSomeAsync();
     Task<string> StartStepAsync();
     Task<string> StepLoginAsync();
@@ -159,44 +163,12 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
         "_name": "JOB_EXEC.GETJOBBOMSTEPQUANTITIES",
         "_value": "SP_SA_JOB_EXEC_GETJBSTEPQUANTS"
       },
-
-
-      {
-        "_name": "JOB_EXEC.GETRUNNABLEENTITIES",
-        "_value": "SP_SA_ENT_GETRUNNABLEENTITIES"
-      },
-      {
-        "_name": "JOB_EXEC.GETSCHEDENTSBYWINDOW",
-        "_value": "SP_SA_JOB_EXEC_GETSCHEDENTS"
-      },
-      {
-        "_name": "JOB_EXEC.GETSCHEDULABLEENTITIES",
-        "_value": "SP_SA_JOB_EXEC_GETSCHEDENTS"
-      },
-      {
-        "_name": "JOB_EXEC.GETSCHEDULABLEENTITY",
-        "_value": "SP_SA_ENT_GETSCHEDULABLEENTITY"
-      },
-      {
-        "_name": "JOB_EXEC.GETSCHEDULABLEPARENTS",
-        "_value": "SP_SA_ENT_GETSCHEDPARENTS"
-      },
-      {
-        "_name": "JOB_EXEC.INSERTPRODVIAFC",
-        "_value": "SP_I_ITEM_PROD_INSERTPRODVIAFC"
-      },
       {
         "_name": "JOB_EXEC.ISSAMEPRODUCED",
         "_value": "SP_SA_ITEM_PROD_ISSAMEPRODUCED"
       },
-      {
-        "_name": "JOB_EXEC.LOGJOBEVENT",
-        "_value": "SP_I_JOB_EVENT"
-      },
-      {
-        "_name": "JOB_EXEC.PAUSEJOB",
-        "_value": "SP_U_JOB_EXEC_PAUSEBATCHJOBS"
-      },
+
+
       {
         "_name": "JOB_EXEC.REJECTPROD",
         "_value": "SP_I_ITEM_PROD_SPLIT"
