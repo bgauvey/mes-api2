@@ -21,6 +21,7 @@
     <None Remove="Models\Prod\" />
     <None Remove="Models\Util\" />
     <None Remove="Models\Generic\" />
+    <None Remove="Models\Cert\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -32,12 +33,13 @@
     <Folder Include="Models\Prod\" />
     <Folder Include="Models\Util\" />
     <Folder Include="Models\Generic\" />
+    <Folder Include="Models\Cert\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
   </ItemGroup>
 </Project>

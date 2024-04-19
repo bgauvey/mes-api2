@@ -97,5 +97,8 @@ public interface IJobExecService
 
     Task<int> RejectProdAsync(int sessionId, int oldRowId, double splitQtyProd, string newWoId, string newOperId, int? newSeqNo, DateTime? newShiftStartLocal, string newItemId, string newLotNo,
         string newRmLotNo, string newSublotNo, string newRmSublotNo, int? newReasCd, string newUserId, int? newEntId, int? newShiftId, int? newToEntId, double? splitQtyProdErp, bool splitProcessedFlag, bool splitByproductFlag);
+
+    Task<int> SetCurLotDataAsync(int entId, int jobPos, int bomPos, string curItemId, string curLotNo, string curSublotNo, int curReasCd, int curStorageEntId, bool curUpdateInv, bool curBackflush);
+
 }
 

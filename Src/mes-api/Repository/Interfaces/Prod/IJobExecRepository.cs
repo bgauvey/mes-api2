@@ -33,16 +33,6 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
       STARTSOME
     */
 
-    Task<string> AddConsAsync(int sessionId, string userId, int entId, int jobPos, int bomPos, double qtyCons, int? reasCd, string? lotNo, string? fgLotNo, string? sublotNo, string? fgSublotNo,
-        int? fromEntId, string? itemId, string extRef, bool applyScalingFactor, string spare1, string spare2, string spare3, string spare4);
-
-    Task<string> AddConsDirectAsync(int fromEntId, string itemId, string lotNo, string sublotNo, double qtyCons, int reasCd, int gradeCd, int statusCd, string userId,
-        string? woId, string? operId, int? seqNo, DateTime? shiftStartLocal, string? fgLotNo, string? fgSublotNo, int itemScrapped,
-        int? entId, int? shiftId, double qtyConsErp, string? extRef, int transactionType, string spare1, string spare2, string spare3, string spare4);
-
-    Task<string> AddConsPostExecAsync(int sessionId, string userId, int entId, int? bomPos, double qtyCons, string woId, string operId, int seqNo, DateTime shiftStartLocal,
-        int shiftId, string? itemId, int? reasCd, string? lotNo, string? fgLotNo, string? sublotNo, string? fgSublotNo, string? extRef, string spare1, string spare2, string spare3, string spare4);
-
     Task<string> AddProdAsync(int sessionId, string userId, int entId, double qtyProd,
     int? reasCd, string? lotNo, string? sublotNo, int? toEntId, string? itemId, int? byproductBomPos,
     string? extRef, bool applyScalingFactor, string spare1, string spare2, string spare3, string spare4, int jobPos);
@@ -66,11 +56,6 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
     Task<int> CertStartAllowedAsync(string userId, string? processId, string? operId, int? stepNo, string? itemId);
 
     Task<string> ChangeJobStatesAsync(int rowId, int? stateCd, DateTime? reqFinishTimeLocal, int? jobPriority, int? applyToAllJobs);
-
-    Task<int> ChangeSpecValueAsync(string userId, int entId, string specId, string newSpecValue, bool updateTemplate, int bomPos, string? bomVerId, string? comments, int jobPos);
-
-    Task<int> ChangeSpecValuesAsync(int sessionId, string userId, int entId, string? newSpecValue, string? newMinValue, string? newMaxValue, bool updateTemplate, int checkPrivs,
-        int bomPos, string? bomVerId, string comments, int jobPos);
 
     Task<int> ChangeWOPriorityAsync(string woId, int newPriority);
 
@@ -127,10 +112,11 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
     Task<int> RejectProdAsync(int sessionId, int oldRowId, double splitQtyProd, string newWoId, string newOperId, int? newSeqNo, DateTime? newShiftStartLocal, string newItemId, string newLotNo,
         string newRmLotNo, string newSublotNo, string newRmSublotNo, int? newReasCd, string newUserId, int? newEntId, int? newShiftId, int? newToEntId, double? splitQtyProdErp, bool splitProcessedFlag, bool splitByproductFlag);
 
-    Task<string> SetActualSpecValueAsync();
-    Task<string> SetAttrAsync();
-    Task<string> SetCurLotDataAsync();
-    Task<string> SetJobQueueAsync();
+    Task<int> SetCurLotDataAsync(int entId, int jobPos, int bomPos, string curItemId, string curLotNo, string curSublotNo, int curReasCd, int curStorageEntId, bool curUpdateInv, bool curBackflush);
+
+    Task<string> SetJobQueueAsync(string woId, string operId, int seqNo, int? stateCd, int? jobPriority, DateTime? reqFinishTimeLocal, int? targetSchedEntId, int? concurrentLink, string statusNotes);
+
+
     Task<string> SetUIScreenTagValuesAsync();
     Task<string> SplitJobAsync();
     Task<string> StartDataEntryJobAsync();
@@ -169,18 +155,6 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
       },
 
 
-      {
-        "_name": "JOB_EXEC.REJECTPROD",
-        "_value": "SP_I_ITEM_PROD_SPLIT"
-      },
-      {
-        "_name": "JOB_EXEC.SETACTUALSPECVALUE",
-        "_value": "SP_U_JOB_SPEC_SETACTSPECVALUE"
-      },
-      {
-        "_name": "JOB_EXEC.SETATTR",
-        "_value": "SP_U_JOB_ATTR_SETATTR"
-      },
       {
         "_name": "JOB_EXEC.SPLITJOB",
         "_value": "SP_I_JOB_EXEC_SPLITJOB"

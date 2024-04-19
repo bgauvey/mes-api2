@@ -1,5 +1,5 @@
 ﻿//
-// IItemAttrRepository.cs
+// IJobSpecRepository.cs
 //
 // Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -23,14 +23,17 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System;
+using BOL.API.Domain.Models.EnProd;
 
-
-using BOL.API.Domain.Models.Prod;
-
-namespace BOL.API.Repository.Interfaces.Prod
+namespace BOL.API.Repository.Interfaces.EnProd
 {
-	public interface IItemAttrRepository : IRepositoryBase<ItemAttr>
-	{
-	}
+	public interface IJobSpecRepository : IRepositoryBase<JobSpec>
+    {
+        Task<int> ChangeSpecValueAsync(string userId, int entId, string specId, string newSpecValue, bool updateTemplate, int bomPos, string? bomVerId, string? comments, int jobPos);
+
+        Task<int> ChangeSpecValuesAsync(int sessionId, string userId, int entId, string? newSpecValue, string? newMinValue, string? newMaxValue, bool updateTemplate, int checkPrivs,
+            int bomPos, string? bomVerId, string comments, int jobPos);
+    }
 }
 

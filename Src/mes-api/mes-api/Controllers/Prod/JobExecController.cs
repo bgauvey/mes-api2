@@ -1206,6 +1206,39 @@ namespace bol.api.Controllers.Prod
                 return BadRequest(new { Status = false, exp.Message });
             }
         }
+
+
+        /// <summary>
+        /// To set the current lot, container, production code, storage location etc for production or consumption data on a given entity. 
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="jobPos"></param>
+        /// <param name="bomPos"></param>
+        /// <param name="curItemId"></param>
+        /// <param name="curLotNo"></param>
+        /// <param name="curSublotNo"></param>
+        /// <param name="curReasCd"></param>
+        /// <param name="curStorageEntId"></param>
+        /// <param name="curUpdateInv"></param>
+        /// <param name="curBackflush"></param>
+        /// <returns></returns>
+        [HttpPost("SetCurLotData", Name = "SetCurLotData")]
+        [Authorize]
+        public async Task<IActionResult> SetCurLotDataAsync(int entId, int jobPos, int bomPos, string curItemId, string curLotNo, string curSublotNo, int curReasCd, int curStorageEntId,
+            bool curUpdateInv, bool curBackflush)
+        {
+            try
+            {
+                var data = await _JobExecService.SetCurLotDataAsync(entId, jobPos, bomPos, curItemId, curLotNo, curSublotNo, curReasCd, curStorageEntId, curUpdateInv, curBackflush);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
     }
 }
 

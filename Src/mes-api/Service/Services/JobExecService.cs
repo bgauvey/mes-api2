@@ -1,24 +1,30 @@
-﻿using BOL.API.Repository.Interfaces.Prod;
+﻿using BOL.API.Repository.Interfaces.EnProd;
+using BOL.API.Repository.Interfaces.Prod;
+using BOL.API.Repository.Repositories.Prod;
 using BOL.API.Service.Interfaces;
 
 namespace BOL.API.Service.Services;
 
 public class JobExecService : IJobExecService
 {
-	private readonly IJobExecRepository _jobExecRepository;
-	private readonly ILogger _logger;
+    private readonly IJobExecRepository _jobExecRepository;
+    private readonly IJobSpecRepository _jobSpecRepository;
+    private readonly IItemConsRepository _itemConsRepository;
+    private readonly ILogger _logger;
 
-	public JobExecService(IJobExecRepository jobExecRepository, ILoggerFactory loggerFactory)
-	{
-		_jobExecRepository = jobExecRepository;
-		_logger = loggerFactory.CreateLogger(nameof(JobExecService));
+    public JobExecService(IJobExecRepository jobExecRepository, IItemConsRepository itemConsRepository, IJobSpecRepository jobSpecRepository, ILoggerFactory loggerFactory)
+    {
+        _jobExecRepository = jobExecRepository;
+        _jobSpecRepository = jobSpecRepository;
+        _itemConsRepository = itemConsRepository;
+        _logger = loggerFactory.CreateLogger(nameof(JobExecService));
 
     }
 
     public async Task<string> AddConsAsync(int sessionId, string userId, int entId, int jobPos, int bomPos, double qtyCons, int? reasCd, string? lotNo, string? fgLotNo, string? sublotNo, string? fgSublotNo,
         int? fromEntId, string? itemId, string extRef, bool applyScalingFactor, string spare1, string spare2, string spare3, string spare4)
     {
-        return await _jobExecRepository.AddConsAsync(sessionId, userId, entId, jobPos, bomPos, qtyCons, reasCd, lotNo,  fgLotNo,  sublotNo, fgSublotNo,
+        return await _itemConsRepository.AddConsAsync(sessionId, userId, entId, jobPos, bomPos, qtyCons, reasCd, lotNo, fgLotNo, sublotNo, fgSublotNo,
                             fromEntId, itemId, extRef, applyScalingFactor, spare1, spare2, spare3, spare4);
     }
 
@@ -26,7 +32,7 @@ public class JobExecService : IJobExecService
         string? woId, string? operId, int? seqNo, DateTime? shiftStartLocal, string? fgLotNo, string? fgSublotNo, int itemScrapped,
         int? entId, int? shiftId, double qtyConsErp, string? extRef, int transactionType, string spare1, string spare2, string spare3, string spare4)
     {
-        return await _jobExecRepository.AddConsDirectAsync(fromEntId, itemId, lotNo, sublotNo, qtyCons, reasCd, gradeCd, statusCd, userId,
+        return await _itemConsRepository.AddConsDirectAsync(fromEntId, itemId, lotNo, sublotNo, qtyCons, reasCd, gradeCd, statusCd, userId,
                             woId, operId, seqNo, shiftStartLocal, fgLotNo, fgSublotNo, itemScrapped, entId, shiftId, qtyConsErp, extRef,
                             transactionType, spare1, spare2, spare3, spare4);
     }
@@ -34,7 +40,7 @@ public class JobExecService : IJobExecService
     public async Task<string> AddConsPostExecAsync(int sessionId, string userId, int entId, int? bomPos, double qtyCons, string woId, string operId, int seqNo, DateTime shiftStartLocal,
     int shiftId, string? itemId, int? reasCd, string? lotNo, string? fgLotNo, string? sublotNo, string? fgSublotNo, string? extRef, string spare1, string spare2, string spare3, string spare4)
     {
-        return await _jobExecRepository.AddConsPostExecAsync(sessionId, userId, entId, bomPos, qtyCons, woId, operId, seqNo, shiftStartLocal,
+        return await _itemConsRepository.AddConsPostExecAsync(sessionId, userId, entId, bomPos, qtyCons, woId, operId, seqNo, shiftStartLocal,
                             shiftId, itemId, reasCd, lotNo, fgLotNo, sublotNo, fgSublotNo, extRef, spare1, spare2, spare3, spare4);
     }
 
@@ -94,13 +100,13 @@ public class JobExecService : IJobExecService
 
     public async Task<int> ChangeSpecValueAsync(string userId, int entId, string specId, string newSpecValue, bool updateTemplate, int bomPos = 0, string? bomVerId = null, string? comments = null, int jobPos = 0)
     {
-        return await _jobExecRepository.ChangeSpecValueAsync(userId, entId, specId, newSpecValue, updateTemplate, bomPos, bomVerId, comments, jobPos);
+        return await _jobSpecRepository.ChangeSpecValueAsync(userId, entId, specId, newSpecValue, updateTemplate, bomPos, bomVerId, comments, jobPos);
     }
 
     public async Task<int> ChangeSpecValuesAsync(int sessionId, string userId, int entId, string? newSpecValue, string? newMinValue, string? newMaxValue, bool updateTemplate = false, int checkPrivs = 0,
         int bomPos = 0, string? bomVerId = null, string comments = "", int jobPos = 0)
     {
-        return await _jobExecRepository.ChangeSpecValuesAsync(sessionId, userId, entId, newSpecValue, newMinValue, newMaxValue, updateTemplate, checkPrivs, bomPos, bomVerId, comments, jobPos);
+        return await _jobSpecRepository.ChangeSpecValuesAsync(sessionId, userId, entId, newSpecValue, newMinValue, newMaxValue, updateTemplate, checkPrivs, bomPos, bomVerId, comments, jobPos);
     }
 
     public async Task<int> ChangeWOPriorityAsync(string woId, int newPriority)
@@ -230,8 +236,13 @@ public class JobExecService : IJobExecService
     string newItemId = null, string newLotNo = null, string newRmLotNo = null, string newSublotNo = null, string newRmSublotNo = null, int? newReasCd = null, string newUserId = null, int? newEntId = null,
     int? newShiftId = null, int? newToEntId = null, double? splitQtyProdErp = null, bool splitProcessedFlag = false, bool splitByproductFlag = false)
     {
-        return await _jobExecRepository.RejectProdAsync(sessionId, oldRowId, splitQtyProd, newWoId, newOperId, newSeqNo, newShiftStartLocal, newItemId, newLotNo, newRmLotNo, newSublotNo,newRmSublotNo,
+        return await _jobExecRepository.RejectProdAsync(sessionId, oldRowId, splitQtyProd, newWoId, newOperId, newSeqNo, newShiftStartLocal, newItemId, newLotNo, newRmLotNo, newSublotNo, newRmSublotNo,
             newReasCd, newUserId, newEntId, newShiftId, newToEntId, splitQtyProdErp, splitProcessedFlag, splitByproductFlag);
     }
-}
 
+    public async Task<int> SetCurLotDataAsync(int entId, int jobPos, int bomPos, string curItemId, string curLotNo, string curSublotNo, int curReasCd, int curStorageEntId, bool curUpdateInv, bool curBackflush)
+    {
+        return await _jobExecRepository.SetCurLotDataAsync(entId, jobPos, bomPos, curItemId, curLotNo, curSublotNo, curReasCd, curStorageEntId, curUpdateInv, curBackflush);
+    }
+
+}

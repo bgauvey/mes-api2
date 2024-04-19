@@ -21,13 +21,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Data;
-using api.Models;
-using BOL.API.Domain.Enums;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Prod;
 using BOL.API.Repository.Helper;
 using BOL.API.Repository.Interfaces.Prod;
-using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
 namespace BOL.API.Repository.Repositories.Prod;
@@ -41,163 +38,6 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         _CommandProcessor = new CommandProcessor(configuration);
     }
 
-    public async Task<string> AddConsAsync(int sessionId, string userId, int entId, int jobPos, int bomPos, double qtyCons, int? reasCd, string? lotNo, string? fgLotNo, string? sublotNo, string? fgSublotNo,
-        int? fromEntId, string? itemId, string extRef, bool applyScalingFactor, string spare1, string spare2, string spare3, string spare4)
-    {
-        int rowId = 0;
-        var parameters = new List<KeyValuePair<string, object>>
-        {
-            new KeyValuePair<string, object>("session_id", sessionId),
-            new KeyValuePair<string, object>("user_id", userId),
-            new KeyValuePair<string, object>("ent_id", entId),
-            new KeyValuePair<string, object>("job_pos", jobPos),
-            new KeyValuePair<string, object>("bom_pos", bomPos),
-            new KeyValuePair<string, object>("qty_cons", qtyCons),
-            new KeyValuePair<string, object>("reas_cd", reasCd),
-            new KeyValuePair<string, object>("lot_no", lotNo),
-            new KeyValuePair<string, object>("fg_lot_no", fgLotNo),
-            new KeyValuePair<string, object>("sublot_no", sublotNo),
-            new KeyValuePair<string, object>("fg_sublot_no", fgSublotNo),
-            new KeyValuePair<string, object>("from_ent_id", fromEntId),
-            new KeyValuePair<string, object>("item_id", itemId),
-            new KeyValuePair<string, object>("ext_ref", extRef),
-            new KeyValuePair<string, object>("apply_scaling_factor", applyScalingFactor),
-            new KeyValuePair<string, object>("spare1", spare1),
-            new KeyValuePair<string, object>("spare2", spare2),
-            new KeyValuePair<string, object>("spare3", spare3),
-            new KeyValuePair<string, object>("spare4", spare4),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0),
-            new KeyValuePair<string, object>("row_id OUTPUT", rowId),
-        };
-        Command command = new Command()
-        {
-            Cmd = "addcons",
-            MsgType = "exec",
-            Object = "item_Cons",
-            Parameters = parameters,
-            Schema = "dbo"
-        };
-
-        var data = await Task.Run(() =>
-        {
-            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
-
-            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
-
-            return jsonString;
-        });
-
-        return data;
-    }
-
-    public async Task<string> AddConsDirectAsync(int fromEntId, string itemId, string lotNo, string sublotNo, double qtyCons, int reasCd, int gradeCd, int statusCd, string userId,
-        string? woId = null, string? operId = null, int? seqNo = null, DateTime? shiftStartLocal = null, string? fgLotNo = null, string? fgSublotNo = null, int itemScrapped = 0,
-        int? entId = null, int? shiftId = null, double qtyConsErp = 0, string? extRef = null, int transactionType = 0, string spare1 = "", string spare2 = "", string spare3 = "",
-        string spare4 = "")
-    {
-        int rowId = 0;
-        var parameters = new List<KeyValuePair<string, object>>
-        {
-            new KeyValuePair<string, object>("from_ent_id", fromEntId),
-            new KeyValuePair<string, object>("item_id", itemId),
-            new KeyValuePair<string, object>("lot_no", lotNo),
-            new KeyValuePair<string, object>("sublot_no", sublotNo),
-            new KeyValuePair<string, object>("qty_cons", qtyCons),
-            new KeyValuePair<string, object>("reas_cd", reasCd),
-            new KeyValuePair<string, object>("grade_cd", gradeCd),
-            new KeyValuePair<string, object>("status_cd", statusCd),
-            new KeyValuePair<string, object>("user_id", userId),
-            new KeyValuePair<string, object>("wo_id", woId),
-            new KeyValuePair<string, object>("oper_id", operId),
-            new KeyValuePair<string, object>("seq_no", seqNo),
-            new KeyValuePair<string, object>("shift_start_local", shiftStartLocal),
-            new KeyValuePair<string, object>("fg_lot_no", fgLotNo),
-            new KeyValuePair<string, object>("fg_sublot_no", fgSublotNo),
-            new KeyValuePair<string, object>("item_scrapped", itemScrapped),
-            new KeyValuePair<string, object>("ent_id", entId),
-            new KeyValuePair<string, object>("shift_id", shiftId),
-            new KeyValuePair<string, object>("qty_cons_erp", qtyConsErp),
-            new KeyValuePair<string, object>("ext_ref", extRef),
-            new KeyValuePair<string, object>("transaction_type", transactionType),
-            new KeyValuePair<string, object>("spare1", spare1),
-            new KeyValuePair<string, object>("spare2", spare2),
-            new KeyValuePair<string, object>("spare3", spare3),
-            new KeyValuePair<string, object>("spare4", spare4),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0),
-            new KeyValuePair<string, object>("row_id OUTPUT", rowId),
-        };
-        Command command = new Command()
-        {
-            Cmd = "addconsdirect",
-            MsgType = "exec",
-            Object = "item_Cons",
-            Parameters = parameters,
-            Schema = "dbo"
-        };
-
-        var data = await Task.Run(() =>
-        {
-            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
-
-            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
-
-            return jsonString;
-        });
-
-        return data;
-    }
-
-    public async Task<string> AddConsPostExecAsync(int sessionId, string userId, int entId, int? bomPos, double qtyCons, string woId, string operId, int seqNo, DateTime shiftStartLocal,
-        int shiftId, string? itemId = null, int? reasCd = null, string? lotNo = null, string? fgLotNo = null, string? sublotNo = null, string? fgSublotNo = null, string? extRef = null,
-        string spare1 = "", string spare2 = "", string spare3 = "", string spare4 = "")
-    {
-        int rowId = 0;
-        var parameters = new List<KeyValuePair<string, object>>
-        {
-            new KeyValuePair<string, object>("session_id", sessionId),
-            new KeyValuePair<string, object>("user_id", userId),
-            new KeyValuePair<string, object>("ent_id", entId),
-            new KeyValuePair<string, object>("bom_pos", bomPos),
-            new KeyValuePair<string, object>("qty_cons", qtyCons),
-            new KeyValuePair<string, object>("wo_id", woId),
-            new KeyValuePair<string, object>("oper_id", operId),
-            new KeyValuePair<string, object>("seq_no", seqNo),
-            new KeyValuePair<string, object>("shift_start_local", shiftStartLocal),
-            new KeyValuePair<string, object>("shift_id", shiftId),
-            new KeyValuePair<string, object>("item_id", itemId),
-            new KeyValuePair<string, object>("reas_cd", reasCd),
-            new KeyValuePair<string, object>("lot_no", lotNo),
-            new KeyValuePair<string, object>("fg_lot_no", fgLotNo),
-            new KeyValuePair<string, object>("sublot_no", sublotNo),
-            new KeyValuePair<string, object>("fg_sublot_no", fgSublotNo),
-            new KeyValuePair<string, object>("ext_ref", extRef),
-            new KeyValuePair<string, object>("spare1", spare1),
-            new KeyValuePair<string, object>("spare2", spare2),
-            new KeyValuePair<string, object>("spare3", spare3),
-            new KeyValuePair<string, object>("spare4", spare4),
-            new KeyValuePair<string, object>("row_id OUTPUT", rowId),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
-        };
-        Command command = new Command()
-        {
-            Cmd = "addconspostexec",
-            MsgType = "exec",
-            Object = "item_Cons",
-            Parameters = parameters,
-            Schema = "dbo"
-        };
-
-        var data = await Task.Run(() =>
-        {
-            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
-
-            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
-
-            return jsonString;
-        });
-
-        return data;
-    }
 
     public async Task<string> AddProdAsync(int sessionId, string userId, int entId, double qtyProd, int? reasCd = null, string? lotNo = null, string? sublotNo = null,
         int? toEntId = null, string? itemId = null, int? byproductBomPos = null, string? extRef = null, bool applyScalingFactor = false, string spare1 = " ",
@@ -527,74 +367,6 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             return jsonString;
         });
 
-        return data;
-    }
-
-    public async Task<int> ChangeSpecValueAsync(string userId, int entId, string specId, string newSpecValue, bool updateTemplate, int bomPos = 0, string? bomVerId = null, string? comments = null, int jobPos = 0)
-    {
-        var parameters = new List<KeyValuePair<string, object>>
-        {
-            new KeyValuePair<string, object>("user_id", userId),
-            new KeyValuePair<string, object>("ent_id", entId),
-            new KeyValuePair<string, object>("spec_id", specId),
-            new KeyValuePair<string, object>("new_spec_value", newSpecValue),
-            new KeyValuePair<string, object>("update_template", updateTemplate),
-            new KeyValuePair<string, object>("bom_pos", bomPos),
-            new KeyValuePair<string, object>("bom_ver_id", bomVerId),
-            new KeyValuePair<string, object>("comments", comments),
-            new KeyValuePair<string, object>("job_pos", jobPos),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
-        };
-        Command command = new Command()
-        {
-            Cmd = "ChangeSpecValue",
-            MsgType = "exec",
-            Object = "Job_Spec",
-            Parameters = parameters,
-            Schema = "dbo"
-        };
-
-        var data = await Task.Run(() =>
-        {
-            return _CommandProcessor.ExecuteCommand(command);
-
-        });
-        return data;
-    }
-
-    public async Task<int> ChangeSpecValuesAsync(int sessionId, string userId, int entId, string? newSpecValue, string? newMinValue, string? newMaxValue, bool updateTemplate = false, int checkPrivs = 0,
-        int bomPos = 0, string? bomVerId = null, string comments = "", int jobPos = 0)
-    {
-        var parameters = new List<KeyValuePair<string, object>>
-        {
-            new KeyValuePair<string, object>("session_id", sessionId),
-            new KeyValuePair<string, object>("user_id", userId),
-            new KeyValuePair<string, object>("ent_id", entId),
-            new KeyValuePair<string, object>("new_spec_value", newSpecValue),
-            new KeyValuePair<string, object>("new_min_value", newMinValue),
-            new KeyValuePair<string, object>("new_max_value", newMaxValue),
-            new KeyValuePair<string, object>("update_template", updateTemplate),
-            new KeyValuePair<string, object>("check_privs", checkPrivs),
-            new KeyValuePair<string, object>("bom_pos", bomPos),
-            new KeyValuePair<string, object>("bom_ver_id", bomVerId),
-            new KeyValuePair<string, object>("comments", comments),
-            new KeyValuePair<string, object>("job_pos", jobPos),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
-        };
-        Command command = new Command()
-        {
-            Cmd = "ChangeSpecValues",
-            MsgType = "exec",
-            Object = "Job_Spec",
-            Parameters = parameters,
-            Schema = "dbo"
-        };
-
-        var data = await Task.Run(() =>
-        {
-            return _CommandProcessor.ExecuteCommand(command);
-
-        });
         return data;
     }
 
@@ -1366,24 +1138,81 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         return data;
     }
 
-    public Task<string> SetActualSpecValueAsync()
+    
+    public async Task<int> SetCurLotDataAsync(int entId, int jobPos, int bomPos, string curItemId, string curLotNo, string curSublotNo, int curReasCd, int curStorageEntId, bool curUpdateInv, bool curBackflush)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("job_pos", jobPos),
+            new KeyValuePair<string, object>("bom_pos", bomPos),
+            new KeyValuePair<string, object>("cur_item_id", curItemId),
+            new KeyValuePair<string, object>("cur_lot_no", curLotNo),
+            new KeyValuePair<string, object>("cur_sublot_no", curSublotNo),
+            new KeyValuePair<string, object>("cur_reas_cd", curReasCd),
+            new KeyValuePair<string, object>("cur_storage_ent_id", curStorageEntId),
+            new KeyValuePair<string, object>("cur_update_inv", curUpdateInv),
+            new KeyValuePair<string, object>("cur_backflush", curBackflush),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "SetCurLotData",
+            MsgType = "exec",
+            Object = "Item_Prod",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+        return data;
     }
 
-    public Task<string> SetAttrAsync()
+    public async Task<string> SetJobQueueAsync(string woId, string operId, int seqNo, int? stateCd = null, int? jobPriority = null, DateTime? reqFinishTimeLocal = null, int? targetSchedEntId = null, int? concurrentLink = null, string statusNotes = null)
     {
-        throw new NotImplementedException();
-    }
 
-    public Task<string> SetCurLotDataAsync()
-    {
-        throw new NotImplementedException();
-    }
+        int runEntId = -1;
+        DateTime editTime = DateTime.Now.ToUniversalTime();
+        int refreshAll = 0;
 
-    public Task<string> SetJobQueueAsync()
-    {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("seq_no", seqNo),
+            new KeyValuePair<string, object>("state_cd", stateCd),
+            new KeyValuePair<string, object>("job_priority", jobPriority),
+            new KeyValuePair<string, object>("req_finish_time_local", reqFinishTimeLocal),
+            new KeyValuePair<string, object>("target_sched_ent_id", targetSchedEntId),
+            new KeyValuePair<string, object>("concurrent_link", concurrentLink),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("run_ent_id OUTPUT", runEntId),
+            new KeyValuePair<string, object>("edit_time OUTPUT", editTime),
+            new KeyValuePair<string, object>("refresh_all OUTPUT", refreshAll)
+        };
+        Command command = new Command()
+        {
+            Cmd = "SetJobQueue",
+            MsgType = "exec",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
     }
 
     public Task<string> SetUIScreenTagValuesAsync()

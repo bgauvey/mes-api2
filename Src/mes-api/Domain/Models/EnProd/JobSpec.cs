@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Models;
+namespace BOL.API.Domain.Models.EnProd;
 
 [PrimaryKey("WoId", "OperId", "SeqNo", "StepNo", "SpecId")]
 [Table("job_spec")]
