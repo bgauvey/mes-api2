@@ -114,12 +114,6 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
         "_value": "SP_SA_JOB_EXEC_GETJBSTEPQUANTS"
       },
       {
-        "_name": "JOB_EXEC.ISSAMEPRODUCED",
-        "_value": "SP_SA_ITEM_PROD_ISSAMEPRODUCED"
-      },
-
-
-      {
         "_name": "JOB_EXEC.SPLITJOB",
         "_value": "SP_I_JOB_EXEC_SPLITJOB"
       },
@@ -130,30 +124,6 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
       {
         "_name": "JOB_EXEC.STARTJOB",
         "_value": "SP_U_JOB_EXEC_STARTBATCHJOBS"
-      },
-      {
-        "_name": "JOB_EXEC.STARTSTEP",
-        "_value": "SP_U_JOB_STEP_STARTSTEP"
-      },
-      {
-        "_name": "JOB_EXEC.STEPLOGIN",
-        "_value": "SP_U_JOB_STEP_STEPLOGIN"
-      },
-      {
-        "_name": "JOB_EXEC.STEPLOGOUT",
-        "_value": "SP_U_JOB_STEP_STEPLOGOUT"
-      },
-      {
-        "_name": "JOB_EXEC.STOPSTEP",
-        "_value": "SP_U_JOB_STEP_STOPSTEP"
-      },
-      {
-        "_name": "JOB_EXEC.UPDATESTEPDATA",
-        "_value": "SP_U_JOB_STEP_UPDATESTEPDATA"
-      },
-      {
-        "_name": "JOB_EXEC.UPDATETEMPLATESPECVALUES",
-        "_value": "SP_U_JOB_SPEC_UPDTEMPLSPECVALS"
       },
       {
         "_name": "JOB_EXEC.VERIFYPROCESS",
@@ -183,6 +153,36 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
         "_name": "JOB_EXEC_STORAGE_EXEC_LINK.UPDATE",
         "_value": "SP_U_JOB_EXEC_STORAGE_EXEC_LNK"
       },
+      {
+        "_name": "JOB_EXEC.STARTSTEP",
+        "_value": "SP_U_JOB_STEP_STARTSTEP"
+      },
+
+
+      {
+        "_name": "JOB_EXEC.STEPLOGIN",
+        "_value": "SP_U_JOB_STEP_STEPLOGIN"
+      },
+      {
+        "_name": "JOB_EXEC.STEPLOGOUT",
+        "_value": "SP_U_JOB_STEP_STEPLOGOUT"
+      },
+      {
+        "_name": "JOB_EXEC.STOPSTEP",
+        "_value": "SP_U_JOB_STEP_STOPSTEP"
+      },
+      {
+        "_name": "JOB_EXEC.UPDATESTEPDATA",
+        "_value": "SP_U_JOB_STEP_UPDATESTEPDATA"
+      },
+
+
+      {
+        "_name": "JOB_EXEC.UPDATETEMPLATESPECVALUES",
+        "_value": "SP_U_JOB_SPEC_UPDTEMPLSPECVALS"
+      },
+
+
     */
 
 

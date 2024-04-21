@@ -100,5 +100,8 @@ public interface IJobExecService
 
     Task<int> SetCurLotDataAsync(int entId, int jobPos, int bomPos, string curItemId, string curLotNo, string curSublotNo, int curReasCd, int curStorageEntId, bool curUpdateInv, bool curBackflush);
 
+    Task<string> IsSameProducedAsync(string woId, string operId, int? seqNo, string? itemId);
+
+    Task<int> UpdateTemplateSpecValuesAsync(int sessionId, string userId, int entId, int? checkPrivs, int? jobPos);
 }
 

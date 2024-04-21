@@ -1239,6 +1239,57 @@ namespace bol.api.Controllers.Prod
                 return BadRequest(new { Status = false, exp.Message });
             }
         }
+
+        /// <summary>
+        /// Returns 1 if the same item is produced in the last job, else 0
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="seqNo"></param>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        [HttpGet("IsSameProduced", Name = "IsSameProduced")]
+        public async Task<IActionResult> IsSameProducedAsync(string woId, string operId, int? seqNo = null, string? itemId = null)
+        {
+            try
+            {
+                var data = await _JobExecService.IsSameProducedAsync(woId, operId, seqNo, itemId);
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To update all operation spec parameter values based on spec values of the current running job.
+        /// This allows for runtime changing of spec values by users with appropriate privileges based on the job currently running on an entity.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="checkPrivs"></param>
+        /// <param name="jobPos"></param>
+        /// <returns></returns>
+        [HttpPut("UpdateTemplateSpecValues", Name = "UpdateTemplateSpecValues")]
+        [Authorize]
+        public async Task<IActionResult> UpdateTemplateSpecValuesAsync(int entId, int? checkPrivs, int? jobPos = null)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+                var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                                         .Select(c => Convert.ToInt32(c.Value)).SingleOrDefault();
+
+                var data = await _JobExecService.UpdateTemplateSpecValuesAsync(sessionId, userId, entId, checkPrivs, jobPos);
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
     }
 }
 

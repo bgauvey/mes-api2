@@ -34,6 +34,8 @@ namespace BOL.API.Repository.Interfaces.EnProd
 
         Task<int> ChangeSpecValuesAsync(int sessionId, string userId, int entId, string? newSpecValue, string? newMinValue, string? newMaxValue, bool updateTemplate, int checkPrivs,
             int bomPos, string? bomVerId, string comments, int jobPos);
+
+        Task<int> UpdateTemplateSpecValuesAsync(int sessionId, string userId, int entId, int? checkPrivs, int? jobPos);
     }
 }
 

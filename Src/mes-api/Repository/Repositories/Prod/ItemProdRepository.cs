@@ -24,10 +24,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Data;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Prod;
 using BOL.API.Repository.Helper;
 using BOL.API.Repository.Interfaces.Prod;
+using Newtonsoft.Json;
 
 namespace BOL.API.Repository.Repositories.Prod
 {
@@ -39,6 +41,38 @@ namespace BOL.API.Repository.Repositories.Prod
          : base(context, loggerFactory)
         {
             _CommandProcessor = new CommandProcessor(configuration);
+        }
+
+        public async Task<string> IsSameProducedAsync(string woId, string operId, int? seqNo, string? itemId)
+        {
+            int sameProduced = 0;
+            var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("seq_no", seqNo),
+            new KeyValuePair<string, object>("item_id", itemId),
+            new KeyValuePair<string, object>("same_produced OUTPUT", sameProduced)
+        };
+            Command command = new Command()
+            {
+                Cmd = "IsSameProduced",
+                MsgType = "getall",
+                Object = "Item_Prod",
+                Parameters = parameters,
+                Schema = "dbo"
+            };
+
+            var data = await Task.Run(() =>
+            {
+                DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+                var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+                return jsonString;
+            });
+
+            return data;
         }
 
         public async Task<int> RejectProdAsync(int sessionId, int oldRowId, double splitQtyProd, string newWoId = null, string newOperId = null, int? newSeqNo = null, DateTime? newShiftStartLocal = null,

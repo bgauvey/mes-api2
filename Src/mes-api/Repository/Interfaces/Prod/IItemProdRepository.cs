@@ -31,6 +31,8 @@ namespace BOL.API.Repository.Interfaces.Prod
 	public interface IItemProdRepository : IRepositoryBase<ItemProd>
 	{
 
+        Task<string> IsSameProducedAsync(string woId, string operId, int? seqNo, string? itemId);
+
         Task<int> RejectProdAsync(int sessionId, int oldRowId, double splitQtyProd, string newWoId, string newOperId, int? newSeqNo, DateTime? newShiftStartLocal, string newItemId, string newLotNo,
             string newRmLotNo, string newSublotNo, string newRmSublotNo, int? newReasCd, string newUserId, int? newEntId, int? newShiftId, int? newToEntId, double? splitQtyProdErp, bool splitProcessedFlag, bool splitByproductFlag);
 

@@ -23,10 +23,14 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using api.Models;
+using System.Data;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.EnProd;
+using BOL.API.Domain.Models.Prod;
 using BOL.API.Repository.Helper;
 using BOL.API.Repository.Interfaces.EnProd;
+using Newtonsoft.Json;
 
 namespace BOL.API.Repository.Repositories.EnProd
 {
@@ -72,7 +76,6 @@ namespace BOL.API.Repository.Repositories.EnProd
             return data;
         }
 
-
         public async Task<int> ChangeSpecValuesAsync(int sessionId, string userId, int entId, string? newSpecValue, string? newMinValue, string? newMaxValue, bool updateTemplate = false, int checkPrivs = 0,
             int bomPos = 0, string? bomVerId = null, string comments = "", int jobPos = 0)
         {
@@ -95,6 +98,33 @@ namespace BOL.API.Repository.Repositories.EnProd
             Command command = new Command()
             {
                 Cmd = "ChangeSpecValues",
+                MsgType = "exec",
+                Object = "Job_Spec",
+                Parameters = parameters,
+                Schema = "dbo"
+            };
+
+            var data = await Task.Run(() =>
+            {
+                return _CommandProcessor.ExecuteCommand(command);
+
+            });
+            return data;
+        }
+
+        public async Task<int> UpdateTemplateSpecValuesAsync(int sessionId, string userId, int entId, int? checkPrivs, int? jobPos)
+        {
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("session_id", sessionId),
+                new KeyValuePair<string, object>("user_id", userId),
+                new KeyValuePair<string, object>("ent_id", entId),
+                new KeyValuePair<string, object>("check_privs", checkPrivs),
+                new KeyValuePair<string, object>("job_pos", jobPos)
+            };
+            Command command = new Command()
+            {
+                Cmd = "UpdTemplSpecVals",
                 MsgType = "exec",
                 Object = "Job_Spec",
                 Parameters = parameters,

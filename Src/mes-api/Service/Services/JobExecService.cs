@@ -264,4 +264,13 @@ public class JobExecService : IJobExecService
         return await _itemProdRepository.SetCurLotDataAsync(entId, jobPos, bomPos, curItemId, curLotNo, curSublotNo, curReasCd, curStorageEntId, curUpdateInv, curBackflush);
     }
 
+    public async Task<string> IsSameProducedAsync(string woId, string operId, int? seqNo, string? itemId)
+    {
+        return await _itemProdRepository.IsSameProducedAsync(woId, operId, seqNo, itemId);
+    }
+
+    public async Task<int> UpdateTemplateSpecValuesAsync(int sessionId, string userId, int entId, int? checkPrivs, int? jobPos)
+    {
+        return await _jobSpecRepository.UpdateTemplateSpecValuesAsync(sessionId, userId, entId, checkPrivs, jobPos);
+    }
 }
