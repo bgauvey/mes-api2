@@ -1,22 +1,41 @@
-﻿using BOL.API.Repository.Interfaces.EnProd;
+﻿using BOL.API.Repository.Interfaces.Cert;
+using BOL.API.Repository.Interfaces.Core;
+using BOL.API.Repository.Interfaces.EnProd;
 using BOL.API.Repository.Interfaces.Prod;
-using BOL.API.Repository.Repositories.Prod;
 using BOL.API.Service.Interfaces;
 
 namespace BOL.API.Service.Services;
 
 public class JobExecService : IJobExecService
 {
+    private readonly ICertRepository _certRepository;
+    private readonly IEntRepository _entRepository;
+    private readonly IJobRepository _jobRepository;
+    private readonly IJobEventRepository _jobEventRepository;
     private readonly IJobExecRepository _jobExecRepository;
     private readonly IJobSpecRepository _jobSpecRepository;
     private readonly IItemConsRepository _itemConsRepository;
+    private readonly IItemProdRepository _itemProdRepository;
     private readonly ILogger _logger;
 
-    public JobExecService(IJobExecRepository jobExecRepository, IItemConsRepository itemConsRepository, IJobSpecRepository jobSpecRepository, ILoggerFactory loggerFactory)
+    public JobExecService(IJobExecRepository jobExecRepository,
+                          IItemConsRepository itemConsRepository,
+                          IItemProdRepository itemProdRepository,
+                          ICertRepository certRepository,
+                          IJobRepository jobRepository,
+                          IJobEventRepository jobEventRepository,
+                          IJobSpecRepository jobSpecRepository,
+                          IEntRepository entRepository,
+                          ILoggerFactory loggerFactory)
     {
+        _certRepository = certRepository;
+        _entRepository = entRepository;
+        _jobRepository = jobRepository;
+        _jobEventRepository = jobEventRepository;
         _jobExecRepository = jobExecRepository;
         _jobSpecRepository = jobSpecRepository;
         _itemConsRepository = itemConsRepository;
+        _itemProdRepository = itemProdRepository;
         _logger = loggerFactory.CreateLogger(nameof(JobExecService));
 
     }
@@ -68,29 +87,29 @@ public class JobExecService : IJobExecService
     public async Task<string> CertSignOffAsync(string woId, string operId, int seqNo, int? stepNo, string lotNo, int prodLogId, int consLogId, string processId, int processStatus,
         bool active, string certName, string userId, DateTime? signOffLocal, string? comments, int refRowId)
     {
-        return await _jobExecRepository.CertSignoffAsync(woId, operId, seqNo, stepNo, lotNo, prodLogId, consLogId, processId, processStatus, active, certName, userId,
+        return await _certRepository.CertSignoffAsync(woId, operId, seqNo, stepNo, lotNo, prodLogId, consLogId, processId, processStatus, active, certName, userId,
             signOffLocal, comments, refRowId);
     }
 
     public async Task<int> CertSignoffAllowedAsync(string userId, string processId, string operId, int? stepNo, string? certName)
     {
-        return await _jobExecRepository.CertSignoffAllowedAsync(userId, processId, operId, stepNo, certName);
+        return await _certRepository.CertSignoffAllowedAsync(userId, processId, operId, stepNo, certName);
     }
 
     public async Task<string> CertSignoffDoneAsync(string woId, string operId, int seqNo, int? stepNo, string? certName, string? lotNo, int? prodLogId, int? consLogId,
         string? processId, int? processStatus, bool? active)
     {
-        return await _jobExecRepository.CertSignoffDoneAsync(woId, operId, seqNo, stepNo, certName, lotNo, prodLogId, consLogId, processId, processStatus, active);
+        return await _certRepository.CertSignoffDoneAsync(woId, operId, seqNo, stepNo, certName, lotNo, prodLogId, consLogId, processId, processStatus, active);
     }
 
     public async Task<string> CertSignoffReqdAsync(string processId, string operId, int? stepNo)
     {
-        return await _jobExecRepository.CertSignoffReqdAsync(processId, operId, stepNo);
+        return await _certRepository.CertSignoffReqdAsync(processId, operId, stepNo);
     }
 
     public async Task<int> CertStartAllowedAsync(string userId, string? processId, string? operId, int? stepNo, string? itemId)
     {
-        return await _jobExecRepository.CertStartAllowedAsync(userId, processId, operId, stepNo, itemId);
+        return await _certRepository.CertStartAllowedAsync(userId, processId, operId, stepNo, itemId);
     }
 
     public async Task<string> ChangeJobStatesAsync(int rowId, int? stateCd, DateTime? reqFinishTimeLocal, int? jobPriority, int? applyToAllJobs)
@@ -116,7 +135,7 @@ public class JobExecService : IJobExecService
 
     public async Task<int> ChangeWOQtysAsync(string userId, string woId, double reqQty, string? processId = null, string? itemId = null, double? startQty = null, DateTime? reqFinishTime = null, DateTime? releaseTime = null)
     {
-        return await _jobExecRepository.ChangeWOQtysAsync(userId, woId, reqQty, processId, itemId, startQty, reqFinishTime, releaseTime);
+        return await _jobRepository.ChangeWOQtysAsync(userId, woId, reqQty, processId, itemId, startQty, reqFinishTime, releaseTime);
     }
 
     public async Task<int> ChangeWOReqdFinishTimeAsync(string woId, DateTime reqFinishTimeLocal)
@@ -131,7 +150,7 @@ public class JobExecService : IJobExecService
 
     public async Task<int> CloneJobAsync(string userId, string woId, string operId, int seqNo, string? newWoId, string? newOperId, int? newSeqNo, double? reqQty, double? startQty, DateTime? reqFinishTimeLocal)
     {
-        return await _jobExecRepository.CloneJobAsync(userId, woId, operId, seqNo, newWoId, newOperId, newSeqNo, reqQty, startQty, reqFinishTimeLocal);
+        return await _jobRepository.CloneJobAsync(userId, woId, operId, seqNo, newWoId, newOperId, newSeqNo, reqQty, startQty, reqFinishTimeLocal);
     }
 
     public async Task<int> CloneWoAsync(string userId, string woId, string newWoId, double? reqQty, string? woDesc, DateTime? releaseTimeLocal, DateTime? reqFinishTimeLocal, int? woPriority, string? custInfo, string? moId, string? notes)
@@ -185,7 +204,7 @@ public class JobExecService : IJobExecService
 
     public async Task<string> GetJobQueueByFilterAsync(string entFilter, string jobFilter)
     {
-        return await _jobExecRepository.GetJobQueueByFilterAsync(entFilter, jobFilter);
+        return await _jobRepository.GetJobQueueByFilterAsync(entFilter, jobFilter);
     }
 
     public async Task<string> GetReqdCertSignoffsAsync(string woId, string operId, int stepNo)
@@ -195,22 +214,22 @@ public class JobExecService : IJobExecService
 
     public async Task<string> GetRunnableEntitiesAsync(int entId)
     {
-        return await _jobExecRepository.GetRunnableEntitiesAsync(entId);
+        return await _entRepository.GetRunnableEntitiesAsync(entId);
     }
 
     public async Task<string> GetSchedEntsByWindowAsync(string woId = null, string operId = null, int windowId = 0)
     {
-        return await _jobExecRepository.GetSchedEntsByWindowAsync(woId, operId, windowId);
+        return await _entRepository.GetSchedEntsByWindowAsync(woId, operId, windowId);
     }
 
     public async Task<string> GetSchedulableEntityAsync(int entId)
     {
-        return await _jobExecRepository.GetSchedulableEntityAsync(entId);
+        return await _entRepository.GetSchedulableEntityAsync(entId);
     }
 
     public async Task<string> GetSchedulableParentsAsync(int entId)
     {
-        return await _jobExecRepository.GetSchedulableParentsAsync(entId);
+        return await _entRepository.GetSchedulableParentsAsync(entId);
     }
 
     public async Task<string> GetStepBOMDataAsync(string woId, string operId, int seqNo, int? stepNo = null)
@@ -222,7 +241,7 @@ public class JobExecService : IJobExecService
         string checkedByUserId, int sourceRowId, string specId, string comments, string value1, string value2, string value3, string value4, string value5, string value6, string value7, string value8, string value9,
         string value10, string lastEditComment)
     {
-        return await _jobExecRepository.LogJobEventAsync(entId, eventTimeLocal, jobPos, stepNo, eventType, bomPos, lotNo, sublotNo, itemId, certName, doneByUserId,
+        return await _jobEventRepository.LogJobEventAsync(entId, eventTimeLocal, jobPos, stepNo, eventType, bomPos, lotNo, sublotNo, itemId, certName, doneByUserId,
         checkedByUserId, sourceRowId, specId, comments, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, lastEditComment);
     }
 
@@ -236,13 +255,13 @@ public class JobExecService : IJobExecService
     string newItemId = null, string newLotNo = null, string newRmLotNo = null, string newSublotNo = null, string newRmSublotNo = null, int? newReasCd = null, string newUserId = null, int? newEntId = null,
     int? newShiftId = null, int? newToEntId = null, double? splitQtyProdErp = null, bool splitProcessedFlag = false, bool splitByproductFlag = false)
     {
-        return await _jobExecRepository.RejectProdAsync(sessionId, oldRowId, splitQtyProd, newWoId, newOperId, newSeqNo, newShiftStartLocal, newItemId, newLotNo, newRmLotNo, newSublotNo, newRmSublotNo,
+        return await _itemProdRepository.RejectProdAsync(sessionId, oldRowId, splitQtyProd, newWoId, newOperId, newSeqNo, newShiftStartLocal, newItemId, newLotNo, newRmLotNo, newSublotNo, newRmSublotNo,
             newReasCd, newUserId, newEntId, newShiftId, newToEntId, splitQtyProdErp, splitProcessedFlag, splitByproductFlag);
     }
 
     public async Task<int> SetCurLotDataAsync(int entId, int jobPos, int bomPos, string curItemId, string curLotNo, string curSublotNo, int curReasCd, int curStorageEntId, bool curUpdateInv, bool curBackflush)
     {
-        return await _jobExecRepository.SetCurLotDataAsync(entId, jobPos, bomPos, curItemId, curLotNo, curSublotNo, curReasCd, curStorageEntId, curUpdateInv, curBackflush);
+        return await _itemProdRepository.SetCurLotDataAsync(entId, jobPos, bomPos, curItemId, curLotNo, curSublotNo, curReasCd, curStorageEntId, curUpdateInv, curBackflush);
     }
 
 }

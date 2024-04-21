@@ -1,11 +1,13 @@
 ﻿
 
+using BOL.API.Repository.Interfaces.Cert;
 using BOL.API.Repository.Interfaces.Core;
 using BOL.API.Repository.Interfaces.EnProd;
 using BOL.API.Repository.Interfaces.Generic;
 using BOL.API.Repository.Interfaces.Prod;
 using BOL.API.Repository.Interfaces.Security;
 using BOL.API.Repository.Interfaces.Util;
+using BOL.API.Repository.Repositories.Cert;
 using BOL.API.Repository.Repositories.Core;
 using BOL.API.Repository.Repositories.EnProd;
 using BOL.API.Repository.Repositories.Generic;
@@ -36,6 +38,9 @@ public static class ServiceExtension
         services.AddScoped<IEntLinkRepository, EntLinkRepository>();
         services.AddScoped<IEntRepository, EntRepository>();
 
+        // Cert
+        services.AddScoped<ICertRepository, CertRepository>();
+
         // EnProd
         services.AddScoped<IItemInvRepository, ItemInvRepository>();
         services.AddScoped<IJobSpecRepository, JobSpecRepository>();
@@ -47,8 +52,11 @@ public static class ServiceExtension
         // Prod
         services.AddScoped<IItemRepository, ItemRepository>();
         services.AddScoped<IItemAttrRepository, ItemAttrRepository>();
-        services.AddScoped<IItemFileRepository, ItemFileRepository>();
         services.AddScoped<IItemConsRepository, ItemConsRepository>();
+        services.AddScoped<IItemFileRepository, ItemFileRepository>();
+        services.AddScoped<IItemProdRepository, ItemProdRepository>();
+        services.AddScoped<IJobRepository, JobRepository>();
+        services.AddScoped<IJobEventRepository, JobEventRepository>();
         services.AddScoped<IJobExecRepository, JobExecRepository>();
 
         // Security

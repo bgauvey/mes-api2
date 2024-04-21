@@ -17,6 +17,9 @@ public interface IEntRepository : IRepositoryBase<Ent>
     Task<string> RefreshShiftSchedAsync(int inEntId, DateTime inStartTime, int inDaysAhead);
     Task<string> GetRefreshShiftSchedAsync(int inEntId, DateTime inStartTime, int inDaysAhead);
     Task<string> GetShiftSchedulesAsync(int inEntId, DateTime startTime, DateTime endTime);
+    Task<string> GetRunnableEntitiesAsync(int entId);
+    Task<string> GetSchedEntsByWindowAsync(string woId, string operId, int windowId);
+    Task<string> GetSchedulableEntityAsync(int entId);
+    Task<string> GetSchedulableParentsAsync(int entId);
+
 }
-
-

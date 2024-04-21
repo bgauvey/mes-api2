@@ -328,4 +328,116 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
 
         return data;
     }
+
+
+    // TODO: Move to ent repository
+    public async Task<string> GetRunnableEntitiesAsync(int entId)
+    {
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetRunnableEntities",
+            MsgType = "getall",
+            Object = "Ent",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
+    }
+
+    public async Task<string> GetSchedEntsByWindowAsync(string woId = null, string operId = null, int windowId = 0)
+    {
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("window_id", windowId)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetSchedEnts",
+            MsgType = "getall",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
+    }
+
+    public async Task<string> GetSchedulableEntityAsync(int entId)
+    {
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id OUTPUT", entId)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetSchedulableEntity",
+            MsgType = "getall",
+            Object = "Ent",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
+    }
+
+    public async Task<string> GetSchedulableParentsAsync(int entId)
+    {
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId)
+        };
+        Command command = new Command()
+        {
+            Cmd = "GetSchedParents",
+            MsgType = "getall",
+            Object = "Ent",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+        });
+
+        return data;
+    }
 }
