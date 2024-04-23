@@ -273,4 +273,17 @@ public class JobExecService : IJobExecService
     {
         return await _jobSpecRepository.UpdateTemplateSpecValuesAsync(sessionId, userId, entId, checkPrivs, jobPos);
     }
+
+    public async Task<string> SplitJobAsync(string userId, string woId, string operId, int origSeqNo, double splitQty, int newSeqNo, double? splitStartQty = null, int? newStateCd = null,
+        DateTime? reqFinishTime = null, int? targetEntId = null, string? statusNotes = null, bool ignoreZeroStartQtyCheck = false)
+    {
+        return await _jobExecRepository.SplitJobAsync(userId, woId, operId, origSeqNo, splitQty, newSeqNo, splitStartQty,  newStateCd,  reqFinishTime, targetEntId,
+            statusNotes, ignoreZeroStartQtyCheck);
+    }
+
+    public async Task<string> StartDataEntryJobAsync(string userId, int entId, string woId, string operId, string itemId, double estProdrate, int prodUom, int? uomId = null,
+    string? spare1 = null, string? spare2 = null, string? spare3 = null, string? spare4 = null)
+    {
+        return await _jobExecRepository.StartDataEntryJobAsync(userId, entId, woId, operId, itemId, estProdrate, prodUom, uomId,  spare1, spare2, spare3, spare4);
+    }
 }

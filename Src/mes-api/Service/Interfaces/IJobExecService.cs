@@ -103,5 +103,11 @@ public interface IJobExecService
     Task<string> IsSameProducedAsync(string woId, string operId, int? seqNo, string? itemId);
 
     Task<int> UpdateTemplateSpecValuesAsync(int sessionId, string userId, int entId, int? checkPrivs, int? jobPos);
+
+    Task<string> SplitJobAsync(string userId, string woId, string operId, int origSeqNo, double splitQty, int newSeqNo, double? splitStartQty, int? newStateCd, DateTime? reqFinishTime,
+        int? targetEntId, string? statusNotes, bool ignoreZeroStartQtyCheck);
+
+    Task<string> StartDataEntryJobAsync(string userId, int entId, string woId, string operId, string itemId, double estProdrate, int prodUom, int? uomId, string? spare1, string? spare2,
+        string? spare3, string? spare4);
 }
 

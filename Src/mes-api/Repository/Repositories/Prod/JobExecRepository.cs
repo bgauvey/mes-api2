@@ -21,11 +21,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Data;
+using api.Models;
 using BOL.API.Domain.Models;
+using BOL.API.Domain.Models.EnProd;
 using BOL.API.Domain.Models.Prod;
 using BOL.API.Repository.Helper;
 using BOL.API.Repository.Interfaces.Prod;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using static Azure.Core.HttpHeader;
 
 namespace BOL.API.Repository.Repositories.Prod;
 
@@ -699,19 +703,87 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         return data;
     }
 
-    public Task<string> SetUIScreenTagValuesAsync()
+    public async Task<string> SplitJobAsync(string userId, string woId, string operId, int origSeqNo, double splitQty, int newSeqNo, double? splitStartQty = null, int? newStateCd = null,
+        DateTime? reqFinishTime = null, int? targetEntId = null, string? statusNotes = null, bool ignoreZeroStartQtyCheck = false)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("orig_seq_no", origSeqNo),
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("split_qty", splitQty),
+            new KeyValuePair<string, object>("new_seq_no OUTPUT", newSeqNo),
+            new KeyValuePair<string, object>("split_start_qty", splitStartQty),
+            new KeyValuePair<string, object>("new_state_cd", newStateCd),
+            new KeyValuePair<string, object>("req_finish_time", reqFinishTime),
+            new KeyValuePair<string, object>("target_ent_id", targetEntId),
+            new KeyValuePair<string, object>("status_notes", statusNotes),
+            new KeyValuePair<string, object>("ignore_zero_start_qty_check", ignoreZeroStartQtyCheck),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "SplitJob",
+            MsgType = "add",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+
+        });
+        return data;
     }
 
-    public Task<string> SplitJobAsync()
+    public async Task<string> StartDataEntryJobAsync(string userId, int entId, string woId, string operId, string itemId, double estProdrate, int prodUom, int? uomId = null,
+        string? spare1 = null, string? spare2 = null, string? spare3 = null, string? spare4 = null)
     {
-        throw new NotImplementedException();
-    }
+        int seqNo = -1;
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("item_id", itemId),
+            new KeyValuePair<string, object>("est_prod_rate", estProdrate),
+            new KeyValuePair<string, object>("prod_uom", prodUom),
+            new KeyValuePair<string, object>("uom_id", uomId),
+            new KeyValuePair<string, object>("spare1", spare1),
+            new KeyValuePair<string, object>("spare2", spare2),
+            new KeyValuePair<string, object>("spare3", spare3),
+            new KeyValuePair<string, object>("spare4", spare4),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("seq_no OUTPUT", seqNo)
+        };
+        Command command = new Command()
+        {
+            Cmd = "StrtDataEntryJob",
+            MsgType = "exec",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
 
-    public Task<string> StartDataEntryJobAsync()
-    {
-        throw new NotImplementedException();
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+
+        });
+        return data;
     }
 
     public Task<string> StartJobAsync()
@@ -750,11 +822,6 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
     }
 
     public Task<string> UpdateStepDataAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<string> UpdateTemplateSpecValuesAsync()
     {
         throw new NotImplementedException();
     }

@@ -1290,6 +1290,78 @@ namespace bol.api.Controllers.Prod
                 return BadRequest(new { Status = false, exp.Message });
             }
         }
+
+        /// <summary>
+        /// To split a job. Returns the seq_no of the new job as an integer if successful ie. if it is >=0, else –1 if there was an error.
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="origSeqNo"></param>
+        /// <param name="splitQty"></param>
+        /// <param name="newSeqNo"></param>
+        /// <param name="splitStartQty"></param>
+        /// <param name="newStateCd"></param>
+        /// <param name="reqFinishTime"></param>
+        /// <param name="targetEntId"></param>
+        /// <param name="statusNotes"></param>
+        /// <param name="ignoreZeroStartQtyCheck"></param>
+        /// <returns></returns>
+        [HttpPost("SplitJob", Name = "SplitJob")]
+        [Authorize]
+        public async Task<IActionResult> SplitJobAsync(string woId, string operId, int origSeqNo, double splitQty, int newSeqNo, double? splitStartQty = null, int? newStateCd = null,
+        DateTime? reqFinishTime = null, int? targetEntId = null, string? statusNotes = null, bool ignoreZeroStartQtyCheck = false)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+
+                var data = await _JobExecService.SplitJobAsync(userId, woId, operId, origSeqNo, splitQty, newSeqNo, splitStartQty, newStateCd, reqFinishTime, targetEntId,
+                    statusNotes, ignoreZeroStartQtyCheck);
+            
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To create and start a new data entry job on the fly, ending the current job if any on an entity.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="estProdrate"></param>
+        /// <param name="prodUom"></param>
+        /// <param name="uomId"></param>
+        /// <param name="spare1"></param>
+        /// <param name="spare2"></param>
+        /// <param name="spare3"></param>
+        /// <param name="spare4"></param>
+        /// <param name="seqNo"></param>
+        /// <returns></returns>
+        [HttpPut("StartDataEntryJob", Name = "StartDataEntryJob")]
+        [Authorize]
+        public async Task<IActionResult> StartDataEntryJobAsync(int entId, string woId, string operId, string itemId, double estProdrate, int prodUom, int? uomId = null,
+            string? spare1 = null, string? spare2 = null, string? spare3 = null, string? spare4 = null, int? seqNo = null)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+
+                var data = await _JobExecService.StartDataEntryJobAsync(userId, entId, woId, operId, itemId, estProdrate, prodUom, uomId, spare1, spare2, spare3, spare4);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
     }
 }
 

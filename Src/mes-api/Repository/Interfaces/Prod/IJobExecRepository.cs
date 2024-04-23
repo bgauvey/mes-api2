@@ -55,7 +55,8 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
         string? custInfo, string? moId, string? notes);
 
     Task<int> CreateWoFromProcessAsync(string userId, string woId, string processId, string itemId, double reqQty, double? startQty, int? initWoState,
-        string? woDesc, DateTime? releaseTime, DateTime? reqFinishTime, int? woPriority, string? custInfo, string? moId, string? notes, string? bomVerId, bool forFirstOp, string? specVerId, bool mayOverrideRoute);
+        string? woDesc, DateTime? releaseTime, DateTime? reqFinishTime, int? woPriority, string? custInfo, string? moId, string? notes, string? bomVerId, bool forFirstOp,
+        string? specVerId, bool mayOverrideRoute);
 
     Task<int> DownloadSpecsAsync(int entId, string woId, string operId, int seqNo, int? stepNo);
 
@@ -78,14 +79,17 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
 
     Task<int> PauseJobAsync(int entId, string woId, string operId, int seqNo, int pausedJobState, int jobPos, string statusNotes, DateTime? actFinishTimeLocal);
 
-    Task<string> SetJobQueueAsync(string woId, string operId, int seqNo, int? stateCd, int? jobPriority, DateTime? reqFinishTimeLocal, int? targetSchedEntId, int? concurrentLink, string statusNotes);
+    Task<string> SetJobQueueAsync(string woId, string operId, int seqNo, int? stateCd, int? jobPriority, DateTime? reqFinishTimeLocal, int? targetSchedEntId, int? concurrentLink,
+        string statusNotes);
 
+    Task<string> SplitJobAsync(string userId, string woId, string operId, int origSeqNo, double splitQty, int newSeqNo, double? splitStartQty, int? newStateCd, DateTime? reqFinishTime,
+        int? targetEntId, string? statusNotes, bool ignoreZeroStartQtyCheck);
 
-    Task<string> SetUIScreenTagValuesAsync();
-    Task<string> SplitJobAsync();
-    Task<string> StartDataEntryJobAsync();
+    Task<string> StartDataEntryJobAsync(string userId, int entId, string woId, string operId, string itemId, double estProdrate, int prodUom, int? uomId, string? spare1, string? spare2, string? spare3, string? spare4);
+
     Task<string> StartJobAsync();
     Task<string> StartSomeAsync();
+
     Task<string> StartStepAsync();
     Task<string> StepLoginAsync();
     Task<string> StepLogoutAsync();
@@ -93,7 +97,6 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
 
     Task<string> TransQtyToCurJobAsync();
     Task<string> UpdateStepDataAsync();
-    Task<string> UpdateTemplateSpecValuesAsync();
     Task<string> VerifyProcessAsync();
 
     /*
@@ -113,10 +116,7 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
         "_name": "JOB_EXEC.GETJOBBOMSTEPQUANTITIES",
         "_value": "SP_SA_JOB_EXEC_GETJBSTEPQUANTS"
       },
-      {
-        "_name": "JOB_EXEC.SPLITJOB",
-        "_value": "SP_I_JOB_EXEC_SPLITJOB"
-      },
+
       {
         "_name": "JOB_EXEC.STARTDATAENTRYJOB",
         "_value": "SP_U_JOB_EXEC_STRTDATAENTRYJOB"
@@ -174,14 +174,7 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
       {
         "_name": "JOB_EXEC.UPDATESTEPDATA",
         "_value": "SP_U_JOB_STEP_UPDATESTEPDATA"
-      },
-
-
-      {
-        "_name": "JOB_EXEC.UPDATETEMPLATESPECVALUES",
-        "_value": "SP_U_JOB_SPEC_UPDTEMPLSPECVALS"
-      },
-
+      }
 
     */
 
