@@ -87,8 +87,9 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
 
     Task<string> StartDataEntryJobAsync(string userId, int entId, string woId, string operId, string itemId, double estProdrate, int prodUom, int? uomId, string? spare1, string? spare2, string? spare3, string? spare4);
 
-    Task<string> StartJobAsync();
-    Task<string> StartSomeAsync();
+    Task<int> StartJobAsync(string userId, int entId, string woId, string operId, int seqNo, int jobPos, string? statusNotes, int? checkPrivs, int? checkCerts);
+
+    Task<string> StartSomeAsync(int sessionId, string userId, string woId, string operId, int seqNo, double qtyAtStart, string? statusNotes, int? checkPrivs, int? checkCerts, int? jobPos, double? qtyReqd);
 
     Task<string> StartStepAsync();
     Task<string> StepLoginAsync();
@@ -122,43 +123,13 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
         "_value": "SP_U_JOB_EXEC_STRTDATAENTRYJOB"
       },
       {
-        "_name": "JOB_EXEC.STARTJOB",
-        "_value": "SP_U_JOB_EXEC_STARTBATCHJOBS"
-      },
-      {
         "_name": "JOB_EXEC.VERIFYPROCESS",
         "_value": "SP_S_JOB_EXEC_VERIFYPROCESS"
-      },
-      {
-        "_name": "JOB_EXEC_STORAGE_EXEC_LINK.ADD",
-        "_value": "SP_I_JOB_EXEC_STORAGE_EXC_LNK"
-      },
-      {
-        "_name": "JOB_EXEC_STORAGE_EXEC_LINK.DELETE",
-        "_value": "SP_D_JOB_EXEC_STORAGE_EXEC_LNK"
-      },
-      {
-        "_name": "JOB_EXEC_STORAGE_EXEC_LINK.GETALL",
-        "_value": "SP_SA_JOB_EXEC_STORAGE_EXC_LNK"
-      },
-      {
-        "_name": "JOB_EXEC_STORAGE_EXEC_LINK.GETALLBYXML",
-        "_value": "SP_SA_JOB_EXEC_STORAGE_EXC_LNK"
-      },
-      {
-        "_name": "JOB_EXEC_STORAGE_EXEC_LINK.GETBYKEY",
-        "_value": "SP_S_JOB_EXEC_STORAGE_EXEC_LNK"
-      },
-      {
-        "_name": "JOB_EXEC_STORAGE_EXEC_LINK.UPDATE",
-        "_value": "SP_U_JOB_EXEC_STORAGE_EXEC_LNK"
       },
       {
         "_name": "JOB_EXEC.STARTSTEP",
         "_value": "SP_U_JOB_STEP_STARTSTEP"
       },
-
-
       {
         "_name": "JOB_EXEC.STEPLOGIN",
         "_value": "SP_U_JOB_STEP_STEPLOGIN"

@@ -786,14 +786,74 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         return data;
     }
 
-    public Task<string> StartJobAsync()
+    public async Task<int> StartJobAsync(string userId, int entId, string woId, string operId, int seqNo, int jobPos = 0, string? statusNotes = null, int? checkPrivs = null, int? checkCerts = null)
     {
-        throw new NotImplementedException();
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("ent_id", entId),
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("seq_no", seqNo),
+            new KeyValuePair<string, object>("job_pos", jobPos),
+            new KeyValuePair<string, object>("status_notes", statusNotes),
+            new KeyValuePair<string, object>("check_privs", checkPrivs),
+            new KeyValuePair<string, object>("check_certs", checkCerts),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+        };
+        Command command = new Command()
+        {
+            Cmd = "StartBatchJobs",
+            MsgType = "exec",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            return _CommandProcessor.ExecuteCommand(command);
+
+        });
+        return data;
     }
 
-    public Task<string> StartSomeAsync()
+    public async Task<string> StartSomeAsync(int sessionId, string userId, string woId, string operId, int seqNo, double qtyAtStart, string? statusNotes = null, int? checkPrivs = null, int? checkCerts = null, int? jobPos = null, double? qtyReqd = null)
     {
-        throw new NotImplementedException();
+        var newSeqNo = -1;
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("session_id", sessionId),
+            new KeyValuePair<string, object>("user_id", userId),
+            new KeyValuePair<string, object>("wo_id", woId),
+            new KeyValuePair<string, object>("oper_id", operId),
+            new KeyValuePair<string, object>("seq_no OUTPUT", seqNo),
+            new KeyValuePair<string, object>("job_pos", jobPos),
+            new KeyValuePair<string, object>("status_notes", statusNotes),
+            new KeyValuePair<string, object>("check_privs", checkPrivs),
+            new KeyValuePair<string, object>("check_certs", checkCerts),
+            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("new_seq_no OUTPUT", newSeqNo)
+        };
+        Command command = new Command()
+        {
+            Cmd = "StartSome",
+            MsgType = "exec",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
+
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+            return jsonString;
+
+        });
+        return data;
     }
 
     public Task<string> StartStepAsync()

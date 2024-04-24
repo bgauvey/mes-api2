@@ -1362,6 +1362,71 @@ namespace bol.api.Controllers.Prod
                 return BadRequest(new { Status = false, exp.Message });
             }
         }
+
+        /// <summary>
+        /// To start a job on the specified entity.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="seqNo"></param>
+        /// <param name="jobPos"></param>
+        /// <param name="statusNotes"></param>
+        /// <param name="checkPrivs"></param>
+        /// <param name="checkCerts"></param>
+        /// <returns></returns>
+        [HttpPut("StartJob", Name = "StartJob")]
+        [Authorize]
+        public async Task<IActionResult> StartJobAsync(int entId, string woId, string operId, int seqNo, int jobPos = 0, string? statusNotes = null, int? checkPrivs = null, int? checkCerts = null)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+
+                var data = await _JobExecService.StartJobAsync(userId, entId, woId, operId, seqNo, jobPos, statusNotes, checkPrivs, checkCerts);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To start a portion of a job on the specified entity.
+        /// </summary>
+        /// <param name="woId"></param>
+        /// <param name="operId"></param>
+        /// <param name="seqNo"></param>
+        /// <param name="qtyAtStart"></param>
+        /// <param name="statusNotes"></param>
+        /// <param name="checkPrivs"></param>
+        /// <param name="checkCerts"></param>
+        /// <param name="jobPos"></param>
+        /// <param name="qtyReqd"></param>
+        /// <returns></returns>
+        [HttpPut("StartSome", Name = "StartSome")]
+        [Authorize]
+        public async Task<IActionResult> StartSomeAsync(string woId, string operId, int seqNo, double qtyAtStart, string? statusNotes = null, int? checkPrivs = null, int? checkCerts = null, int? jobPos = null, double? qtyReqd = null)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+                var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                                      .Select(c => Convert.ToInt32(c.Value)).SingleOrDefault();
+
+                var data = await _JobExecService.StartSomeAsync(sessionId, userId, woId, operId, seqNo, qtyAtStart, statusNotes, checkPrivs, checkCerts, jobPos, qtyReqd);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
     }
 }
 

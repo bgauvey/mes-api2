@@ -286,4 +286,14 @@ public class JobExecService : IJobExecService
     {
         return await _jobExecRepository.StartDataEntryJobAsync(userId, entId, woId, operId, itemId, estProdrate, prodUom, uomId,  spare1, spare2, spare3, spare4);
     }
+
+    public async Task<int> StartJobAsync(string userId, int entId, string woId, string operId, int seqNo, int jobPos = 0, string? statusNotes = null, int? checkPrivs = null, int? checkCerts = null)
+    {
+        return await _jobExecRepository.StartJobAsync(userId, entId, woId, operId, seqNo, jobPos, statusNotes, checkPrivs, checkCerts);
+    }
+
+    public async Task<string> StartSomeAsync(int sessionId, string userId, string woId, string operId, int seqNo, double qtyAtStart, string? statusNotes = null, int? checkPrivs = null, int? checkCerts = null, int? jobPos = null, double? qtyReqd = null)
+    {
+        return await _jobExecRepository.StartSomeAsync(sessionId, userId, woId, operId, seqNo, qtyAtStart, statusNotes, checkPrivs, checkCerts, jobPos, qtyReqd);
+    }
 }

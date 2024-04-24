@@ -109,5 +109,9 @@ public interface IJobExecService
 
     Task<string> StartDataEntryJobAsync(string userId, int entId, string woId, string operId, string itemId, double estProdrate, int prodUom, int? uomId, string? spare1, string? spare2,
         string? spare3, string? spare4);
+
+    Task<int> StartJobAsync(string userId, int entId, string woId, string operId, int seqNo, int jobPos, string? statusNotes, int? checkPrivs, int? checkCerts);
+
+    Task<string> StartSomeAsync(int sessionId, string userId, string woId, string operId, int seqNo, double qtyAtStart, string? statusNotes, int? checkPrivs, int? checkCerts, int? jobPos, double? qtyReqd);
 }
 
