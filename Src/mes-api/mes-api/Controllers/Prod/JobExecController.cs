@@ -1429,6 +1429,38 @@ namespace bol.api.Controllers.Prod
         }
 
         /// <summary>
+        /// To start a Step for the job currently running on a given entity. 
+        /// </summary>
+        /// <param name="jobPos"></param>
+        /// <param name="stepNo"></param>
+        /// <param name="lotNo"></param>
+        /// <param name="sublotNo"></param>
+        /// <param name="stateCd"></param>
+        /// <param name="checkCert"></param>
+        /// <param name="laborOption"></param>
+        /// <returns></returns>
+        [HttpPut("StartStep", Name = "StartStep")]
+        [Authorize]
+        public async Task<IActionResult> StartStepAsync(int jobPos, int stepNo, string lotNo, string sublotNo, int? stateCd = null, bool? checkCert = null, bool? laborOption = null)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+                var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                                      .Select(c => Convert.ToInt32(c.Value)).SingleOrDefault();
+
+                var data = await _JobExecService.StartStepAsync(sessionId, userId, jobPos, stepNo, lotNo, sublotNo, stateCd, checkCert, laborOption);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
         /// To verify that a specified process and all its dependent operations and associated data is valid.
         /// </summary>
         /// <param name="processId"></param>

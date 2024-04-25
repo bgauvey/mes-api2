@@ -24,9 +24,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using api.Models;
+using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.EnProd;
 using BOL.API.Repository.Helper;
 using BOL.API.Repository.Interfaces.EnProd;
+using Microsoft.AspNetCore.Http;
 
 namespace BOL.API.Repository.Repositories.EnProd
 {
@@ -39,9 +42,37 @@ namespace BOL.API.Repository.Repositories.EnProd
             _CommandProcessor = new CommandProcessor(configuration);
         }
 
-        public async Task<string> StartStepAsync()
+        public async Task<int> StartStepAsync(int sessionId, string userId, int jobPos, int stepNo, string lotNo, string sublotNo, int? stateCd = null, bool? checkCert = null, bool? laborOption = null)
         {
-            throw new NotImplementedException();
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("session_id", sessionId),
+                new KeyValuePair<string, object>("user_id", userId),
+                new KeyValuePair<string, object>("job_pos", jobPos),
+                new KeyValuePair<string, object>("step_no", stepNo) ,
+                new KeyValuePair<string, object>("lot_no", lotNo),
+                new KeyValuePair<string, object>("sublot_no", sublotNo),
+                new KeyValuePair<string, object>("state_cd", stateCd),
+                new KeyValuePair<string, object>("check_cert", checkCert),
+                new KeyValuePair<string, object>("labor_option", laborOption),
+                new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            };
+            Command command = new Command()
+            {
+                Cmd = "StartBatchJobs",
+                MsgType = "exec",
+                Object = "Job_Exec",
+                Parameters = parameters,
+                Schema = "dbo"
+            };
+
+            var data = await Task.Run(() =>
+            {
+                return _CommandProcessor.ExecuteCommand(command);
+
+            });
+            return data;
+
         }
 
         public async Task<string> StepLoginAsync()

@@ -114,7 +114,8 @@ public interface IJobExecService
 
     Task<string> StartSomeAsync(int sessionId, string userId, string woId, string operId, int seqNo, double qtyAtStart, string? statusNotes, int? checkPrivs, int? checkCerts, int? jobPos, double? qtyReqd);
 
-    Task<string> StartStepAsync();
+    Task<int> StartStepAsync(int sessionId, string userId, int jobPos, int stepNo, string lotNo, string sublotNo, int? stateCd, bool? checkCert, bool? laborOption);
+
     Task<string> StepLoginAsync();
     Task<string> StepLogoutAsync();
     Task<string> StopStepAsync();

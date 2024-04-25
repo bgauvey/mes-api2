@@ -31,7 +31,8 @@ namespace BOL.API.Repository.Interfaces.EnProd
 	public interface IJobStepRepository : IRepositoryBase<JobStep>
 	{
 
-        Task<string> StartStepAsync();
+        Task<int> StartStepAsync(int sessionId, string userId, int jobPos, int stepNo, string lotNo, string sublotNo, int? stateCd, bool? checkCert, bool? laborOption);
+
         Task<string> StepLoginAsync();
         Task<string> StepLogoutAsync();
         Task<string> StopStepAsync();

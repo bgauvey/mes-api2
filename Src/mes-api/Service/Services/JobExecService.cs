@@ -300,9 +300,9 @@ public class JobExecService : IJobExecService
         return await _jobExecRepository.StartSomeAsync(sessionId, userId, woId, operId, seqNo, qtyAtStart, statusNotes, checkPrivs, checkCerts, jobPos, qtyReqd);
     }
 
-    public async Task<string> StartStepAsync()
+    public async Task<int> StartStepAsync(int sessionId, string userId, int jobPos, int stepNo, string lotNo, string sublotNo, int? stateCd = null, bool? checkCert = null, bool? laborOption = null)
     {
-        throw new NotImplementedException();
+        return await _jobStepRepository.StartStepAsync(sessionId, userId, jobPos, stepNo, lotNo, sublotNo, stateCd, checkCert, laborOption);
     }
 
     public async Task<string> StepLoginAsync()
