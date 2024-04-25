@@ -44,6 +44,7 @@ public static class ServiceExtension
         // EnProd
         services.AddScoped<IItemInvRepository, ItemInvRepository>();
         services.AddScoped<IJobSpecRepository, JobSpecRepository>();
+        services.AddScoped<IJobStepRepository, JobStepRepository>();
         services.AddScoped<IStorageExecRepository, StorageExecRepository>();
 
         // Generic

@@ -91,16 +91,6 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
 
     Task<string> StartSomeAsync(int sessionId, string userId, string woId, string operId, int seqNo, double qtyAtStart, string? statusNotes, int? checkPrivs, int? checkCerts, int? jobPos, double? qtyReqd);
 
-    /*
-    Task<string> StartStepAsync();
-    Task<string> StepLoginAsync();
-    Task<string> StepLogoutAsync();
-    Task<string> StopStepAsync();
-    Task<string> UpdateStepDataAsync();
-    Task<string> UpdateTemplateSpecValuesAsync();
-
-    */
-
     Task<string> VerifyProcessAsync(string processId, string? parentItemId, string? woId);
 
     /*

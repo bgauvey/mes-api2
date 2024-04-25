@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Models;
+namespace BOL.API.Domain.Models.EnProd;
 
 [PrimaryKey("WoId", "OperId", "SeqNo", "StepNo")]
 [Table("job_step")]

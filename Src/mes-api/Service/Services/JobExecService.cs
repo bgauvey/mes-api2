@@ -14,6 +14,7 @@ public class JobExecService : IJobExecService
     private readonly IJobEventRepository _jobEventRepository;
     private readonly IJobExecRepository _jobExecRepository;
     private readonly IJobSpecRepository _jobSpecRepository;
+    private readonly IJobStepRepository _jobStepRepository;
     private readonly IItemConsRepository _itemConsRepository;
     private readonly IItemProdRepository _itemProdRepository;
     private readonly ILogger _logger;
@@ -25,6 +26,7 @@ public class JobExecService : IJobExecService
                           IJobRepository jobRepository,
                           IJobEventRepository jobEventRepository,
                           IJobSpecRepository jobSpecRepository,
+                          IJobStepRepository jobStepRepository,
                           IEntRepository entRepository,
                           ILoggerFactory loggerFactory)
     {
@@ -34,6 +36,7 @@ public class JobExecService : IJobExecService
         _jobEventRepository = jobEventRepository;
         _jobExecRepository = jobExecRepository;
         _jobSpecRepository = jobSpecRepository;
+        _jobStepRepository = jobStepRepository;
         _itemConsRepository = itemConsRepository;
         _itemProdRepository = itemProdRepository;
         _logger = loggerFactory.CreateLogger(nameof(JobExecService));

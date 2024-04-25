@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
-namespace api.Models;
+namespace BOL.API.Domain.Models.EnProd;
 
 [Table("job_step_data")]
 public partial class JobStepDatum
