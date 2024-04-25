@@ -113,5 +113,15 @@ public interface IJobExecService
     Task<int> StartJobAsync(string userId, int entId, string woId, string operId, int seqNo, int jobPos, string? statusNotes, int? checkPrivs, int? checkCerts);
 
     Task<string> StartSomeAsync(int sessionId, string userId, string woId, string operId, int seqNo, double qtyAtStart, string? statusNotes, int? checkPrivs, int? checkCerts, int? jobPos, double? qtyReqd);
+
+    Task<string> StartStepAsync();
+    Task<string> StepLoginAsync();
+    Task<string> StepLogoutAsync();
+    Task<string> StopStepAsync();
+    Task<string> UpdateStepDataAsync();
+    Task<string> UpdateTemplateSpecValuesAsync();
+
+
+    Task<string> VerifyProcessAsync(string processId, string? parentItemId, string? woId);
 }
 

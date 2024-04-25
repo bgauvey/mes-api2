@@ -1427,6 +1427,30 @@ namespace bol.api.Controllers.Prod
                 return BadRequest(new { Status = false, exp.Message });
             }
         }
+
+        /// <summary>
+        /// To verify that a specified process and all its dependent operations and associated data is valid.
+        /// </summary>
+        /// <param name="processId"></param>
+        /// <param name="parentItemId"></param>
+        /// <param name="woId"></param>
+        /// <returns></returns>
+        [HttpGet("VerifyProcess", Name = "VerifyProcess")]
+        [Authorize]
+        public async Task<IActionResult> VerifyProcessAsync(string processId, string? parentItemId = null, string? woId = null)
+        {
+            try
+            {
+                var data = await _JobExecService.VerifyProcessAsync(processId, parentItemId, woId);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
     }
 }
 

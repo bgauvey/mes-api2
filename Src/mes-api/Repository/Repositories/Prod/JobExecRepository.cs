@@ -856,40 +856,32 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         return data;
     }
 
-    public Task<string> StartStepAsync()
+    public async Task<string> VerifyProcessAsync(string processId, string? parentItemId = null, string? woId = null)
     {
-        throw new NotImplementedException();
-    }
+        var parameters = new List<KeyValuePair<string, object>>
+        {
+            new KeyValuePair<string, object>("process_id", processId),
+            new KeyValuePair<string, object>("parent_item_id", parentItemId),
+            new KeyValuePair<string, object>("wo_id", woId)
+        };
+        Command command = new Command()
+        {
+            Cmd = "VerifyProcess",
+            MsgType = "getspec",
+            Object = "Job_Exec",
+            Parameters = parameters,
+            Schema = "dbo"
+        };
 
-    public Task<string> StepLoginAsync()
-    {
-        throw new NotImplementedException();
-    }
+        var data = await Task.Run(() =>
+        {
+            DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
 
-    public Task<string> StepLogoutAsync()
-    {
-        throw new NotImplementedException();
-    }
+            var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
 
-    public Task<string> StopStepAsync()
-    {
-        throw new NotImplementedException();
-    }
+            return jsonString;
 
-    public Task<string> TransQtyToCurJobAsync()
-    {
-        throw new NotImplementedException();
+        });
+        return data;
     }
-
-    public Task<string> UpdateStepDataAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<string> VerifyProcessAsync()
-    {
-        throw new NotImplementedException();
-    }
-
 }
-

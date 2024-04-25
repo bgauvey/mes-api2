@@ -296,4 +296,39 @@ public class JobExecService : IJobExecService
     {
         return await _jobExecRepository.StartSomeAsync(sessionId, userId, woId, operId, seqNo, qtyAtStart, statusNotes, checkPrivs, checkCerts, jobPos, qtyReqd);
     }
+
+    public async Task<string> StartStepAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<string> StepLoginAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<string> StepLogoutAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<string> StopStepAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<string> UpdateStepDataAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<string> UpdateTemplateSpecValuesAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<string> VerifyProcessAsync(string processId, string? parentItemId = null, string? woId = null)
+    {
+        return await _jobExecRepository.VerifyProcessAsync(processId, parentItemId, woId);
+    }
 }

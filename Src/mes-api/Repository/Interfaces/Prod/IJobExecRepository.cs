@@ -91,14 +91,17 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
 
     Task<string> StartSomeAsync(int sessionId, string userId, string woId, string operId, int seqNo, double qtyAtStart, string? statusNotes, int? checkPrivs, int? checkCerts, int? jobPos, double? qtyReqd);
 
+    /*
     Task<string> StartStepAsync();
     Task<string> StepLoginAsync();
     Task<string> StepLogoutAsync();
     Task<string> StopStepAsync();
-
-    Task<string> TransQtyToCurJobAsync();
     Task<string> UpdateStepDataAsync();
-    Task<string> VerifyProcessAsync();
+    Task<string> UpdateTemplateSpecValuesAsync();
+
+    */
+
+    Task<string> VerifyProcessAsync(string processId, string? parentItemId, string? woId);
 
     /*
       {
@@ -116,37 +119,7 @@ public interface IJobExecRepository : IRepositoryBase<JobExec>
       {
         "_name": "JOB_EXEC.GETJOBBOMSTEPQUANTITIES",
         "_value": "SP_SA_JOB_EXEC_GETJBSTEPQUANTS"
-      },
-
-      {
-        "_name": "JOB_EXEC.STARTDATAENTRYJOB",
-        "_value": "SP_U_JOB_EXEC_STRTDATAENTRYJOB"
-      },
-      {
-        "_name": "JOB_EXEC.VERIFYPROCESS",
-        "_value": "SP_S_JOB_EXEC_VERIFYPROCESS"
-      },
-      {
-        "_name": "JOB_EXEC.STARTSTEP",
-        "_value": "SP_U_JOB_STEP_STARTSTEP"
-      },
-      {
-        "_name": "JOB_EXEC.STEPLOGIN",
-        "_value": "SP_U_JOB_STEP_STEPLOGIN"
-      },
-      {
-        "_name": "JOB_EXEC.STEPLOGOUT",
-        "_value": "SP_U_JOB_STEP_STEPLOGOUT"
-      },
-      {
-        "_name": "JOB_EXEC.STOPSTEP",
-        "_value": "SP_U_JOB_STEP_STOPSTEP"
-      },
-      {
-        "_name": "JOB_EXEC.UPDATESTEPDATA",
-        "_value": "SP_U_JOB_STEP_UPDATESTEPDATA"
       }
-
     */
 
 
