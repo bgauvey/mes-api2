@@ -1,5 +1,5 @@
 ﻿//
-// AttrService.cs
+// EntLinkService.cs
 //
 // Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -23,46 +23,47 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System;
 using BOL.API.Domain.Models.Core;
 using BOL.API.Repository.Interfaces.Core;
 using BOL.API.Service.Interfaces.Core;
 
 namespace BOL.API.Service.Services.Core
 {
-    public class AttrService: IAttrService
+	public class EntLinkService : IEntLinkService
 	{
-        private readonly IAttrRepository _attrRepository;
+        private readonly IEntLinkRepository _entLinkRepository;
         private readonly ILogger _logger;
 
-        public AttrService(IAttrRepository attrRepository, ILoggerFactory loggerFactory)
+        public EntLinkService(IEntLinkRepository entLinkRepository, ILoggerFactory loggerFactory)
         {
-            _attrRepository = attrRepository;
-            _logger = loggerFactory.CreateLogger(nameof(AttrService));
+            _entLinkRepository = entLinkRepository;
+            _logger = loggerFactory.CreateLogger(nameof(EntLinkService));
         }
-        public IEnumerable<Attr> GetAll()
+        public IEnumerable<EntLink> GetAll()
         {
-            return _attrRepository.GetAll();
-        }
-
-        public Attr GetById(int id)
-        {
-            return _attrRepository.GetByCondition(x => x.AttrId.Equals(id)).Single();
+            return _entLinkRepository.GetAll();
         }
 
-        public void Create(Attr attr)
+        public EntLink GetById(int id)
         {
-            _attrRepository.Create(attr);
+            return _entLinkRepository.GetByCondition(x => x.RowId.Equals(id)).Single();
         }
 
-        public void Update(Attr attr)
+        public void Create(EntLink entLink)
         {
-            _attrRepository.Update(attr);
+            _entLinkRepository.Create(entLink);
+        }
+
+        public void Update(EntLink entLink)
+        {
+            _entLinkRepository.Update(entLink);
         }
 
         public void Delete(int id)
         {
-            var attr = GetById(id);
-            _attrRepository.Delete(attr);
+            var entLink = GetById(id);
+            _entLinkRepository.Delete(entLink);
         }
     }
 }

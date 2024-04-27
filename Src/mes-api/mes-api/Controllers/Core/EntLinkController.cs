@@ -10,27 +10,27 @@ namespace bol.api.Controllers.Core
 {
     [Route("attr")]
     [EnableCors("AllowAnyOrigin")]
-    public class AttrController : ControllerBase
+    public class EntLinkController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly IAttrService _attrService;
+        private readonly IEntLinkService _entLinkService;
 
-        public AttrController(IAttrService attrService, ILoggerFactory loggerFactory)
+        public EntLinkController(IEntLinkService entLinkService, ILoggerFactory loggerFactory)
         {
             _logger = loggerFactory.CreateLogger(nameof(EntController));
-            _attrService = attrService;
+            _entLinkService = entLinkService;
         }
 
         // GET: api/values
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<IEnumerable<Attr>> Get()
+        public ActionResult<IEnumerable<EntLink>> Get()
         {
             try
             { 
-                var attrs = _attrService.GetAll();
-                return Ok(attrs);
+                var entLinks = _entLinkService.GetAll();
+                return Ok(entLinks);
             }
             catch (Exception exp)
             {
@@ -47,8 +47,8 @@ namespace bol.api.Controllers.Core
         {
             try
             {
-                var attr = _attrService.GetById(id);
-                return Ok(attr);
+                var entLink = _entLinkService.GetById(id);
+                return Ok(entLink);
 
             }
             catch (Exception exp)
@@ -65,18 +65,18 @@ namespace bol.api.Controllers.Core
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        public IActionResult Post([FromBody] Attr attr)
+        public IActionResult Post([FromBody] EntLink entLink)
         {
             try
             {
-                if (attr == null)
+                if (entLink == null)
                     return BadRequest();
 
-                attr.LastEditAt = DateTime.Now.ToUniversalTime();
+                entLink.LastEditAt = DateTime.Now.ToUniversalTime();
                 if (ClaimsPrincipal.Current != null)
-                    attr.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                    entLink.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-                _attrService.Create(attr);
+                _entLinkService.Create(entLink);
                 return Created();
             }
             catch (Exception exp)
@@ -93,23 +93,23 @@ namespace bol.api.Controllers.Core
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        public IActionResult Put(int id, [FromBody] Attr attr)
+        public IActionResult Put(int id, [FromBody] EntLink entLink)
         {
             try
             {
-                if (id != attr.AttrId)
-                    return BadRequest("AttrId mismatch");
+                if (id != entLink.RowId)
+                    return BadRequest("RowId mismatch");
 
-                var attrToUpdate = _attrService.GetById(id);
+                var attrToUpdate = _entLinkService.GetById(id);
 
                 if (attrToUpdate == null)
-                    return NotFound($"Attribute with AttrId = {id} not found");
+                    return NotFound($"EntLink with RowId = {id} not found");
 
-                attr.LastEditAt = DateTime.Now.ToUniversalTime();
+                entLink.LastEditAt = DateTime.Now.ToUniversalTime();
                 if (ClaimsPrincipal.Current != null)
-                    attr.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                    entLink.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-                _attrService.Update(attr);
+                _entLinkService.Update(entLink);
                 return Created();
             }
             catch (Exception exp)
@@ -129,12 +129,12 @@ namespace bol.api.Controllers.Core
         {
             try
             {
-                var attrToDelete = _attrService.GetById(id);
+                var entLinkToDelete = _entLinkService.GetById(id);
 
-                if (attrToDelete == null)
-                    return NotFound($"Attribute with AttrId = {id} not found");
+                if (entLinkToDelete == null)
+                    return NotFound($"EntLink with RowId = {id} not found");
 
-                _attrService.Delete(id);
+                _entLinkService.Delete(id);
                 return NoContent();
             }
             catch (Exception exp)
