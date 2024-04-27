@@ -2,7 +2,7 @@
 using System.Net.Mime;
 using System.Security.Claims;
 using BOL.API.Domain.Models.Core;
-using BOL.API.Service.Interfaces;
+using BOL.API.Service.Interfaces.Core;
 using BOL.API.Service.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;

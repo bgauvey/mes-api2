@@ -1,7 +1,7 @@
 ﻿using BOL.API.Domain.Models.Core;
 using BOL.API.Service.Models;
 
-namespace BOL.API.Service.Interfaces;
+namespace BOL.API.Service.Interfaces.Core;
 
 public interface IEntService
 {
