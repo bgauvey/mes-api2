@@ -36,9 +36,9 @@
     <None Remove="Interfaces\Generic\" />
     <None Remove="Repositories\Generic\" />
     <None Remove="Mapping\" />
-    <None Remove="Helper\" />
     <None Remove="Interfaces\Cert\" />
     <None Remove="Repositories\Cert\" />
+    <None Remove="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
@@ -57,9 +57,9 @@
     <Folder Include="Interfaces\Generic\" />
     <Folder Include="Repositories\Generic\" />
     <Folder Include="Mapping\" />
-    <Folder Include="Helper\" />
     <Folder Include="Interfaces\Cert\" />
     <Folder Include="Repositories\Cert\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Properties\launchSettings.json">

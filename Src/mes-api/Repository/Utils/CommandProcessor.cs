@@ -29,7 +29,7 @@ using BOL.API.Domain.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace BOL.API.Repository.Helper
+namespace BOL.API.Repository.Utils
 {
     public class CommandProcessor
 	{

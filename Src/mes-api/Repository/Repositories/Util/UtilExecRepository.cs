@@ -24,7 +24,7 @@ using System.Dynamic;
 using System.Xml.Linq;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Util;
-using BOL.API.Repository.Helper;
+using BOL.API.Repository.Utils;
 using BOL.API.Repository.Interfaces.Util;
 using BOL.API.Repository.Repositories;
 using Microsoft.Data.SqlClient;

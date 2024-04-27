@@ -21,15 +21,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Data;
-using api.Models;
 using BOL.API.Domain.Models;
-using BOL.API.Domain.Models.EnProd;
 using BOL.API.Domain.Models.Prod;
-using BOL.API.Repository.Helper;
 using BOL.API.Repository.Interfaces.Prod;
-using Microsoft.AspNetCore.Http;
+using BOL.API.Repository.Utils;
 using Newtonsoft.Json;
-using static Azure.Core.HttpHeader;
 
 namespace BOL.API.Repository.Repositories.Prod;
 

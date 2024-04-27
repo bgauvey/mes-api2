@@ -25,7 +25,7 @@
 // THE SOFTWARE.
 using System.Data;
 using BOL.API.Domain.Models;
-using BOL.API.Repository.Helper;
+using BOL.API.Repository.Utils;
 using BOL.API.Repository.Interfaces.Cert;
 using Newtonsoft.Json;
 

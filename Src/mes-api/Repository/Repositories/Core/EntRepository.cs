@@ -2,7 +2,7 @@
 using System.Xml.Linq;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Core;
-using BOL.API.Repository.Helper;
+using BOL.API.Repository.Utils;
 using BOL.API.Repository.Interfaces.Core;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

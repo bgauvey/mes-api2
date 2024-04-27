@@ -28,7 +28,7 @@ using System.Data;
 using System.Xml.Linq;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Util;
-using BOL.API.Repository.Helper;
+using BOL.API.Repository.Utils;
 using BOL.API.Repository.Interfaces.Util;
 using Newtonsoft.Json;
 
