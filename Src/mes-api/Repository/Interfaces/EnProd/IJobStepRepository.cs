@@ -33,11 +33,13 @@ namespace BOL.API.Repository.Interfaces.EnProd
 
         Task<int> StartStepAsync(int sessionId, string userId, int jobPos, int stepNo, string lotNo, string sublotNo, int? stateCd, bool? checkCert, bool? laborOption);
 
-        Task<string> StepLoginAsync();
-        Task<string> StepLogoutAsync();
-        Task<string> StopStepAsync();
-        Task<string> UpdateStepDataAsync();
-        Task<string> UpdateTemplateSpecValuesAsync();
+        Task<int> StepLoginAsync(int sessionId, string userId, int entId, int stepNo, int jobPos, string lotNo, string sublotNo, string labCd, string deptId, DateTime? eventTimeLocal);
+
+        Task<int> StepLogoutAsync(int sessionId, string userId, int entId, int stepNo, string lotNo, string sublotNo, DateTime? eventTimeLocal);
+
+        Task<int> StopStepAsync(int sessionId, string userId, int entId, int jobPos, int stepNo, string lotNo, string sublotNo, int? stateCd, bool? checkCert, bool? laborOption);
+
+        Task<int> UpdateStepDataAsync(int sessionId, string userId, int entId, int jobPos, int stepNo, string lotNo, string sublotNo, string data);
     }
 }
 

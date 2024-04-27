@@ -272,11 +272,6 @@ public class JobExecService : IJobExecService
         return await _itemProdRepository.IsSameProducedAsync(woId, operId, seqNo, itemId);
     }
 
-    public async Task<int> UpdateTemplateSpecValuesAsync(int sessionId, string userId, int entId, int? checkPrivs, int? jobPos)
-    {
-        return await _jobSpecRepository.UpdateTemplateSpecValuesAsync(sessionId, userId, entId, checkPrivs, jobPos);
-    }
-
     public async Task<string> SplitJobAsync(string userId, string woId, string operId, int origSeqNo, double splitQty, int newSeqNo, double? splitStartQty = null, int? newStateCd = null,
         DateTime? reqFinishTime = null, int? targetEntId = null, string? statusNotes = null, bool ignoreZeroStartQtyCheck = false)
     {
@@ -305,29 +300,29 @@ public class JobExecService : IJobExecService
         return await _jobStepRepository.StartStepAsync(sessionId, userId, jobPos, stepNo, lotNo, sublotNo, stateCd, checkCert, laborOption);
     }
 
-    public async Task<string> StepLoginAsync()
+    public async Task<int> StepLoginAsync(int sessionId, string userId, int entId, int stepNo, int jobPos, string lotNo, string sublotNo, string labCd = null, string deptId = null, DateTime? eventTimeLocal = null)
     {
-        throw new NotImplementedException();
+        return await _jobStepRepository.StepLoginAsync(sessionId, userId, entId, stepNo, jobPos, lotNo, sublotNo, labCd, deptId, eventTimeLocal);
     }
 
-    public async Task<string> StepLogoutAsync()
+    public async Task<int> StepLogoutAsync(int sessionId, string userId, int entId, int stepNo, string lotNo, string sublotNo, DateTime? eventTimeLocal = null)
     {
-        throw new NotImplementedException();
+        return await _jobStepRepository.StepLogoutAsync(sessionId, userId, entId, stepNo, lotNo, sublotNo, eventTimeLocal);
     }
 
-    public async Task<string> StopStepAsync()
+    public async Task<int> StopStepAsync(int sessionId, string userId, int entId, int jobPos, int stepNo, string lotNo, string sublotNo, int? stateCd = null, bool? checkCert = null, bool? laborOption = null)
     {
-        throw new NotImplementedException();
+        return await _jobStepRepository.StopStepAsync(sessionId, userId, entId, jobPos, stepNo, lotNo, sublotNo, stateCd, checkCert, laborOption);
     }
 
-    public async Task<string> UpdateStepDataAsync()
+    public async Task<int> UpdateStepDataAsync(int sessionId, string userId, int entId, int jobPos, int stepNo, string lotNo, string sublotNo, string data)
     {
-        throw new NotImplementedException();
+        return await _jobStepRepository.UpdateStepDataAsync(sessionId, userId, entId, jobPos, stepNo, lotNo, sublotNo, data);
     }
 
-    public async Task<string> UpdateTemplateSpecValuesAsync()
+    public async Task<int> UpdateTemplateSpecValuesAsync(int sessionId, string userId, int entId, int? checkPrivs, int? jobPos)
     {
-        throw new NotImplementedException();
+        return await _jobSpecRepository.UpdateTemplateSpecValuesAsync(sessionId, userId, entId, checkPrivs, jobPos);
     }
 
     public async Task<string> VerifyProcessAsync(string processId, string? parentItemId = null, string? woId = null)

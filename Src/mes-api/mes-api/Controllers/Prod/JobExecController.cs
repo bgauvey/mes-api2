@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.Security.Claims;
 using api.Models;
 using BOL.API.Domain.Models.Core;
+using BOL.API.Domain.Models.Prod;
 using BOL.API.Service.Interfaces;
 using BOL.API.Service.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -1264,34 +1265,6 @@ namespace bol.api.Controllers.Prod
         }
 
         /// <summary>
-        /// To update all operation spec parameter values based on spec values of the current running job.
-        /// This allows for runtime changing of spec values by users with appropriate privileges based on the job currently running on an entity.
-        /// </summary>
-        /// <param name="entId"></param>
-        /// <param name="checkPrivs"></param>
-        /// <param name="jobPos"></param>
-        /// <returns></returns>
-        [HttpPut("UpdateTemplateSpecValues", Name = "UpdateTemplateSpecValues")]
-        [Authorize]
-        public async Task<IActionResult> UpdateTemplateSpecValuesAsync(int entId, int? checkPrivs, int? jobPos = null)
-        {
-            try
-            {
-                var userId = User.Identity.Name;
-                var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
-                                         .Select(c => Convert.ToInt32(c.Value)).SingleOrDefault();
-
-                var data = await _JobExecService.UpdateTemplateSpecValuesAsync(sessionId, userId, entId, checkPrivs, jobPos);
-                return Ok(data);
-            }
-            catch (Exception exp)
-            {
-                _logger.LogError(exp.Message);
-                return BadRequest(new { Status = false, exp.Message });
-            }
-        }
-
-        /// <summary>
         /// To split a job. Returns the seq_no of the new job as an integer if successful ie. if it is >=0, else –1 if there was an error.
         /// </summary>
         /// <param name="woId"></param>
@@ -1451,6 +1424,161 @@ namespace bol.api.Controllers.Prod
 
                 var data = await _JobExecService.StartStepAsync(sessionId, userId, jobPos, stepNo, lotNo, sublotNo, stateCd, checkCert, laborOption);
 
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To log a user into a step / lot for the purpose of capturing labor with respect to the step / lot. 
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="stepNo"></param>
+        /// <param name="jobPos"></param>
+        /// <param name="lotNo"></param>
+        /// <param name="sublotNo"></param>
+        /// <param name="labCd"></param>
+        /// <param name="deptId"></param>
+        /// <param name="eventTimeLocal"></param>
+        /// <returns></returns>
+        [HttpPut("StepLogin", Name = "StepLogin")]
+        [Authorize]
+        public async Task<IActionResult> StepLoginAsync(int entId, int stepNo, int jobPos, string lotNo, string sublotNo, string labCd = null, string deptId = null, DateTime? eventTimeLocal = null)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+                var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                                      .Select(c => Convert.ToInt32(c.Value)).SingleOrDefault();
+
+                var data = await _JobExecService.StepLoginAsync(sessionId, userId, entId, stepNo, jobPos, lotNo, sublotNo, labCd, deptId, eventTimeLocal);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To log a user out of a step / lot for the purpose of capturing labor with respect to the step / lot. 
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="stepNo"></param>
+        /// <param name="lotNo"></param>
+        /// <param name="sublotNo"></param>
+        /// <param name="eventTimeLocal"></param>
+        /// <returns></returns>
+        [HttpPut("StepLogout", Name = "StepLogout")]
+        [Authorize]
+        public async Task<IActionResult> StepLogoutAsync(int entId, int stepNo, string lotNo, string sublotNo, DateTime? eventTimeLocal = null)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+                var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                                      .Select(c => Convert.ToInt32(c.Value)).SingleOrDefault();
+
+                var data = await _JobExecService.StepLogoutAsync(sessionId, userId, entId, stepNo, lotNo, sublotNo, eventTimeLocal);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To end or bypass a step for the running job on a given entity.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="jobPos"></param>
+        /// <param name="stepNo"></param>
+        /// <param name="lotNo"></param>
+        /// <param name="sublotNo"></param>
+        /// <param name="stateCd"></param>
+        /// <param name="checkCert"></param>
+        /// <param name="laborOption"></param>
+        /// <returns></returns>
+        [HttpPut("StopStep", Name = "StopStep")]
+        [Authorize]
+        public async Task<IActionResult> StopStepAsync(int entId, int jobPos, int stepNo, string lotNo, string sublotNo, int? stateCd = null, bool? checkCert = null, bool? laborOption = null)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+                var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                                      .Select(c => Convert.ToInt32(c.Value)).SingleOrDefault();
+
+                var data = await _JobExecService.StopStepAsync(sessionId, userId, entId, jobPos, stepNo, lotNo, sublotNo, stateCd, checkCert, laborOption);
+
+                return Ok(data);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To enter or update data for a step / lot combination for the running job on a given entity.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="jobPos"></param>
+        /// <param name="stepNo"></param>
+        /// <param name="lotNo"></param>
+        /// <param name="sublotNo"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPut("UpdateStepData", Name = "UpdateStepData")]
+        [Authorize]
+        public async Task<IActionResult> UpdateStepDataAsync(int entId, int jobPos, int stepNo, string lotNo, string sublotNo, string data)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+                var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                                      .Select(c => Convert.ToInt32(c.Value)).SingleOrDefault();
+
+                var returnData = await _JobExecService.UpdateStepDataAsync(sessionId, userId, entId, jobPos, stepNo, lotNo, sublotNo, data); ;
+
+                return Ok(returnData);
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To update all operation spec parameter values based on spec values of the current running job.
+        /// This allows for runtime changing of spec values by users with appropriate privileges based on the job currently running on an entity.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <param name="checkPrivs"></param>
+        /// <param name="jobPos"></param>
+        /// <returns></returns>
+        [HttpPut("UpdateTemplateSpecValues", Name = "UpdateTemplateSpecValues")]
+        [Authorize]
+        public async Task<IActionResult> UpdateTemplateSpecValuesAsync(int entId, int? checkPrivs, int? jobPos = null)
+        {
+            try
+            {
+                var userId = User.Identity.Name;
+                var sessionId = User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                                         .Select(c => Convert.ToInt32(c.Value)).SingleOrDefault();
+
+                var data = await _JobExecService.UpdateTemplateSpecValuesAsync(sessionId, userId, entId, checkPrivs, jobPos);
                 return Ok(data);
             }
             catch (Exception exp)

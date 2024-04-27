@@ -59,9 +59,9 @@ namespace BOL.API.Repository.Repositories.EnProd
             };
             Command command = new Command()
             {
-                Cmd = "StartBatchJobs",
+                Cmd = "StartStep",
                 MsgType = "exec",
-                Object = "Job_Exec",
+                Object = "Job_Step",
                 Parameters = parameters,
                 Schema = "dbo"
             };
@@ -72,32 +72,133 @@ namespace BOL.API.Repository.Repositories.EnProd
 
             });
             return data;
-
         }
 
-        public async Task<string> StepLoginAsync()
+        public async Task<int> StepLoginAsync(int sessionId, string userId, int entId, int stepNo, int jobPos, string lotNo, string sublotNo, string labCd = null, string deptId = null, DateTime? eventTimeLocal = null)
         {
-            throw new NotImplementedException();
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("session_id", sessionId),
+                new KeyValuePair<string, object>("user_id", userId),
+                new KeyValuePair<string, object>("ent_id", entId),
+                new KeyValuePair<string, object>("step_no", stepNo),
+                new KeyValuePair<string, object>("job_pos", jobPos),
+                new KeyValuePair<string, object>("lot_no", lotNo),
+                new KeyValuePair<string, object>("sublot_no", sublotNo),
+                new KeyValuePair<string, object>("lab_cd", labCd),
+                new KeyValuePair<string, object>("dept_id", deptId),
+                new KeyValuePair<string, object>("event_time_local", eventTimeLocal),
+                new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            };
+            Command command = new Command()
+            {
+                Cmd = "StepLogin",
+                MsgType = "exec",
+                Object = "Job_Step",
+                Parameters = parameters,
+                Schema = "dbo"
+            };
+
+            var data = await Task.Run(() =>
+            {
+                return _CommandProcessor.ExecuteCommand(command);
+
+            });
+            return data;
         }
 
-        public async Task<string> StepLogoutAsync()
+        public async Task<int> StepLogoutAsync(int sessionId, string userId, int entId, int stepNo, string lotNo, string sublotNo, DateTime? eventTimeLocal = null)
         {
-            throw new NotImplementedException();
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("session_id", sessionId),
+                new KeyValuePair<string, object>("user_id", userId),
+                new KeyValuePair<string, object>("ent_id", entId),
+                new KeyValuePair<string, object>("step_no", stepNo),
+                new KeyValuePair<string, object>("lot_no", lotNo),
+                new KeyValuePair<string, object>("sublot_no", sublotNo),
+                new KeyValuePair<string, object>("event_time_local", eventTimeLocal),
+                new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            };
+            Command command = new Command()
+            {
+                Cmd = "StepLogout",
+                MsgType = "exec",
+                Object = "Job_Step",
+                Parameters = parameters,
+                Schema = "dbo"
+            };
+
+            var data = await Task.Run(() =>
+            {
+                return _CommandProcessor.ExecuteCommand(command);
+
+            });
+            return data;
         }
 
-        public async Task<string> StopStepAsync()
+        public async Task<int> StopStepAsync(int sessionId, string userId, int entId, int jobPos, int stepNo, string lotNo, string sublotNo, int? stateCd = null, bool? checkCert = null, bool? laborOption = null)
         {
-            throw new NotImplementedException();
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("session_id", sessionId),
+                new KeyValuePair<string, object>("user_id", userId),
+                new KeyValuePair<string, object>("ent_id", entId),
+                new KeyValuePair<string, object>("job_pos", jobPos),
+                new KeyValuePair<string, object>("step_no", stepNo) ,
+                new KeyValuePair<string, object>("lot_no", lotNo),
+                new KeyValuePair<string, object>("sublot_no", sublotNo),
+                new KeyValuePair<string, object>("state_cd", stateCd),
+                new KeyValuePair<string, object>("check_cert", checkCert),
+                new KeyValuePair<string, object>("labor_option", laborOption),
+                new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            };
+            Command command = new Command()
+            {
+                Cmd = "StopStep",
+                MsgType = "exec",
+                Object = "Job_Step",
+                Parameters = parameters,
+                Schema = "dbo"
+            };
+
+            var data = await Task.Run(() =>
+            {
+                return _CommandProcessor.ExecuteCommand(command);
+
+            });
+            return data;
         }
 
-        public async Task<string> UpdateStepDataAsync()
+        public async Task<int> UpdateStepDataAsync(int sessionId, string userId, int entId, int jobPos, int stepNo, string lotNo, string sublotNo, string data)
         {
-            throw new NotImplementedException();
-        }
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("session_id", sessionId),
+                new KeyValuePair<string, object>("user_id", userId),
+                new KeyValuePair<string, object>("ent_id", entId),
+                new KeyValuePair<string, object>("job_pos", jobPos),
+                new KeyValuePair<string, object>("step_no", stepNo) ,
+                new KeyValuePair<string, object>("lot_no", lotNo),
+                new KeyValuePair<string, object>("sublot_no", sublotNo),
+                new KeyValuePair<string, object>("data", data),
+                new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            };
+            Command command = new Command()
+            {
+                Cmd = "UpdateStepData",
+                MsgType = "exec",
+                Object = "Job_Step",
+                Parameters = parameters,
+                Schema = "dbo"
+            };
 
-        public async Task<string> UpdateTemplateSpecValuesAsync()
-        {
-            throw new NotImplementedException();
+            var returnData = await Task.Run(() =>
+            {
+                return _CommandProcessor.ExecuteCommand(command);
+
+            });
+            return returnData;
         }
     }
 }
