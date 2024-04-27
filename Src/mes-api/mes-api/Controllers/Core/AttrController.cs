@@ -63,6 +63,7 @@ namespace bol.api.Controllers.Core
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         public IActionResult Post([FromBody] Attr attr)
         {
@@ -90,6 +91,7 @@ namespace bol.api.Controllers.Core
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         public IActionResult Put(int id, [FromBody] Attr attr)
         {
@@ -121,14 +123,15 @@ namespace bol.api.Controllers.Core
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         public IActionResult Delete(int id)
         {
             try
             {
-                var entToDelete = _attrService.GetById(id);
+                var attrToDelete = _attrService.GetById(id);
 
-                if (entToDelete == null)
+                if (attrToDelete == null)
                     return NotFound($"Attribute with AttrId = {id} not found");
 
                 _attrService.Delete(id);
