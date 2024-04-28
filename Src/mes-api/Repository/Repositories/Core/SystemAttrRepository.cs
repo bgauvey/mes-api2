@@ -1,5 +1,5 @@
 ﻿//
-// AttrService.cs
+// SystemAttrRepository.cs
 //
 // Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -23,48 +23,18 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using BOL.API.Domain.Models.Core;
 using BOL.API.Repository.Interfaces.Core;
-using BOL.API.Service.Interfaces.Core;
 
-namespace BOL.API.Service.Services.Core
+namespace BOL.API.Repository.Repositories.Core
 {
-    public class AttrService: IAttrService
+	public class SystemAttrRepository : RepositoryBase<SystemAttr>, ISystemAttrRepository
 	{
-        private readonly IAttrRepository _attrRepository;
-        private readonly ILogger _logger;
-
-        public AttrService(IAttrRepository attrRepository, ILoggerFactory loggerFactory)
+		public SystemAttrRepository(FactelligenceContext context, ILoggerFactory loggerFactory)
+         : base(context, loggerFactory)
         {
-            _attrRepository = attrRepository;
-            _logger = loggerFactory.CreateLogger(nameof(AttrService));
-        }
-
-        public IEnumerable<Attr> GetAll()
-        {
-            return _attrRepository.GetAll();
-        }
-
-        public Attr GetById(int id)
-        {
-            return _attrRepository.GetByCondition(x => x.AttrId.Equals(id)).Single();
-        }
-
-        public void Create(Attr attr)
-        {
-            _attrRepository.Create(attr);
-        }
-
-        public void Update(Attr attr)
-        {
-            _attrRepository.Update(attr);
-        }
-
-        public void Delete(int id)
-        {
-            var attr = GetById(id);
-            _attrRepository.Delete(attr);
-        }
-    }
+		}
+	}
 }
 

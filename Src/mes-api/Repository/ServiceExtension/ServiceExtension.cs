@@ -37,6 +37,7 @@ public static class ServiceExtension
         services.AddScoped<IEntFileRepository, EntFileRepository>();
         services.AddScoped<IEntLinkRepository, EntLinkRepository>();
         services.AddScoped<IEntRepository, EntRepository>();
+        services.AddScoped<ISystemAttrRepository, SystemAttrRepository>();
 
         // Cert
         services.AddScoped<ICertRepository, CertRepository>();

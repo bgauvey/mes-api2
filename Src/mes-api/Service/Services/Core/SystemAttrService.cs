@@ -1,5 +1,5 @@
 ﻿//
-// AttrService.cs
+// SystemAttrService.cs
 //
 // Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -23,47 +23,48 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using BOL.API.Domain.Models.Core;
 using BOL.API.Repository.Interfaces.Core;
 using BOL.API.Service.Interfaces.Core;
 
 namespace BOL.API.Service.Services.Core
 {
-    public class AttrService: IAttrService
+    public class SystemAttrService : ISystemAttrService
 	{
-        private readonly IAttrRepository _attrRepository;
+        private readonly ISystemAttrRepository _systemAttrRepository;
         private readonly ILogger _logger;
 
-        public AttrService(IAttrRepository attrRepository, ILoggerFactory loggerFactory)
-        {
-            _attrRepository = attrRepository;
-            _logger = loggerFactory.CreateLogger(nameof(AttrService));
+		public SystemAttrService(ISystemAttrRepository systemAttrRepository, ILoggerFactory loggerFactory)
+		{
+            _systemAttrRepository = systemAttrRepository;
+            _logger = loggerFactory.CreateLogger(nameof(SystemAttrService));
         }
 
-        public IEnumerable<Attr> GetAll()
+        public IEnumerable<SystemAttr> GetAll()
         {
-            return _attrRepository.GetAll();
+            return _systemAttrRepository.GetAll();
         }
 
-        public Attr GetById(int id)
+        public SystemAttr GetById(int id)
         {
-            return _attrRepository.GetByCondition(x => x.AttrId.Equals(id)).Single();
+            return _systemAttrRepository.GetByCondition(x => x.AttrId.Equals(id)).Single();
         }
 
-        public void Create(Attr attr)
+        public void Create(SystemAttr systemAttr)
         {
-            _attrRepository.Create(attr);
+            _systemAttrRepository.Create(systemAttr);
         }
 
-        public void Update(Attr attr)
+        public void Update(SystemAttr systemAttr)
         {
-            _attrRepository.Update(attr);
+            _systemAttrRepository.Update(systemAttr);
         }
 
         public void Delete(int id)
         {
-            var attr = GetById(id);
-            _attrRepository.Delete(attr);
+            var systemAttr = GetById(id);
+            _systemAttrRepository.Delete(systemAttr);
         }
     }
 }
