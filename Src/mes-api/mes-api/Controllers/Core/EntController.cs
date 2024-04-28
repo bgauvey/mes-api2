@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace bol.api.Controllers.Core
 {
-    [Route("ent")]
+    [Route("core/ent")]
     [EnableCors("AllowAnyOrigin")]
     public class EntController : ControllerBase
     {

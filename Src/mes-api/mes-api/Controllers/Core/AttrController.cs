@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace bol.api.Controllers.Core
 {
-    [Route("entlink")]
+    [Route("core/attr")]
     [EnableCors("AllowAnyOrigin")]
     public class AttrController : ControllerBase
     {
