@@ -17,7 +17,7 @@ namespace bol.api.Controllers.Core
 
         public SystemAttrGrpController(ISystemAttrGrpService systemAttrGrpService, ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger(nameof(EntController));
+            _logger = loggerFactory.CreateLogger(nameof(SystemAttrGrpController));
             _systemAttrGrpService = systemAttrGrpService;
         }
 

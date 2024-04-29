@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace bol.api.Controllers.Core
 {
-    [Route("core/systemattrgrp")]
+    [Route("core/languagegrp")]
     [EnableCors("AllowAnyOrigin")]
     public class LanguageGrpController : ControllerBase
     {
@@ -16,7 +16,7 @@ namespace bol.api.Controllers.Core
 
         public LanguageGrpController(ILanguageGrpService languageGrpService, ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger(nameof(EntController));
+            _logger = loggerFactory.CreateLogger(nameof(LanguageGrpController));
             _languageGrpService = languageGrpService;
         }
 

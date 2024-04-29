@@ -17,7 +17,7 @@ namespace bol.api.Controllers.Core
 
         public EntLinkController(IEntLinkService entLinkService, ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger(nameof(EntController));
+            _logger = loggerFactory.CreateLogger(nameof(EntLinkController));
             _entLinkService = entLinkService;
         }
 

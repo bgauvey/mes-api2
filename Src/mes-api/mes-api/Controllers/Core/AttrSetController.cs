@@ -17,7 +17,7 @@ namespace bol.api.Controllers.Core
 
         public AttrSetController(IAttrSetService attrSetService, ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger(nameof(EntController));
+            _logger = loggerFactory.CreateLogger(nameof(AttrSetController));
             _attrSetService = attrSetService;
         }
 

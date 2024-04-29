@@ -17,7 +17,7 @@ namespace bol.api.Controllers.Core
 
         public EntAttrController(IEntAttrService entAttrService, ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger(nameof(EntController));
+            _logger = loggerFactory.CreateLogger(nameof(EntAttrController));
             _entAttrService = entAttrService;
         }
 

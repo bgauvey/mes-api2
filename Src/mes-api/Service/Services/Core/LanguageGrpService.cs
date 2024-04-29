@@ -39,7 +39,7 @@ namespace BOL.API.Service.Services.Core
         public LanguageGrpService(ILanguageGrpRepository languageGrpRepository, ILoggerFactory loggerFactory)
         {
             _languageGrpRepository = languageGrpRepository;
-            _logger = loggerFactory.CreateLogger(nameof(SystemAttrService));
+            _logger = loggerFactory.CreateLogger(nameof(LanguageGrpService));
         }
 
         public IEnumerable<LanguageGrp> GetAll()

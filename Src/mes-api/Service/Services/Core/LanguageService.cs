@@ -1,5 +1,5 @@
 ﻿//
-// SystemAttrGrpService.cs
+// LanguageService.cs
 //
 // Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -30,41 +30,56 @@ using BOL.API.Service.Interfaces.Core;
 
 namespace BOL.API.Service.Services.Core
 {
-	public class SystemAttrGrpService : ISystemAttrGrpService
+    public class LanguageService : ILanguageService
 	{
-        private readonly ISystemAttrGrpRepository _systemAttrGrpRepository;
+        private readonly ILanguageRepository _languageRepository;
         private readonly ILogger _logger;
 
-        public SystemAttrGrpService(ISystemAttrGrpRepository systemAttrGrpRepository, ILoggerFactory loggerFactory)
+        public LanguageService(ILanguageRepository languageRepository, ILoggerFactory loggerFactory)
         {
-            _systemAttrGrpRepository = systemAttrGrpRepository;
-            _logger = loggerFactory.CreateLogger(nameof(SystemAttrGrpService));
+            _languageRepository = languageRepository;
+            _logger = loggerFactory.CreateLogger(nameof(LanguageService));
         }
 
-        public IEnumerable<SystemAttrGrp> GetAll()
+        public async Task<int> CloneAsync(int newLangId, int clonedLangId, string newLangDesc)
         {
-            return _systemAttrGrpRepository.GetAll();
+            return await _languageRepository.CloneAsync(newLangId, clonedLangId, newLangDesc);
         }
 
-        public SystemAttrGrp GetById(int id)
+        public void Create(Language language)
         {
-            return _systemAttrGrpRepository.GetByCondition(x => x.GrpId.Equals(id)).Single();
-        }
-
-        public void Create(SystemAttrGrp systemAttrGrp)
-        {
-            _systemAttrGrpRepository.Create(systemAttrGrp);
-        }
-
-        public void Update(SystemAttrGrp systemAttrGrp)
-        {
-            _systemAttrGrpRepository.Update(systemAttrGrp);
+            _languageRepository.Create(language);
         }
 
         public void Delete(int id)
         {
-            var systemAttrGrp = GetById(id);
-            _systemAttrGrpRepository.Delete(systemAttrGrp);
+            var language = GetById(id);
+            _languageRepository.Delete(language);
+        }
+
+        public async Task<int> DeleteByLangAsync(int langId)
+        {
+            return await _languageRepository.DeleteByLangAsync(langId);
+        }
+
+        public IEnumerable<Language> GetAll()
+        {
+            return _languageRepository.GetAll();
+        }
+
+        public Language GetById(int id)
+        {
+            return _languageRepository.GetByCondition(x => x.LangId.Equals(id)).Single();
+        }
+
+        public async Task<string> NextFreeLangIdAsync()
+        {
+            return await _languageRepository.NextFreeLangIdAsync();
+        }
+
+        public void Update(Language language)
+        {
+            _languageRepository.Update(language);
         }
     }
 }
