@@ -18,7 +18,9 @@ namespace bol.api
             services.AddScoped<IEntService, EntService>();
             services.AddScoped<IEntAttrService, EntAttrService>();
             services.AddScoped<IEntLinkService, EntLinkService>();
+            services.AddScoped<ILanguageGrpService, LanguageGrpService>();
             services.AddScoped<ISystemAttrService, SystemAttrService>();
+            services.AddScoped<ISystemAttrGrpService, SystemAttrGrpService>();
 
             // EnProd Services
             services.AddScoped<IInventoryService, InventoryService>();
