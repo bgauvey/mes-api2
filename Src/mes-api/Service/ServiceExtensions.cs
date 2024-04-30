@@ -1,8 +1,10 @@
 ﻿using BOL.API.Service.Interfaces;
 using BOL.API.Service.Interfaces.Core;
+using BOL.API.Service.Interfaces.Security;
 using BOL.API.Service.Interfaces.Utilization;
 using BOL.API.Service.Services;
 using BOL.API.Service.Services.Core;
+using BOL.API.Service.Services.Security;
 using BOL.API.Service.Services.Utilization;
 
 namespace bol.api
@@ -11,8 +13,6 @@ namespace bol.api
     {
         public static void ConfigureServices(this IServiceCollection services)
         {
-            services.AddScoped<IAuthorizationService, AuthorizationService>();
-
             // Core Services
             services.AddScoped<IAttrService, AttrService>();
             services.AddScoped<IEntService, EntService>();
@@ -28,6 +28,10 @@ namespace bol.api
             //Prod Services
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<IJobExecService, JobExecService>();
+
+            //Security Services
+            services.AddScoped<IAuthorizationService, AuthorizationService>();
+            services.AddScoped<IPrivService, PrivService>();
 
             // Utilization Services
             services.AddScoped<IUtilExecService, UtilExecService>();

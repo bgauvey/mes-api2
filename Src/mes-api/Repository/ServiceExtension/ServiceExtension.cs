@@ -66,6 +66,7 @@ public static class ServiceExtension
 
         // Security
         services.AddScoped<IGrpNameRepository, GrpNameRepository>();
+        services.AddScoped<IPrivRepository, PrivRepository>();
         services.AddScoped<ISessionRepository, SessionRepository>();
         services.AddScoped<IUserGrpLinkRepository, UserGrpLinkRepository>();
         services.AddScoped<IUserNameRepository, UserNameRepository>();

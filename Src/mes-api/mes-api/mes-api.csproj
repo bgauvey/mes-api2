@@ -26,6 +26,7 @@
     <None Remove="Controllers\Core\" />
     <None Remove="Infrastructure\" />
     <None Remove="GlobalErrorHandler\" />
+    <None Remove="Controllers\Security\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
@@ -33,6 +34,7 @@
     <Folder Include="Controllers\Core\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="GlobalErrorHandler\" />
+    <Folder Include="Controllers\Security\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Service\BOL.API.Service.csproj">

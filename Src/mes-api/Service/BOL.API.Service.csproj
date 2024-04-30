@@ -20,6 +20,8 @@
     <None Remove="Interfaces\Utilization\" />
     <None Remove="Services\Core\" />
     <None Remove="Interfaces\Core\" />
+    <None Remove="Interfaces\Security\" />
+    <None Remove="Services\Security\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
@@ -29,6 +31,8 @@
     <Folder Include="Interfaces\Utilization\" />
     <Folder Include="Services\Core\" />
     <Folder Include="Interfaces\Core\" />
+    <Folder Include="Interfaces\Security\" />
+    <Folder Include="Services\Security\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\BOL.API.Domain.csproj" />
