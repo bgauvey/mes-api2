@@ -20,6 +20,7 @@ namespace bol.api
             services.AddScoped<IEntLinkService, EntLinkService>();
             services.AddScoped<ILanguageGrpService, LanguageGrpService>();
             services.AddScoped<IShiftService, ShiftService>();
+            services.AddScoped<IShiftExcService, ShiftExcService>();
             services.AddScoped<IShiftSchedService, ShiftSchedService>();
             services.AddScoped<ISystemAttrService, SystemAttrService>();
             services.AddScoped<ISystemAttrGrpService, SystemAttrGrpService>();

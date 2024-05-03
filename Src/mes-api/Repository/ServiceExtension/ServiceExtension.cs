@@ -40,6 +40,7 @@ public static class ServiceExtension
         services.AddScoped<ILanguageGrpRepository, LanguageGrpRepository>();
         services.AddScoped<ILanguageRepository, LanguageRepository>();
         services.AddScoped<IShiftRepository, ShiftRepository>();
+        services.AddScoped<IShiftExcRepository, ShiftExcRepository>();
         services.AddScoped<IShiftSchedRepository, ShiftSchedRepository>();
         services.AddScoped<ISystemAttrRepository, SystemAttrRepository>();
         services.AddScoped<ISystemAttrGrpRepository, SystemAttrGrpRepository>();
