@@ -8,29 +8,29 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace bol.api.Controllers.Core
 {
-    [Route("security/grpprivlink")]
+    [Route("security/grpentlink")]
     [EnableCors("AllowAnyOrigin")]
-    public class GrpPrivLinkController : ControllerBase
+    public class GrpEntLinkController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly IGrpPrivLinkService _grpPrivLinkService;
+        private readonly IGrpEntLinkService _grpEntLinkService;
 
-        public GrpPrivLinkController(IGrpPrivLinkService grpPrivLinkService, ILoggerFactory loggerFactory)
+        public GrpEntLinkController(IGrpEntLinkService grpEntLinkService, ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger(nameof(GrpPrivLinkController));
-            _grpPrivLinkService = grpPrivLinkService;
+            _logger = loggerFactory.CreateLogger(nameof(GrpEntLinkController));
+            _grpEntLinkService = grpEntLinkService;
         }
 
         // GET: api/values
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<IEnumerable<GrpPrivLink>> Get()
+        public ActionResult<IEnumerable<GrpEntLink>> Get()
         {
             try
             { 
-                var grpPrivLinks = _grpPrivLinkService.GetAll();
-                return Ok(grpPrivLinks);
+                var grpEntLinks = _grpEntLinkService.GetAll();
+                return Ok(grpEntLinks);
             }
             catch (Exception exp)
             {
@@ -43,12 +43,12 @@ namespace bol.api.Controllers.Core
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<GrpPrivLink> Get(int id)
+        public ActionResult<GrpEntLink> Get(int id)
         {
             try
             {
-                var grpPrivLink = _grpPrivLinkService.GetById(id);
-                return Ok(grpPrivLink);
+                var grpEntLink = _grpEntLinkService.GetById(id);
+                return Ok(grpEntLink);
 
             }
             catch (Exception exp)
@@ -65,18 +65,18 @@ namespace bol.api.Controllers.Core
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        public IActionResult Post([FromBody] GrpPrivLink grpPrivLink)
+        public IActionResult Post([FromBody] GrpEntLink grpEntLink)
         {
             try
             {
-                if (grpPrivLink == null)
+                if (grpEntLink == null)
                     return BadRequest();
 
-                grpPrivLink.LastEditAt = DateTime.Now.ToUniversalTime();
+                grpEntLink.LastEditAt = DateTime.Now.ToUniversalTime();
                 if (ClaimsPrincipal.Current != null)
-                    grpPrivLink.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                    grpEntLink.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-                _grpPrivLinkService.Create(grpPrivLink);
+                _grpEntLinkService.Create(grpEntLink);
                 return Created();
             }
             catch (Exception exp)
@@ -93,23 +93,23 @@ namespace bol.api.Controllers.Core
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        public IActionResult Put(int id, [FromBody] GrpPrivLink grpPrivLink)
+        public IActionResult Put(int id, [FromBody] GrpEntLink grpEntLink)
         {
             try
             {
-                if (id != grpPrivLink.RowId)
+                if (id != grpEntLink.RowId)
                     return BadRequest("RowId mismatch");
 
-                var grpPrivLinkToUpdate = _grpPrivLinkService.GetById(id);
+                var grpEntLinkToUpdate = _grpEntLinkService.GetById(id);
 
-                if (grpPrivLinkToUpdate == null)
-                    return NotFound($"GrpPrivLink with RowId = {id} not found");
+                if (grpEntLinkToUpdate == null)
+                    return NotFound($"GrpEntLink with RowId = {id} not found");
 
-                grpPrivLink.LastEditAt = DateTime.Now.ToUniversalTime();
+                grpEntLink.LastEditAt = DateTime.Now.ToUniversalTime();
                 if (ClaimsPrincipal.Current != null)
-                    grpPrivLink.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                    grpEntLink.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-                _grpPrivLinkService.Update(grpPrivLink);
+                _grpEntLinkService.Update(grpEntLink);
                 return Created();
             }
             catch (Exception exp)
@@ -129,12 +129,12 @@ namespace bol.api.Controllers.Core
         {
             try
             {
-                var grpPrivLinkToDelete = _grpPrivLinkService.GetById(id);
+                var grpEntLinkToDelete = _grpEntLinkService.GetById(id);
 
-                if (grpPrivLinkToDelete == null)
-                    return NotFound($"GrpPrivLink with RowId = {id} not found");
+                if (grpEntLinkToDelete == null)
+                    return NotFound($"GrpEntLink with RowId = {id} not found");
 
-                _grpPrivLinkService.Delete(id);
+                _grpEntLinkService.Delete(id);
                 return NoContent();
             }
             catch (Exception exp)
@@ -144,22 +144,21 @@ namespace bol.api.Controllers.Core
             }
         }
 
-
         /// <summary>
-        /// To return a specific privilege access levels for a given user. 
+        /// To find out whether a given user group has access rights to a given entity.
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="privId"></param>
+        /// <param name="grpId"></param>
+        /// <param name="entId"></param>
         /// <returns></returns>
-        [HttpGet("GetPriv", Name = "GetPriv")]
+        [HttpGet("CanAccess", Name = "CanAccess")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<GrpPrivLink>> GetPrivAsync(string userId, int privId)
+        public async Task<ActionResult<GrpEntLink>> CanAccessAsync(int grpId, int entId)
         {
             try
             {
-                var grpPrivLink = await _grpPrivLinkService.GetPrivAsync(userId, privId);
-                return Ok(grpPrivLink);
+                var grpEntLink = await _grpEntLinkService.CanAccessAsync(grpId, entId);
+                return Ok(grpEntLink);
 
             }
             catch (Exception exp)
@@ -170,19 +169,19 @@ namespace bol.api.Controllers.Core
         }
 
         /// <summary>
-        /// To return all defined privilege access levels for a given user. 
+        /// To return all entities and whether a given user has access privileges to them or not. 
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [HttpGet("GetPrivilegesByUser/{userId}")]
+        [HttpGet("GetEntAccessByUser/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<GrpPrivLink>> GetPrivilegesByUserAsync(string userId)
+        public async Task<ActionResult<GrpEntLink>> GetEntAccessByUserAsync(string userId)
         {
             try
             {
-                var grpPrivLink = await _grpPrivLinkService.GetPrivilegesByUserAsync(userId);
-                return Ok(grpPrivLink);
+                var grpEntLink = await _grpEntLinkService.GetEntAccessByUserAsync(userId);
+                return Ok(grpEntLink);
 
             }
             catch (Exception exp)
@@ -193,19 +192,42 @@ namespace bol.api.Controllers.Core
         }
 
         /// <summary>
-        /// To return all defined user’s access levels for a given privilege. 
+        /// To return all defined user groups’ access privileges to the specified entity.
         /// </summary>
-        /// <param name="privId"></param>
+        /// <param name="entId"></param>
         /// <returns></returns>
-        [HttpGet("GetUsersByPrivilege/{privId}")]
+        [HttpGet("GetGrpAccessByEnt/{entId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task< ActionResult<GrpPrivLink>> GetUsersByPrivilegeAsync(int privId)
+        public async Task<ActionResult<GrpEntLink>> GetGrpAccessByEntAsync(int entId)
         {
             try
             {
-                var grpPrivLink = await _grpPrivLinkService.GetUsersByPrivilegeAsync(privId);
-                return Ok(grpPrivLink);
+                var grpEntLink = await _grpEntLinkService.GetGrpAccessByEntAsync(entId);
+                return Ok(grpEntLink);
+
+            }
+            catch (Exception exp)
+            {
+                _logger.LogError(exp.Message);
+                return BadRequest(new { Status = false, exp.Message });
+            }
+        }
+
+        /// <summary>
+        /// To return all defined users’ access privileges to the specified entity.
+        /// </summary>
+        /// <param name="entId"></param>
+        /// <returns></returns>
+        [HttpGet("GetUserAccessByEnt/{entId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<GrpEntLink>> GetUserAccessByEntAsync(int entId)
+        {
+            try
+            {
+                var grpEntLink = await _grpEntLinkService.GetUserAccessByEntAsync(entId);
+                return Ok(grpEntLink);
 
             }
             catch (Exception exp)

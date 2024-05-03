@@ -39,6 +39,8 @@ public static class ServiceExtension
         services.AddScoped<IEntRepository, EntRepository>();
         services.AddScoped<ILanguageGrpRepository, LanguageGrpRepository>();
         services.AddScoped<ILanguageRepository, LanguageRepository>();
+        services.AddScoped<IShiftRepository, ShiftRepository>();
+        services.AddScoped<IShiftSchedRepository, ShiftSchedRepository>();
         services.AddScoped<ISystemAttrRepository, SystemAttrRepository>();
         services.AddScoped<ISystemAttrGrpRepository, SystemAttrGrpRepository>();
 
@@ -66,6 +68,8 @@ public static class ServiceExtension
 
         // Security
         services.AddScoped<IGrpNameRepository, GrpNameRepository>();
+        services.AddScoped<IGrpEntLinkRepository, GrpEntLinkRepository>();
+        services.AddScoped<IGrpPrivLinkRepository, GrpPrivLinkRepository>();
         services.AddScoped<IPrivRepository, PrivRepository>();
         services.AddScoped<ISessionRepository, SessionRepository>();
         services.AddScoped<IUserGrpLinkRepository, UserGrpLinkRepository>();

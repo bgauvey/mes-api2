@@ -8,10 +8,10 @@ namespace bol.api.Controllers.Auth
     [Route("auth")]
     public class AuthorizationController : ControllerBase
     {
-        private readonly BOL.API.Service.Interfaces.IAuthorizationService _authorizationService;
+        private readonly BOL.API.Service.Interfaces.Security.IAuthorizationService _authorizationService;
         private readonly ILogger _logger;
 
-        public AuthorizationController(BOL.API.Service.Interfaces.IAuthorizationService authorizationService, ILoggerFactory loggerFactory)
+        public AuthorizationController(BOL.API.Service.Interfaces.Security.IAuthorizationService authorizationService, ILoggerFactory loggerFactory)
         {
             _logger = loggerFactory.CreateLogger(nameof(AuthorizationController));
             _authorizationService = authorizationService;

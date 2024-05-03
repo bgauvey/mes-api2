@@ -18,14 +18,26 @@ public class FactelligenceContext : DbContext
     public DbSet<EntAttr> EntAttrs { get; set; }
     public DbSet<EntFile> EntFiles { get; set; }
     public DbSet<EntLink> EntLinks { get; set; }
+    public DbSet<Language> Languages { get; set; }
+    public DbSet<LanguageGrp> languageGrps { get; set; }
+    public DbSet<Shift> Shifts { get; set; }
+    public DbSet<SystemAttr> SystemAttrs { get; set; }
+    public DbSet<SystemAttrGrp> SystemAttrGrps { get; set; }
 
     // EnProd Models
     public DbSet<ItemInv> ItemInvs { get; set; }
+    public DbSet<JobSpec> JobSpecs { get; set; }
+    public DbSet<JobStep> JobSteps { get; set; }
     public DbSet<StorageExec> StorageExecs { get; set; }
 
     //Prod Models
     public DbSet<Item> Items { get; set; }
     public DbSet<ItemAttr> ItemAttrs { get; set; }
+    public DbSet<ItemCons> ItemConumptions { get; set; }
+    public DbSet<ItemFile> ItemFiles { get; set; }
+    public DbSet<ItemProd> ItemProds { get; set; }
+    public DbSet<Job> Jobs { get; set; }
+    public DbSet<JobEvent> JobEvents { get; set; }
     public DbSet<JobExec> JobExecs { get; set; }
 
     // Security Models

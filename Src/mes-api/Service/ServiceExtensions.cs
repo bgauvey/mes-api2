@@ -19,6 +19,8 @@ namespace bol.api
             services.AddScoped<IEntAttrService, EntAttrService>();
             services.AddScoped<IEntLinkService, EntLinkService>();
             services.AddScoped<ILanguageGrpService, LanguageGrpService>();
+            services.AddScoped<IShiftService, ShiftService>();
+            services.AddScoped<IShiftSchedService, ShiftSchedService>();
             services.AddScoped<ISystemAttrService, SystemAttrService>();
             services.AddScoped<ISystemAttrGrpService, SystemAttrGrpService>();
 
@@ -31,6 +33,8 @@ namespace bol.api
 
             //Security Services
             services.AddScoped<IAuthorizationService, AuthorizationService>();
+            services.AddScoped<IGrpEntLinkService, GrpEntLinkService>();
+            services.AddScoped<IGrpPrivLinkService, GrpPrivLinkService>();
             services.AddScoped<IPrivService, PrivService>();
 
             // Utilization Services

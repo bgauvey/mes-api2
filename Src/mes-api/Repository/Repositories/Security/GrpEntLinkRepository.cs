@@ -1,5 +1,5 @@
 ﻿//
-// GrpPrivLinkRepository.cs
+// GrpEntLinkRepository.cs
 //
 // Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -24,6 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Data;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Security;
@@ -33,32 +34,29 @@ using Newtonsoft.Json;
 
 namespace BOL.API.Repository.Repositories.Security
 {
-	public class GrpPrivLinkRepository : RepositoryBase<GrpPrivLink>, IGrpPrivLinkRepository
+    public class GrpEntLinkRepository : RepositoryBase<GrpEntLink>, IGrpEntLinkRepository
 	{
-        private readonly IConfiguration _Configuration;
         private readonly CommandProcessor _CommandProcessor;
-
-        public GrpPrivLinkRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
+        public GrpEntLinkRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
          : base(context, loggerFactory)
         {
-            _Configuration = configuration;
-            _CommandProcessor = new CommandProcessor(_Configuration);
+            _CommandProcessor = new CommandProcessor(configuration);
         }
 
-        public async Task<string> GetPrivAsync(string userId, int privId)
+        public async Task<string> CanAccessAsync(int grpId, int entId)
         {
-            int privValue = -1;
+            int accss = -1;
             var parameters = new List<KeyValuePair<string, object>>
             {
-                new KeyValuePair<string, object>("user_id", userId),
-                new KeyValuePair<string, object>("priv_id", privId),
-                new KeyValuePair<string, object>("priv_value OUTPUT", privValue)
+                new KeyValuePair<string, object>("grp_id", grpId),
+                new KeyValuePair<string, object>("ent_id", entId),
+                new KeyValuePair<string, object>("accss OUTPUT", accss)
             };
             Command command = new Command()
             {
-                Cmd = "GetPriv",
+                Cmd = "Can_Access",
                 MsgType = "getspec",
-                Object = "Grp_Priv_Link",
+                Object = "Grp_Ent_Link",
                 Parameters = parameters,
                 Schema = "dbo"
             };
@@ -75,7 +73,7 @@ namespace BOL.API.Repository.Repositories.Security
             return returnData;
         }
 
-        public async Task<string> GetPrivilegesByUserAsync(string userId)
+        public async Task<string> GetEntAccessByUserAsync(string userId)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
@@ -83,9 +81,9 @@ namespace BOL.API.Repository.Repositories.Security
             };
             Command command = new Command()
             {
-                Cmd = "By_User",
+                Cmd = "EntAccByUser",
                 MsgType = "getspec",
-                Object = "Grp_Priv_Link",
+                Object = "Grp_Ent_Link",
                 Parameters = parameters,
                 Schema = "dbo"
             };
@@ -102,17 +100,44 @@ namespace BOL.API.Repository.Repositories.Security
             return returnData;
         }
 
-        public async Task<string> GetUsersByPrivilegeAsync(int privId)
+        public async Task<string> GetGrpAccessByEntAsync(int entId)
         {
             var parameters = new List<KeyValuePair<string, object>>
             {
-                new KeyValuePair<string, object>("priv_id", privId)
+                new KeyValuePair<string, object>("ent_id", entId)
             };
             Command command = new Command()
             {
-                Cmd = "By_Priv",
+                Cmd = "GrpAccByEnt",
                 MsgType = "getspec",
-                Object = "Grp_Priv_Link",
+                Object = "Grp_Ent_Link",
+                Parameters = parameters,
+                Schema = "dbo"
+            };
+
+            var returnData = await Task.Run(() =>
+            {
+                DataTable dt = _CommandProcessor.GetDataTableFromCommand(command);
+
+                var jsonString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+
+                return jsonString;
+            });
+
+            return returnData;
+        }
+
+        public async Task<string> GetUserAccessByEntAsync(int entId)
+        {
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("ent_id", entId)
+            };
+            Command command = new Command()
+            {
+                Cmd = "UserAccByEnt",
+                MsgType = "getspec",
+                Object = "Grp_Ent_Link",
                 Parameters = parameters,
                 Schema = "dbo"
             };
