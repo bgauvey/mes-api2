@@ -33,6 +33,7 @@ public static class ServiceExtension
         // Core
         services.AddScoped<IAttrRepository, AttrRepository>();
         services.AddScoped<IAttrSetRepository, AttrSetRepository>();
+        services.AddScoped<IEmailattRepository, EmailattRepository>();
         services.AddScoped<IEntAttrRepository, EntAttrRepository>();
         services.AddScoped<IEntFileRepository, EntFileRepository>();
         services.AddScoped<IEntLinkRepository, EntLinkRepository>();

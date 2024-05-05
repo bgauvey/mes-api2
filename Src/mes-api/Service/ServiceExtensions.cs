@@ -15,6 +15,7 @@ namespace bol.api
         {
             // Core Services
             services.AddScoped<IAttrService, AttrService>();
+            services.AddScoped<IEmailattService, EmailattService>();
             services.AddScoped<IEntService, EntService>();
             services.AddScoped<IEntAttrService, EntAttrService>();
             services.AddScoped<IEntLinkService, EntLinkService>();
