@@ -33,6 +33,7 @@ public static class ServiceExtension
         // Core
         services.AddScoped<IAttrRepository, AttrRepository>();
         services.AddScoped<IAttrSetRepository, AttrSetRepository>();
+        services.AddScoped<IDocTypeRepository, DocTypeRepository>();
         services.AddScoped<IEmailattRepository, EmailattRepository>();
         services.AddScoped<IEntAttrRepository, EntAttrRepository>();
         services.AddScoped<IEntFileRepository, EntFileRepository>();
@@ -43,6 +44,7 @@ public static class ServiceExtension
         services.AddScoped<IMailGrpRepository, MailGrpRepository>();
         services.AddScoped<IMailGrpMemberRepository, MailGrpMemberRepository>();
         services.AddScoped<IMessageRepository, MessageRepository>();
+        services.AddScoped<IPredMsgRepository, PredMsgRepository>();
         services.AddScoped<IShiftRepository, ShiftRepository>();
         services.AddScoped<IShiftExcRepository, ShiftExcRepository>();
         services.AddScoped<IShiftSchedRepository, ShiftSchedRepository>();

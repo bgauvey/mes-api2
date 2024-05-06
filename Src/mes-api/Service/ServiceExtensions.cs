@@ -15,6 +15,7 @@ namespace bol.api
         {
             // Core Services
             services.AddScoped<IAttrService, AttrService>();
+            services.AddScoped<IDocTypeService, DocTypeService>();
             services.AddScoped<IEmailattService, EmailattService>();
             services.AddScoped<IEntService, EntService>();
             services.AddScoped<IEntAttrService, EntAttrService>();
@@ -23,6 +24,7 @@ namespace bol.api
             services.AddScoped<IMailGrpService, MailGrpService>();
             services.AddScoped<IMailGrpMemberService, MailGrpMemberService>();
             services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IPredMsgService, PredMsgService>();
             services.AddScoped<IShiftService, ShiftService>();
             services.AddScoped<IShiftExcService, ShiftExcService>();
             services.AddScoped<IShiftSchedService, ShiftSchedService>();
