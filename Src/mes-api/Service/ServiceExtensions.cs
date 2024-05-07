@@ -20,6 +20,7 @@ namespace bol.api
             services.AddScoped<IEntService, EntService>();
             services.AddScoped<IEntAttrService, EntAttrService>();
             services.AddScoped<IEntLinkService, EntLinkService>();
+            services.AddScoped<IFileTypeService, FileTypeService>();
             services.AddScoped<ILanguageGrpService, LanguageGrpService>();
             services.AddScoped<IMailGrpService, MailGrpService>();
             services.AddScoped<IMailGrpMemberService, MailGrpMemberService>();

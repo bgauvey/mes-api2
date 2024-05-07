@@ -18,6 +18,8 @@ public class FactelligenceContext : DbContext
     public DbSet<EntAttr> EntAttrs { get; set; }
     public DbSet<EntFile> EntFiles { get; set; }
     public DbSet<EntLink> EntLinks { get; set; }
+    public DbSet<FileType> FileTypes { get; set; }
+    public DbSet<FileDesc> FileDescs { get; set; }
     public DbSet<Language> Languages { get; set; }
     public DbSet<LanguageGrp> languageGrps { get; set; }
     public DbSet<Shift> Shifts { get; set; }
