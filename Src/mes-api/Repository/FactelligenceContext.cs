@@ -21,7 +21,8 @@ public class FactelligenceContext : DbContext
     public DbSet<FileType> FileTypes { get; set; }
     public DbSet<FileDesc> FileDescs { get; set; }
     public DbSet<Language> Languages { get; set; }
-    public DbSet<LanguageGrp> languageGrps { get; set; }
+    public DbSet<LanguageGrp> LanguageGrps { get; set; }
+    public DbSet<MgrDataConfig> MgrDataConfigs { get; set; }
     public DbSet<Shift> Shifts { get; set; }
     public DbSet<SystemAttr> SystemAttrs { get; set; }
     public DbSet<SystemAttrGrp> SystemAttrGrps { get; set; }

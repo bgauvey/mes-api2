@@ -26,6 +26,7 @@ namespace bol.api
             services.AddScoped<IMailGrpService, MailGrpService>();
             services.AddScoped<IMailGrpMemberService, MailGrpMemberService>();
             services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IMgrDataConfigService, MgrDataConfigService>();
             services.AddScoped<IPredMsgService, PredMsgService>();
             services.AddScoped<IShiftService, ShiftService>();
             services.AddScoped<IShiftExcService, ShiftExcService>();
