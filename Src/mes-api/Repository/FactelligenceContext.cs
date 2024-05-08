@@ -27,6 +27,7 @@ public class FactelligenceContext : DbContext
     public DbSet<SystemAttr> SystemAttrs { get; set; }
     public DbSet<SystemAttrGrp> SystemAttrGrps { get; set; }
     public DbSet<UiButton> UiButtons { get; set; }
+    public DbSet<UiButtonSet> UiButtonSets { get; set; }
 
     // EnProd Models
     public DbSet<ItemInv> ItemInvs { get; set; }
