@@ -32,6 +32,7 @@ namespace bol.api
             services.AddScoped<IShiftSchedService, ShiftSchedService>();
             services.AddScoped<ISystemAttrService, SystemAttrService>();
             services.AddScoped<ISystemAttrGrpService, SystemAttrGrpService>();
+            services.AddScoped<IUiButtonService, UiButtonService>();
 
             // EnProd Services
             services.AddScoped<IInventoryService, InventoryService>();

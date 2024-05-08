@@ -1,5 +1,5 @@
 ﻿//
-// IDocTypeRepository.cs
+// IUiButtonRepository.cs
 //
 // Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -28,7 +28,7 @@ using BOL.API.Domain.Models.Core;
 
 namespace BOL.API.Repository.Interfaces.Core
 {
-	public interface IDocTypeRepository: IRepositoryBase<DocType>
+	public interface IUiButtonRepository: IRepositoryBase<UiButton>
 	{
 	}
 }

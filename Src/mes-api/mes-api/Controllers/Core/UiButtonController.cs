@@ -8,29 +8,29 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace bol.api.Controllers.Core
 {
-    [Route("core/filedesc")]
+    [Route("core/uibutton")]
     [EnableCors("AllowAnyOrigin")]
-    public class FileDescController : ControllerBase
+    public class UiButtonController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly IFileDescService _fileDescService;
+        private readonly IUiButtonService _uiButtonService;
 
-        public FileDescController(IFileDescService fileDescService, ILoggerFactory loggerFactory)
+        public UiButtonController(IUiButtonService uiButtonService, ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger(nameof(FileDescController));
-            _fileDescService = fileDescService;
+            _logger = loggerFactory.CreateLogger(nameof(UiButtonController));
+            _uiButtonService = uiButtonService;
         }
 
         // GET: api/values
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<IEnumerable<FileDesc>> Get()
+        public ActionResult<IEnumerable<UiButton>> Get()
         {
             try
             { 
-                var fileDescs = _fileDescService.GetAll();
-                return Ok(fileDescs);
+                var uiButtons = _uiButtonService.GetAll();
+                return Ok(uiButtons);
             }
             catch (Exception exp)
             {
@@ -43,12 +43,12 @@ namespace bol.api.Controllers.Core
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<FileDesc> Get(int id)
+        public ActionResult<UiButton> Get(int id)
         {
             try
             {
-                var fileDesc = _fileDescService.GetById(id);
-                return Ok(fileDesc);
+                var uiButton = _uiButtonService.GetById(id);
+                return Ok(uiButton);
 
             }
             catch (Exception exp)
@@ -65,18 +65,18 @@ namespace bol.api.Controllers.Core
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        public IActionResult Post([FromBody] FileDesc fileDesc)
+        public IActionResult Post([FromBody] UiButton uiButton)
         {
             try
             {
-                if (fileDesc == null)
+                if (uiButton == null)
                     return BadRequest();
 
-                fileDesc.LastEditAt = DateTime.Now.ToUniversalTime();
+                uiButton.LastEditAt = DateTime.Now.ToUniversalTime();
                 if (ClaimsPrincipal.Current != null)
-                    fileDesc.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                    uiButton.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-                _fileDescService.Create(fileDesc);
+                _uiButtonService.Create(uiButton);
                 return Created();
             }
             catch (Exception exp)
@@ -93,23 +93,23 @@ namespace bol.api.Controllers.Core
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        public IActionResult Put(int id, [FromBody] FileDesc fileDesc)
+        public IActionResult Put(int id, [FromBody] UiButton uiButton)
         {
             try
             {
-                if (id != fileDesc.RowId)
-                    return BadRequest("RowId mismatch");
+                if (id != uiButton.ButtonId)
+                    return BadRequest("ButtonId mismatch");
 
-                var fileDescToUpdate = _fileDescService.GetById(id);
+                var uiButtonToUpdate = _uiButtonService.GetById(id);
 
-                if (fileDescToUpdate == null)
-                    return NotFound($"FileDesc with RowId = {id} not found");
+                if (uiButtonToUpdate == null)
+                    return NotFound($"UiButton with ButtonId = {id} not found");
 
-                fileDesc.LastEditAt = DateTime.Now.ToUniversalTime();
+                uiButton.LastEditAt = DateTime.Now.ToUniversalTime();
                 if (ClaimsPrincipal.Current != null)
-                    fileDesc.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                    uiButton.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-                _fileDescService.Update(fileDesc);
+                _uiButtonService.Update(uiButton);
                 return Created();
             }
             catch (Exception exp)
@@ -129,12 +129,12 @@ namespace bol.api.Controllers.Core
         {
             try
             {
-                var fileDescToDelete = _fileDescService.GetById(id);
+                var uiButtonToDelete = _uiButtonService.GetById(id);
 
-                if (fileDescToDelete == null)
-                    return NotFound($"FileDesc with RowId = {id} not found");
+                if (uiButtonToDelete == null)
+                    return NotFound($"UiButton with ButtonId = {id} not found");
 
-                _fileDescService.Delete(id);
+                _uiButtonService.Delete(id);
                 return NoContent();
             }
             catch (Exception exp)

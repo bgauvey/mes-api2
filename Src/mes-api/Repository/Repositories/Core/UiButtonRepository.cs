@@ -1,5 +1,5 @@
 ﻿//
-// IDocTypeRepository.cs
+// UiButton.cs
 //
 // Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -23,13 +23,18 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
-using BOL.API.Domain.Models.Core;
 
-namespace BOL.API.Repository.Interfaces.Core
+using BOL.API.Domain.Models.Core;
+using BOL.API.Repository.Interfaces.Core;
+
+namespace BOL.API.Repository.Repositories.Core
 {
-	public interface IDocTypeRepository: IRepositoryBase<DocType>
+	public class UiButtonRepository : RepositoryBase<UiButton>, IUiButtonRepository
 	{
+		public UiButtonRepository(FactelligenceContext context, ILoggerFactory loggerFactory)
+         : base(context, loggerFactory)
+        {
+		}
 	}
 }
 

@@ -52,6 +52,7 @@ public static class ServiceExtension
         services.AddScoped<IShiftSchedRepository, ShiftSchedRepository>();
         services.AddScoped<ISystemAttrRepository, SystemAttrRepository>();
         services.AddScoped<ISystemAttrGrpRepository, SystemAttrGrpRepository>();
+        services.AddScoped<IUiButtonRepository, UiButtonRepository>();
 
         // Cert
         services.AddScoped<ICertRepository, CertRepository>();

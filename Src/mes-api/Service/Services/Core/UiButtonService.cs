@@ -1,5 +1,5 @@
 ﻿//
-// IDocTypeRepository.cs
+// UiButtonService.cs
 //
 // Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -23,13 +23,48 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
 using BOL.API.Domain.Models.Core;
+using BOL.API.Repository.Interfaces.Core;
+using BOL.API.Service.Interfaces.Core;
 
-namespace BOL.API.Repository.Interfaces.Core
+namespace BOL.API.Service.Services.Core
 {
-	public interface IDocTypeRepository: IRepositoryBase<DocType>
+    public class UiButtonService: IUiButtonService
 	{
-	}
+        private readonly IUiButtonRepository _uiButtonRepository;
+        private readonly ILogger _logger;
+
+        public UiButtonService(IUiButtonRepository uiButtonRepository, ILoggerFactory loggerFactory)
+        {
+            _uiButtonRepository = uiButtonRepository;
+            _logger = loggerFactory.CreateLogger(nameof(UiButtonService));
+        }
+
+        public IEnumerable<UiButton> GetAll()
+        {
+            return _uiButtonRepository.GetAll();
+        }
+
+        public UiButton GetById(int id)
+        {
+            return _uiButtonRepository.GetByCondition(x => x.ButtonId.Equals(id)).Single();
+        }
+
+        public void Create(UiButton uiButton)
+        {
+            _uiButtonRepository.Create(uiButton);
+        }
+
+        public void Update(UiButton uiButton)
+        {
+            _uiButtonRepository.Update(uiButton);
+        }
+
+        public void Delete(int id)
+        {
+            var uiButton = GetById(id);
+            _uiButtonRepository.Delete(uiButton);
+        }
+    }
 }
 
