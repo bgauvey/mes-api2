@@ -55,6 +55,7 @@ public static class ServiceExtension
         services.AddScoped<ISystemAttrGrpRepository, SystemAttrGrpRepository>();
         services.AddScoped<IUiButtonRepository, UiButtonRepository>();
         services.AddScoped<IUiButtonSetRepository, UiButtonSetRepository>();
+        services.AddScoped<IUiConfigRepository, UiConfigRepository>();
 
         // Cert
         services.AddScoped<ICertRepository, CertRepository>();
