@@ -1,5 +1,5 @@
 ﻿//
-// DocTypeRepository.cs
+// UiConfigRepository.cs
 //
 // Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -24,17 +24,48 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Core;
 using BOL.API.Repository.Interfaces.Core;
+using BOL.API.Repository.Utils;
+using Microsoft.Extensions.Logging;
 
 namespace BOL.API.Repository.Repositories.Core
 {
-	public class DocTypeRepository : RepositoryBase<DocType>, IDocTypeRepository
+    public class UiConfigRepository : RepositoryBase<UiConfig>, IUiConfigRepository
 	{
-		public DocTypeRepository(FactelligenceContext context, ILoggerFactory loggerFactory)
+        private readonly CommandProcessor _CommandProcessor;
+
+        public UiConfigRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
          : base(context, loggerFactory)
         {
-		}
-	}
+            _CommandProcessor = new CommandProcessor(configuration);
+        }
+
+        public async Task<int> DeleteAsync(string configId, string screenId, string sectionId)
+        {
+            var parameters = new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>("config_id", configId),
+                new KeyValuePair<string, object>("screen", screenId),
+                new KeyValuePair<string, object>("sectn", sectionId)
+            };
+            Command command = new Command()
+            {
+                Cmd = "",
+                MsgType = "remove",
+                Object = "ui_config",
+                Parameters = parameters,
+                Schema = "dbo"
+            };
+
+            var rowsAffected = await Task.Run(() =>
+            {
+                return _CommandProcessor.ExecuteCommand(command);
+            });
+
+            return rowsAffected;
+        }
+    }
 }
 

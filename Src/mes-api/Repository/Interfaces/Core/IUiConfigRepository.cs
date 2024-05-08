@@ -1,5 +1,5 @@
 ﻿//
-// DocTypeRepository.cs
+// IUiConfigRepository.cs
 //
 // Author:
 //       Bill Gauvey <Bill.Gauvey@barretteoutdoorliving.com>
@@ -23,18 +23,14 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
+using System;
 using BOL.API.Domain.Models.Core;
-using BOL.API.Repository.Interfaces.Core;
 
-namespace BOL.API.Repository.Repositories.Core
+namespace BOL.API.Repository.Interfaces.Core
 {
-	public class DocTypeRepository : RepositoryBase<DocType>, IDocTypeRepository
+	public interface IUiConfigRepository: IRepositoryBase<UiConfig>
 	{
-		public DocTypeRepository(FactelligenceContext context, ILoggerFactory loggerFactory)
-         : base(context, loggerFactory)
-        {
-		}
-	}
+        Task<int> DeleteAsync(string configId, string screenId, string sectionId);
+    }
 }
 
