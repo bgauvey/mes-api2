@@ -152,7 +152,7 @@ namespace bol.api.Controllers.Core
         /// <param name="sectionId"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        [HttpPut("SaveSectionParams", Name = "SaveSectionParams")]
+        [HttpPut("SaveSectionParams")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

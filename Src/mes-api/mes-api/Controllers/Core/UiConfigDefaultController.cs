@@ -158,7 +158,6 @@ namespace bol.api.Controllers.Core
         {
             try
             {
-
                 var result = await _uiConfigDefaultService.SaveSectionParamsAsync(jsonData);
                 return NoContent();
             }

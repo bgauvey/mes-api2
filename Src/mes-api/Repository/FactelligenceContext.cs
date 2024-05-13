@@ -54,6 +54,7 @@ public class FactelligenceContext : DbContext
     public DbSet<UiButton> UiButtons { get; set; }
     public DbSet<UiButtonSet> UiButtonSets { get; set; }
     public DbSet<UiConfig> UiConfigs { get; set; }
+    public DbSet<UiConfigDefault> UiConfigDefaults { get; set; }
 
     // EnProd Models
     public DbSet<ItemInv> ItemInvs { get; set; }

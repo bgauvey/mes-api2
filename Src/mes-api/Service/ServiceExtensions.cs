@@ -36,6 +36,7 @@ namespace bol.api
             services.AddScoped<IUiButtonService, UiButtonService>();
             services.AddScoped<IUiButtonSetService, UiButtonSetService>();
             services.AddScoped<IUiConfigService, UiConfigService>();
+            services.AddScoped<IUiConfigDefaultService, UiConfigDefaultService>();
 
             // EnProd Services
             services.AddScoped<IInventoryService, InventoryService>();
