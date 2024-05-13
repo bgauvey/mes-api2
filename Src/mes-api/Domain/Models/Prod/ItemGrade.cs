@@ -4,15 +4,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Models;
+namespace BOL.API.Domain.Models.Prod;
 
-[Table("item_state")]
-[Index("ItemStatusDesc", Name = "IX_item_state", IsUnique = true)]
-public partial class ItemState
+[Table("item_grade")]
+public partial class ItemGrade
 {
-    [Column("item_status_desc")]
+    [Column("item_grade_desc")]
     [StringLength(80)]
-    public string ItemStatusDesc { get; set; } = null!;
+    public string ItemGradeDesc { get; set; } = null!;
+
+    [Column("good_prod")]
+    public bool GoodProd { get; set; }
+
+    [Column("scrapped")]
+    public bool Scrapped { get; set; }
 
     [Column("color")]
     public int Color { get; set; }
@@ -32,6 +37,6 @@ public partial class ItemState
     public DateTime LastEditAt { get; set; }
 
     [Key]
-    [Column("item_status_cd")]
-    public int ItemStatusCd { get; set; }
+    [Column("item_grade_cd")]
+    public int ItemGradeCd { get; set; }
 }

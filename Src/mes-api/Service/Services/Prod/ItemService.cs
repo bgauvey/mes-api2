@@ -1,10 +1,10 @@
 ﻿using BOL.API.Domain.Models.Prod;
 using BOL.API.Repository.Interfaces.Core;
 using BOL.API.Repository.Interfaces.Prod;
-using BOL.API.Service.Interfaces;
+using BOL.API.Service.Interfaces.Prod;
 using BOL.API.Service.Models;
 
-namespace BOL.API.Service.Services
+namespace BOL.API.Service.Services.Prod
 {
     public class ItemService : IItemService
 	{

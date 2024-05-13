@@ -18,12 +18,9 @@
 //
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-using BOL.API.Domain.Models.Core;
 using BOL.API.Domain.Models.Prod;
-using BOL.API.Domain.Models.Util;
-using BOL.API.Service.Interfaces;
+using BOL.API.Service.Interfaces.Prod;
 using BOL.API.Service.Models;
-using BOL.API.Service.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;

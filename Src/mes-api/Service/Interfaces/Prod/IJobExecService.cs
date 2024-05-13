@@ -1,5 +1,5 @@
 ﻿using System;
-namespace BOL.API.Service.Interfaces;
+namespace BOL.API.Service.Interfaces.Prod;
 
 public interface IJobExecService
 {

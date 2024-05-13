@@ -2,9 +2,9 @@
 using BOL.API.Repository.Interfaces.Core;
 using BOL.API.Repository.Interfaces.EnProd;
 using BOL.API.Repository.Interfaces.Prod;
-using BOL.API.Service.Interfaces;
+using BOL.API.Service.Interfaces.Prod;
 
-namespace BOL.API.Service.Services;
+namespace BOL.API.Service.Services.Prod;
 
 public class JobExecService : IJobExecService
 {

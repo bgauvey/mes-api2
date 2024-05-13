@@ -1,9 +1,11 @@
 ﻿using BOL.API.Service.Interfaces;
 using BOL.API.Service.Interfaces.Core;
+using BOL.API.Service.Interfaces.Prod;
 using BOL.API.Service.Interfaces.Security;
 using BOL.API.Service.Interfaces.Utilization;
 using BOL.API.Service.Services;
 using BOL.API.Service.Services.Core;
+using BOL.API.Service.Services.Prod;
 using BOL.API.Service.Services.Security;
 using BOL.API.Service.Services.Utilization;
 
@@ -43,6 +45,7 @@ namespace bol.api
 
             //Prod Services
             services.AddScoped<IItemService, ItemService>();
+            services.AddScoped<IItemStateService, ItemStateService>();
             services.AddScoped<IJobExecService, JobExecService>();
 
             //Security Services
