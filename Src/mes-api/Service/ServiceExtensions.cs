@@ -46,6 +46,8 @@ namespace bol.api
             //Prod Services
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<IItemStateService, ItemStateService>();
+            services.AddScoped<IItemGradeService, ItemGradeService>();
+            services.AddScoped<IItemClassService, ItemClassService>();
             services.AddScoped<IJobExecService, JobExecService>();
 
             //Security Services
