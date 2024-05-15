@@ -8,29 +8,29 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace bol.api.Controllers.Core
 {
-    [Route("core/itemclass")]
+    [Route("core/itemclassattr")]
     [EnableCors("AllowAnyOrigin")]
-    public class ItemClassController : ControllerBase
+    public class ItemClassAttrController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly IItemClassService _itemClassService;
+        private readonly IItemClassAttrService _itemClassAttrService;
 
-        public ItemClassController(IItemClassService itemClassService, ILoggerFactory loggerFactory)
+        public ItemClassAttrController(IItemClassAttrService itemClassAttrService, ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger(nameof(ItemClassController));
-            _itemClassService = itemClassService;
+            _logger = loggerFactory.CreateLogger(nameof(ItemClassAttrController));
+            _itemClassAttrService = itemClassAttrService;
         }
 
         // GET: api/values
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<IEnumerable<ItemClass>> Get()
+        public ActionResult<IEnumerable<ItemClassAttr>> Get()
         {
             try
             { 
-                var itemClasss = _itemClassService.GetAll();
-                return Ok(itemClasss);
+                var itemClassAttrs = _itemClassAttrService.GetAll();
+                return Ok(itemClassAttrs);
             }
             catch (Exception exp)
             {
@@ -43,12 +43,12 @@ namespace bol.api.Controllers.Core
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<ItemClass> Get(string id)
+        public ActionResult<ItemClassAttr> Get(int id)
         {
             try
             {
-                var itemClass = _itemClassService.GetById(id);
-                return Ok(itemClass);
+                var itemClassAttr = _itemClassAttrService.GetById(id);
+                return Ok(itemClassAttr);
 
             }
             catch (Exception exp)
@@ -65,18 +65,18 @@ namespace bol.api.Controllers.Core
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        public IActionResult Post([FromBody] ItemClass itemClass)
+        public IActionResult Post([FromBody] ItemClassAttr itemClassAttr)
         {
             try
             {
-                if (itemClass == null)
+                if (itemClassAttr == null)
                     return BadRequest();
 
-                itemClass.LastEditAt = DateTime.Now.ToUniversalTime();
+                itemClassAttr.LastEditAt = DateTime.Now.ToUniversalTime();
                 if (ClaimsPrincipal.Current != null)
-                    itemClass.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                    itemClassAttr.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-                _itemClassService.Create(itemClass);
+                _itemClassAttrService.Create(itemClassAttr);
                 return Created();
             }
             catch (Exception exp)
@@ -93,23 +93,23 @@ namespace bol.api.Controllers.Core
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        public IActionResult Put(string id, [FromBody] ItemClass itemClass)
+        public IActionResult Put(int id, [FromBody] ItemClassAttr itemClassAttr)
         {
             try
             {
-                if (!itemClass.ItemClassId.Equals(id))
-                    return BadRequest("ItemClassId mismatch");
+                if (!itemClassAttr.RowId.Equals(id))
+                    return BadRequest("RowId mismatch");
 
-                var itemClassToUpdate = _itemClassService.GetById(id);
+                var itemClassAttrToUpdate = _itemClassAttrService.GetById(id);
 
-                if (itemClassToUpdate == null)
-                    return NotFound($"ItemClass with ItemClassId = {id} not found");
+                if (itemClassAttrToUpdate == null)
+                    return NotFound($"ItemClassAttr with RowId = {id} not found");
 
-                itemClass.LastEditAt = DateTime.Now.ToUniversalTime();
+                itemClassAttr.LastEditAt = DateTime.Now.ToUniversalTime();
                 if (ClaimsPrincipal.Current != null)
-                    itemClass.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                    itemClassAttr.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-                _itemClassService.Update(itemClass);
+                _itemClassAttrService.Update(itemClassAttr);
                 return Created();
             }
             catch (Exception exp)
@@ -125,16 +125,16 @@ namespace bol.api.Controllers.Core
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(int id)
         {
             try
             {
-                var itemClassToDelete = _itemClassService.GetById(id);
+                var itemClassAttrToDelete = _itemClassAttrService.GetById(id);
 
-                if (itemClassToDelete == null)
-                    return NotFound($"ItemClass with ItemClassId = {id} not found");
+                if (itemClassAttrToDelete == null)
+                    return NotFound($"ItemClassAttr with RowId = {id} not found");
 
-                _itemClassService.Delete(id);
+                _itemClassAttrService.Delete(id);
                 return NoContent();
             }
             catch (Exception exp)

@@ -71,6 +71,7 @@ public class FactelligenceContext : DbContext
     public DbSet<ItemState> ItemStates { get; set; }
     public DbSet<ItemGrade> ItemGrades { get; set; }
     public DbSet<ItemClass> ItemClasses { get; set; }
+    public DbSet<ItemClassAttr> ItemClassAttrs { get; set; }
     public DbSet<Job> Jobs { get; set; }
     public DbSet<JobEvent> JobEvents { get; set; }
     public DbSet<JobExec> JobExecs { get; set; }
