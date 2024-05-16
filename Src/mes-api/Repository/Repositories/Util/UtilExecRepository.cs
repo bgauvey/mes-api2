@@ -20,28 +20,22 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Data;
-using System.Dynamic;
-using System.Xml.Linq;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Util;
-using BOL.API.Repository.Utils;
 using BOL.API.Repository.Interfaces.Util;
 using BOL.API.Repository.Repositories;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
+using BOL.API.Repository.Utils;
 using Newtonsoft.Json;
 
 namespace BOL.API.Repository.Util;
 
 public class UtilExecRepository : RepositoryBase<UtilExec>, IUtilExecRepository
 {
-    private readonly IConfiguration _Configuration;
     private readonly CommandProcessor _CommandProcessor;
     public UtilExecRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
          : base(context, loggerFactory)
     {
-        _Configuration = configuration;
-        _CommandProcessor = new CommandProcessor(_Configuration);
+        _CommandProcessor = new CommandProcessor(configuration);
     }
 
     public async Task<string> GetAvailableReasonsAsync(int entId, int rawReasCode)

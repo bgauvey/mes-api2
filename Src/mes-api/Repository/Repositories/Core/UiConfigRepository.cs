@@ -28,7 +28,6 @@ using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Core;
 using BOL.API.Repository.Interfaces.Core;
 using BOL.API.Repository.Utils;
-using Microsoft.Extensions.Logging;
 
 namespace BOL.API.Repository.Repositories.Core
 {

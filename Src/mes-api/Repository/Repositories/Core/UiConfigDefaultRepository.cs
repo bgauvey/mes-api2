@@ -28,6 +28,7 @@ using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Core;
 using BOL.API.Repository.Interfaces.Core;
 using BOL.API.Repository.Utils;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace BOL.API.Repository.Repositories.Core
 {

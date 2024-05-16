@@ -27,9 +27,8 @@
 using System.Data;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Prod;
-using BOL.API.Repository.Utils;
 using BOL.API.Repository.Interfaces.Prod;
-using Microsoft.Extensions.Configuration;
+using BOL.API.Repository.Utils;
 using Newtonsoft.Json;
 
 namespace BOL.API.Repository.Repositories.Prod

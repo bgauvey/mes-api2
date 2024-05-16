@@ -33,16 +33,14 @@ using Newtonsoft.Json;
 
 namespace BOL.API.Repository.Repositories.Security
 {
-	public class GrpPrivLinkRepository : RepositoryBase<GrpPrivLink>, IGrpPrivLinkRepository
+    public class GrpPrivLinkRepository : RepositoryBase<GrpPrivLink>, IGrpPrivLinkRepository
 	{
-        private readonly IConfiguration _Configuration;
         private readonly CommandProcessor _CommandProcessor;
 
         public GrpPrivLinkRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
          : base(context, loggerFactory)
         {
-            _Configuration = configuration;
-            _CommandProcessor = new CommandProcessor(_Configuration);
+            _CommandProcessor = new CommandProcessor(configuration);
         }
 
         public async Task<string> GetPrivAsync(string userId, int privId)

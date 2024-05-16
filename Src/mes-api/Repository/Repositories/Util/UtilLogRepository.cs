@@ -23,18 +23,16 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
 using System.Data;
-using System.Xml.Linq;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Util;
-using BOL.API.Repository.Utils;
 using BOL.API.Repository.Interfaces.Util;
+using BOL.API.Repository.Utils;
 using Newtonsoft.Json;
 
 namespace BOL.API.Repository.Repositories.Util
 {
-	public class UtilLogRepository: RepositoryBase<UtilLog>, IUtilLogRepository
+    public class UtilLogRepository: RepositoryBase<UtilLog>, IUtilLogRepository
     { 
         private readonly CommandProcessor _CommandProcessor;
         public UtilLogRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)

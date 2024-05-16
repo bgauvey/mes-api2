@@ -1,23 +1,19 @@
 ﻿using System.Data;
-using System.Xml.Linq;
 using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Core;
-using BOL.API.Repository.Utils;
 using BOL.API.Repository.Interfaces.Core;
-using Microsoft.Extensions.Logging;
+using BOL.API.Repository.Utils;
 using Newtonsoft.Json;
 
 namespace BOL.API.Repository.Repositories.Core;
 
 public class EntRepository : RepositoryBase<Ent>, IEntRepository
 {
-    private readonly IConfiguration _Configuration;
     private readonly CommandProcessor _CommandProcessor;
     public EntRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
          : base(context, loggerFactory)
     {
-        _Configuration = configuration;
-        _CommandProcessor = new CommandProcessor(_Configuration);
+        _CommandProcessor = new CommandProcessor(configuration);
     }
 
     public async Task<string> GetAllTopLevelAsync()

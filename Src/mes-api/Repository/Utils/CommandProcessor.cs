@@ -23,6 +23,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System.Data;
 using System.Runtime.CompilerServices;
 using BOL.API.Domain.Models;
@@ -34,6 +35,7 @@ namespace BOL.API.Repository.Utils
     public class CommandProcessor
 	{
         private readonly IConfiguration _Configuration;
+
         public CommandProcessor(IConfiguration configuration)
 		{
             _Configuration = configuration;
@@ -42,82 +44,80 @@ namespace BOL.API.Repository.Utils
         public int ExecuteCommand(Command command)
         {
             var conStr = _Configuration.GetConnectionString("DefaultConnection");
-            var sqlConnection = new SqlConnection(conStr);
-            using (var sqlCommand = sqlConnection.CreateCommand())
+            using (var sqlConnection = new SqlConnection(conStr))
             {
-                var cmd = parseCommand(command);
-                sqlCommand.CommandText = cmd.StoredProcedure;
-                sqlCommand.CommandType = CommandType.StoredProcedure;
-                if (cmd.parmaeters != null)
+                using (var sqlCommand = sqlConnection.CreateCommand())
                 {
-                    foreach (var p in cmd.parmaeters)
+                    var cmd = parseCommand(command);
+                    sqlCommand.CommandText = cmd.StoredProcedure;
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    
+                    sqlConnection.Open();
+                    SqlCommandBuilder.DeriveParameters(sqlCommand);
+
+                    foreach (SqlParameter p in sqlCommand.Parameters)
                     {
-                        var dbParameter = sqlCommand.CreateParameter();
-                        dbParameter.ParameterName = p.Key;
-                        if (p.Value != null)
+                        if (!p.ParameterName.Equals("@RETURN_VALUE"))
                         {
-                            var t = p.Value.GetType();
-                            if (t is string)
-                                dbParameter.Value = p.Value.ToString();
-                            else
-                                dbParameter.Value = p.Value;
+                            if (cmd.parmaeters != null)
+                            {
+                                var kvp = cmd.parmaeters.Find(t => "@" + t.Key == p.ParameterName);
+                                if (kvp.Value != null && kvp.Value.ToString().Length > 0)
+                                {
+                                    sqlCommand.Parameters["@" + kvp.Key].Value = kvp.Value;
+                                }
+                            }
                         }
-                        sqlCommand.Parameters.Add(dbParameter);
                     }
+
+                    return sqlCommand.ExecuteNonQuery();
                 }
-                sqlConnection.Open();
-                return sqlCommand.ExecuteNonQuery();
             }
         }
 
         public DataTable GetDataTableFromCommand(Command command)
 		{
             var conStr = _Configuration.GetConnectionString("DefaultConnection");
-            var sqlConnection = new SqlConnection(conStr);
-
             DataSet ds = new DataSet();
             DataTable dt = new DataTable();
             ds.Tables.Add(dt);
-            using (var sqlCommand = sqlConnection.CreateCommand())
+
+            using (var sqlConnection = new SqlConnection(conStr))
             {
-                var cmd = parseCommand(command);
-                sqlCommand.CommandText = cmd.StoredProcedure;
-                sqlCommand.CommandType = CommandType.StoredProcedure;
-                if (cmd.parmaeters != null)
+                using (var sqlCommand = sqlConnection.CreateCommand())
                 {
-                    foreach (var p in cmd.parmaeters)
+                    var cmd = parseCommand(command);
+
+                    sqlCommand.CommandText = cmd.StoredProcedure;
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    sqlConnection.Open();
+                    SqlCommandBuilder.DeriveParameters(sqlCommand);
+                    foreach (SqlParameter p in sqlCommand.Parameters)
                     {
-                        var dbParameter = sqlCommand.CreateParameter();
-                        if (p.Key.Contains(" OUTPUT"))
+                        if (!p.ParameterName.Equals("@RETURN_VALUE"))
                         {
-                            dbParameter.ParameterName = p.Key.Replace(" OUTPUT", "");
-                            dbParameter.Direction = ParameterDirection.Output;
+                            if (cmd.parmaeters != null)
+                            {
+                                var kvp = cmd.parmaeters.Find(t => "@" + t.Key == p.ParameterName);
+                                if (kvp.Value != null && kvp.Value.ToString().Length > 0)
+                                {
+                                    sqlCommand.Parameters["@" + kvp.Key].Value = kvp.Value;
+                                }
+                            }
                         }
-                        else
-                        {
-                            dbParameter.ParameterName = p.Key;
-                        }
-                        if (p.Value != null)
-                        {
-                            var t = p.Value.GetType();
-                            if (t is string)
-                                dbParameter.Value = p.Value.ToString();
-                            else
-                                dbParameter.Value = p.Value;
-                        }
-                        sqlCommand.Parameters.Add(dbParameter);
                     }
-                }
-                sqlConnection.Open();
-                using (var result = sqlCommand.ExecuteReader())
-                {
-                    dt.TableName = command.Object;
-                    dt.Load(result);
+
+                    using (var result = sqlCommand.ExecuteReader())
+                    {
+                        dt.TableName = command.Object;
+                        dt.Load(result);
+                    }
+                    sqlConnection.Close();
                 }
             }
             return dt;
         }
-
 
         #region Private Methods
         private (string StoredProcedure, List<KeyValuePair<string, object>> parmaeters) parseCommand(Command command)

@@ -13,6 +13,7 @@ builder.Services.AddDIServices(builder.Configuration);
 builder.Services.ConfigureServices();
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddMemoryCache();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

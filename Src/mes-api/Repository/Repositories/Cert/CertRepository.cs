@@ -39,7 +39,7 @@ namespace BOL.API.Repository.Repositories.Cert
         protected ILogger _Logger { get; set; }
 
         public CertRepository(FactelligenceContext factelligenceContext, ILoggerFactory loggerFactory, IConfiguration configuration)
-		{
+        {
             _CommandProcessor = new CommandProcessor(configuration);
             _Context = factelligenceContext;
             _Logger = loggerFactory.CreateLogger(nameof(CertRepository));

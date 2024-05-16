@@ -29,21 +29,18 @@ using BOL.API.Domain.Models;
 using BOL.API.Domain.Models.Core;
 using BOL.API.Repository.Interfaces.Core;
 using BOL.API.Repository.Utils;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace BOL.API.Repository.Repositories.Core
 {
     public class LanguageRepository : RepositoryBase<Language>, ILanguageRepository
 	{
-        private readonly IConfiguration _Configuration;
         private readonly CommandProcessor _CommandProcessor;
 
         public LanguageRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
          : base(context, loggerFactory)
         {
-            _Configuration = configuration;
-            _CommandProcessor = new CommandProcessor(_Configuration);
+            _CommandProcessor = new CommandProcessor(configuration);
         }
 
         public async Task<int> CloneAsync(int newLangId, int clonedLangId, string newLangDesc)
