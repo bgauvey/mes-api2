@@ -277,7 +277,7 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
         Command command = new Command()
         {
             Cmd = "GetRefrshdShiftSched",
-            MsgType = "exec",
+            MsgType = "getall",
             Object = "ent",
             Parameters = parameters,
             Schema = "dbo"
@@ -307,7 +307,7 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
         Command command = new Command()
         {
             Cmd = "GetRefrshdShiftSched",
-            MsgType = "exec",
+            MsgType = "getall",
             Object = "ent",
             Parameters = parameters,
             Schema = "dbo"
