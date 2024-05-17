@@ -36,10 +36,12 @@ namespace BOL.API.Repository.Repositories.Prod
     public class JobRepository : RepositoryBase<Job>, IJobRepository
     {
         private readonly CommandProcessor _CommandProcessor;
+        private readonly int _timeZoneBiasValue;
 
         public JobRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
          : base(context, loggerFactory)
         {
+            _timeZoneBiasValue = (int)configuration.GetSection("Mes").GetValue(typeof(int), "_timeZoneBiasValue");
             _CommandProcessor = new CommandProcessor(configuration);
         }
 
@@ -55,7 +57,7 @@ namespace BOL.API.Repository.Repositories.Prod
             new KeyValuePair<string, object>("start_qty", startQty),
             new KeyValuePair<string, object>("req_finish_time", reqFinishTime),
             new KeyValuePair<string, object>("release_time", releaseTime),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue),
         };
             Command command = new Command()
             {
@@ -88,7 +90,7 @@ namespace BOL.API.Repository.Repositories.Prod
             new KeyValuePair<string, object>("req_qty", reqQty),
             new KeyValuePair<string, object>("start_qty", startQty),
             new KeyValuePair<string, object>("req_finish_time_local", reqFinishTimeLocal),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
             Command command = new Command()
             {
@@ -113,7 +115,7 @@ namespace BOL.API.Repository.Repositories.Prod
         {
             new KeyValuePair<string, object>("ent_filter", entFilter),
             new KeyValuePair<string, object>("job_filter", jobFilter),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
             Command command = new Command()
             {

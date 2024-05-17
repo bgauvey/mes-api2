@@ -34,12 +34,13 @@ namespace BOL.API.Repository.Repositories.Cert
     public class CertRepository: ICertRepository
     {
         private readonly CommandProcessor _CommandProcessor;
-
+        private readonly int _timeZoneBiasValue;
         protected FactelligenceContext _Context { get; set; }
         protected ILogger _Logger { get; set; }
 
         public CertRepository(FactelligenceContext factelligenceContext, ILoggerFactory loggerFactory, IConfiguration configuration)
         {
+            _timeZoneBiasValue = (int)configuration.GetSection("Mes").GetValue(typeof(int), "timeZoneBiasValue");
             _CommandProcessor = new CommandProcessor(configuration);
             _Context = factelligenceContext;
             _Logger = loggerFactory.CreateLogger(nameof(CertRepository));
@@ -66,7 +67,7 @@ namespace BOL.API.Repository.Repositories.Cert
             new KeyValuePair<string, object>("sign_off_local", signOffLocal),
             new KeyValuePair<string, object>("comments", comments),
             new KeyValuePair<string, object>("ref_row_id", refRowId),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue),
             new KeyValuePair<string, object>("row_id OUTPUT", rowId),
         };
             Command command = new Command()
@@ -99,7 +100,7 @@ namespace BOL.API.Repository.Repositories.Cert
             new KeyValuePair<string, object>("oper_id", operId),
             new KeyValuePair<string, object>("step_no", stepNo),
             new KeyValuePair<string, object>("cert_name", certName),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
             Command command = new Command()
             {
@@ -199,7 +200,7 @@ namespace BOL.API.Repository.Repositories.Cert
             new KeyValuePair<string, object>("oper_id", operId),
             new KeyValuePair<string, object>("step_no", stepNo),
             new KeyValuePair<string, object>("item_id", itemId),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
             Command command = new Command()
             {

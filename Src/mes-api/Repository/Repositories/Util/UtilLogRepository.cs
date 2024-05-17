@@ -35,9 +35,12 @@ namespace BOL.API.Repository.Repositories.Util
     public class UtilLogRepository: RepositoryBase<UtilLog>, IUtilLogRepository
     { 
         private readonly CommandProcessor _CommandProcessor;
+        private readonly int _timeZoneBiasValue;
+
         public UtilLogRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
              : base(context, loggerFactory)
         {
+            _timeZoneBiasValue = (int)configuration.GetSection("Mes").GetValue(typeof(int), "_timeZoneBiasValue");
             _CommandProcessor = new CommandProcessor(configuration);
         }
 
@@ -48,7 +51,7 @@ namespace BOL.API.Repository.Repositories.Util
                 new KeyValuePair<string, object>("ent_id", entId),
                 new KeyValuePair<string, object>("event_time_local", eventTimeLocal),
                 new KeyValuePair<string, object>("new_duration", newDuration),
-                new KeyValuePair<string, object>("time_zone_bias_value", 0)
+                new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
             };
             Command command = new Command()
             {
@@ -74,7 +77,7 @@ namespace BOL.API.Repository.Repositories.Util
             var parameters = new List<KeyValuePair<string, object>>
             {
                 new KeyValuePair<string, object>("event_time", eventTime),
-                new KeyValuePair<string, object>("time_zone_bias_value", 0)
+                new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
             };
             Command command = new Command()
             {
@@ -103,7 +106,7 @@ namespace BOL.API.Repository.Repositories.Util
                 new KeyValuePair<string, object>("ent_id", entId),
                 new KeyValuePair<string, object>("start_time_local", startTimeLocal),
                 new KeyValuePair<string, object>("end_time_local", endTimeLocal),
-                new KeyValuePair<string, object>("time_zone_bias_value", 0)
+                new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
             };
             Command command = new Command()
             {
@@ -139,7 +142,7 @@ namespace BOL.API.Repository.Repositories.Util
                 new KeyValuePair<string, object>("reas_pending", reasPending),
                 new KeyValuePair<string, object>("comments", comments),
                 new KeyValuePair<string, object>("raw_reas_cd", rawReasCd),
-                new KeyValuePair<string, object>("time_zone_bias_value", 0)
+                new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
             };
             Command command = new Command()
             {

@@ -33,10 +33,12 @@ namespace BOL.API.Repository.Repositories.EnProd
     public class JobSpecRepository : RepositoryBase<JobSpec>, IJobSpecRepository
     {
         private readonly CommandProcessor _CommandProcessor;
+        private readonly int _timeZoneBiasValue;
 
         public JobSpecRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
              : base(context, loggerFactory)
         {
+            _timeZoneBiasValue = (int)configuration.GetSection("Mes").GetValue(typeof(int), "_timeZoneBiasValue");
             _CommandProcessor = new CommandProcessor(configuration);
         }
 
@@ -53,7 +55,7 @@ namespace BOL.API.Repository.Repositories.EnProd
             new KeyValuePair<string, object>("bom_ver_id", bomVerId),
             new KeyValuePair<string, object>("comments", comments),
             new KeyValuePair<string, object>("job_pos", jobPos),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
             Command command = new Command()
             {
@@ -89,7 +91,7 @@ namespace BOL.API.Repository.Repositories.EnProd
             new KeyValuePair<string, object>("bom_ver_id", bomVerId),
             new KeyValuePair<string, object>("comments", comments),
             new KeyValuePair<string, object>("job_pos", jobPos),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
             Command command = new Command()
             {

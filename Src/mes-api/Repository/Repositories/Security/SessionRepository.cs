@@ -9,9 +9,12 @@ namespace BOL.API.Repository.Repositories.Security;
 
 public class SessionRepository : RepositoryBase<Sessn>, ISessionRepository
 {
-    public SessionRepository(FactelligenceContext context, ILoggerFactory loggerFactory)
+    private readonly int _timeZoneBiasValue;
+
+    public SessionRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
          : base(context, loggerFactory)
     {
+        _timeZoneBiasValue = (int)configuration.GetSection("Mes").GetValue(typeof(int), "_timeZoneBiasValue");
     }
 
     public int Create(ClientType clientType, string clientAddress, ref int sessionId)
@@ -27,7 +30,8 @@ public class SessionRepository : RepositoryBase<Sessn>, ISessionRepository
         var recordsAffected = _Context.Database.ExecuteSqlInterpolated($"sp_I_Session @session_id={
             sessionIdParam} OUT,@client_type={
             clientType},@client_address={
-            clientAddress},@reqd_events=NULL,@tz_bias=0,@std_time=0,@time_zone_bias_value=0,@db_version={
+            clientAddress},@reqd_events=NULL,@tz_bias=0,@std_time=0,@time_zone_bias_value={
+            _timeZoneBiasValue},@db_version={
             dbVersion} OUT,@sp_version={
             spVersion} OUT,@def_data_version={
             defDataVersion} OUT");

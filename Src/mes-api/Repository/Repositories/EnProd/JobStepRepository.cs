@@ -33,9 +33,12 @@ namespace BOL.API.Repository.Repositories.EnProd
     public class JobStepRepository: RepositoryBase<JobStep>, IJobStepRepository
 	{
         private readonly CommandProcessor _CommandProcessor;
+        private readonly int _timeZoneBiasValue;
+
         public JobStepRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
              : base(context, loggerFactory)
         {
+            _timeZoneBiasValue = (int)configuration.GetSection("Mes").GetValue(typeof(int), "_timeZoneBiasValue");
             _CommandProcessor = new CommandProcessor(configuration);
         }
 
@@ -52,7 +55,7 @@ namespace BOL.API.Repository.Repositories.EnProd
                 new KeyValuePair<string, object>("state_cd", stateCd),
                 new KeyValuePair<string, object>("check_cert", checkCert),
                 new KeyValuePair<string, object>("labor_option", laborOption),
-                new KeyValuePair<string, object>("time_zone_bias_value", 0)
+                new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
             };
             Command command = new Command()
             {
@@ -85,7 +88,7 @@ namespace BOL.API.Repository.Repositories.EnProd
                 new KeyValuePair<string, object>("lab_cd", labCd),
                 new KeyValuePair<string, object>("dept_id", deptId),
                 new KeyValuePair<string, object>("event_time_local", eventTimeLocal),
-                new KeyValuePair<string, object>("time_zone_bias_value", 0)
+                new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
             };
             Command command = new Command()
             {
@@ -115,7 +118,7 @@ namespace BOL.API.Repository.Repositories.EnProd
                 new KeyValuePair<string, object>("lot_no", lotNo),
                 new KeyValuePair<string, object>("sublot_no", sublotNo),
                 new KeyValuePair<string, object>("event_time_local", eventTimeLocal),
-                new KeyValuePair<string, object>("time_zone_bias_value", 0)
+                new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
             };
             Command command = new Command()
             {
@@ -148,7 +151,7 @@ namespace BOL.API.Repository.Repositories.EnProd
                 new KeyValuePair<string, object>("state_cd", stateCd),
                 new KeyValuePair<string, object>("check_cert", checkCert),
                 new KeyValuePair<string, object>("labor_option", laborOption),
-                new KeyValuePair<string, object>("time_zone_bias_value", 0)
+                new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
             };
             Command command = new Command()
             {
@@ -179,7 +182,7 @@ namespace BOL.API.Repository.Repositories.EnProd
                 new KeyValuePair<string, object>("lot_no", lotNo),
                 new KeyValuePair<string, object>("sublot_no", sublotNo),
                 new KeyValuePair<string, object>("data", data),
-                new KeyValuePair<string, object>("time_zone_bias_value", 0)
+                new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
             };
             Command command = new Command()
             {

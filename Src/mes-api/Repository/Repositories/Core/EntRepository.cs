@@ -10,9 +10,12 @@ namespace BOL.API.Repository.Repositories.Core;
 public class EntRepository : RepositoryBase<Ent>, IEntRepository
 {
     private readonly CommandProcessor _CommandProcessor;
+    private readonly int _timeZoneBiasValue;
+
     public EntRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
          : base(context, loggerFactory)
     {
+        _timeZoneBiasValue = (int)configuration.GetSection("Mes").GetValue(typeof(int), "_timeZoneBiasValue");
         _CommandProcessor = new CommandProcessor(configuration);
     }
 
@@ -20,7 +23,7 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
     {
         var parameters = new List<KeyValuePair<string, object>>
         {
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -49,7 +52,7 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
         {
             new KeyValuePair<string, object>("session_id", sessionId),
             new KeyValuePair<string, object>("user_id", userId),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -77,7 +80,7 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
         var parameters = new List<KeyValuePair<string, object>>
         {
             new KeyValuePair<string, object>("ent_id", entId),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -106,7 +109,7 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
         {
             new KeyValuePair<string, object>("ent_id", entId),
             new KeyValuePair<string, object>("child_levels", childLevels),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -136,7 +139,7 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
             new KeyValuePair<string, object>("ent_id", entId),
             new KeyValuePair<string, object>("start_date", startDate),
             new KeyValuePair<string, object>("end_date", endDate),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -164,7 +167,7 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
         var parameters = new List<KeyValuePair<string, object>>
         {
             new KeyValuePair<string, object>("ent_id", entId),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -187,7 +190,7 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
     {
         var parameters = new List<KeyValuePair<string, object>>
         {
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -213,7 +216,7 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
             new KeyValuePair<string, object>("ent_id", entId),
             new KeyValuePair<string, object>("shift_id", shiftId),
             new KeyValuePair<string, object>("shift_start", shiftStart),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -239,7 +242,7 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
             new KeyValuePair<string, object>("in_ent_id", inEntId),
             new KeyValuePair<string, object>("in_start_time", inStartTime),
             new KeyValuePair<string, object>("in_days_ahead", inDaysAhead),
-            new KeyValuePair<string, object>("in_time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("in_time_zone_bias_value", _timeZoneBiasValue),
             new KeyValuePair<string, object>("shift_sched_ent OUTPUT", 0),
             new KeyValuePair<string, object>("shift_start_time OUTPUT", DateTime.Now),
             new KeyValuePair<string, object>("shift_end_time OUTPUT", DateTime.Now)
@@ -272,7 +275,7 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
             new KeyValuePair<string, object>("in_ent_id", inEntId),
             new KeyValuePair<string, object>("in_start_time", inStartTime),
             new KeyValuePair<string, object>("in_days_ahead", inDaysAhead),
-            new KeyValuePair<string, object>("in_time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("in_time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -302,7 +305,7 @@ public class EntRepository : RepositoryBase<Ent>, IEntRepository
             new KeyValuePair<string, object>("in_ent_id", inEntId),
             new KeyValuePair<string, object>("start_time", startTime),
             new KeyValuePair<string, object>("end_time", endTime),
-            new KeyValuePair<string, object>("in_time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("in_time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {

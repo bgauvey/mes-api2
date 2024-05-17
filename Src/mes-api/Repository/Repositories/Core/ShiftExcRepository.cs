@@ -31,9 +31,12 @@ namespace BOL.API.Repository.Repositories.Core;
 public class ShiftExcRepository : RepositoryBase<ShiftExc>, IShiftExcRepository
 {
     private readonly CommandProcessor _CommandProcessor;
+    private readonly int _timeZoneBiasValue;
+
     public ShiftExcRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
          : base(context, loggerFactory)
     {
+        _timeZoneBiasValue = (int)configuration.GetSection("Mes").GetValue(typeof(int), "_timeZoneBiasValue");
         _CommandProcessor = new CommandProcessor(configuration);
     }
 
@@ -43,7 +46,7 @@ public class ShiftExcRepository : RepositoryBase<ShiftExc>, IShiftExcRepository
         {
             new KeyValuePair<string, object>("start_time", startTime),
             new KeyValuePair<string, object>("end_time", entTime),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
 
         Command command = new Command()

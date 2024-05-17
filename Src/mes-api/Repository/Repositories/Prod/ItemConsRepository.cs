@@ -35,9 +35,11 @@ namespace BOL.API.Repository.Repositories.Prod
     public class ItemConsRepository : RepositoryBase<ItemCons>, IItemConsRepository
     {
         private readonly CommandProcessor _CommandProcessor;
+        private readonly int _timeZoneBiasValue;
         public ItemConsRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
              : base(context, loggerFactory)
         {
+            _timeZoneBiasValue = (int)configuration.GetSection("Mes").GetValue(typeof(int), "_timeZoneBiasValue");
             _CommandProcessor = new CommandProcessor(configuration);
         }
 
@@ -67,7 +69,7 @@ namespace BOL.API.Repository.Repositories.Prod
                 new KeyValuePair<string, object>("spare2", spare2),
                 new KeyValuePair<string, object>("spare3", spare3),
                 new KeyValuePair<string, object>("spare4", spare4),
-                new KeyValuePair<string, object>("time_zone_bias_value", 0),
+                new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue),
                 new KeyValuePair<string, object>("row_id OUTPUT", rowId),
             };
             Command command = new Command()
@@ -125,7 +127,7 @@ namespace BOL.API.Repository.Repositories.Prod
             new KeyValuePair<string, object>("spare2", spare2),
             new KeyValuePair<string, object>("spare3", spare3),
             new KeyValuePair<string, object>("spare4", spare4),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue),
             new KeyValuePair<string, object>("row_id OUTPUT", rowId),
         };
             Command command = new Command()
@@ -179,7 +181,7 @@ namespace BOL.API.Repository.Repositories.Prod
             new KeyValuePair<string, object>("spare3", spare3),
             new KeyValuePair<string, object>("spare4", spare4),
             new KeyValuePair<string, object>("row_id OUTPUT", rowId),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
             Command command = new Command()
             {

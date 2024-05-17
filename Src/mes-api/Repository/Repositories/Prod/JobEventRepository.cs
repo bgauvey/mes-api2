@@ -35,9 +35,12 @@ namespace BOL.API.Repository.Repositories.Prod
     public class JobEventRepository : RepositoryBase<JobEvent>, IJobEventRepository
 	{
         private readonly CommandProcessor _CommandProcessor;
+        private readonly int _timeZoneBiasValue;
+
         public JobEventRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
              : base(context, loggerFactory)
         {
+            _timeZoneBiasValue = (int)configuration.GetSection("Mes").GetValue(typeof(int), "_timeZoneBiasValue");
             _CommandProcessor = new CommandProcessor(configuration);
         }
 
@@ -74,7 +77,7 @@ namespace BOL.API.Repository.Repositories.Prod
             new KeyValuePair<string, object>("value9", value9),
             new KeyValuePair<string, object>("value10", value10),
             new KeyValuePair<string, object>("last_edit_comment", lastEditComment),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue),
             new KeyValuePair<string, object>("row_id OUTPUT", rowId),
         };
             Command command = new Command()

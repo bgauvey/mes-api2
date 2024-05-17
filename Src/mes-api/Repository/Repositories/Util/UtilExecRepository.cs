@@ -32,9 +32,12 @@ namespace BOL.API.Repository.Util;
 public class UtilExecRepository : RepositoryBase<UtilExec>, IUtilExecRepository
 {
     private readonly CommandProcessor _CommandProcessor;
+    private readonly int _timeZoneBiasValue;
+
     public UtilExecRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
          : base(context, loggerFactory)
     {
+        _timeZoneBiasValue = (int)configuration.GetSection("Mes").GetValue(typeof(int), "_timeZoneBiasValue");
         _CommandProcessor = new CommandProcessor(configuration);
     }
 
@@ -132,7 +135,7 @@ public class UtilExecRepository : RepositoryBase<UtilExec>, IUtilExecRepository
             new KeyValuePair<string, object>("raw_reas_cd", rawReasCode),
             new KeyValuePair<string, object>("new_reas_start", newReasStart),
             new KeyValuePair<string, object>("@comments", comments),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {

@@ -35,10 +35,12 @@ namespace BOL.API.Repository.Repositories.Prod
     public class ItemProdRepository : RepositoryBase<ItemProd>, IItemProdRepository
 	{
         private readonly CommandProcessor _CommandProcessor;
+        private readonly int _timeZoneBiasValue;
 
         public ItemProdRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
          : base(context, loggerFactory)
         {
+            _timeZoneBiasValue = (int)configuration.GetSection("Mes").GetValue(typeof(int), "_timeZoneBiasValue");
             _CommandProcessor = new CommandProcessor(configuration);
         }
 
@@ -100,7 +102,7 @@ namespace BOL.API.Repository.Repositories.Prod
             new KeyValuePair<string, object>("split_qty_prod_erp", splitQtyProdErp),
             new KeyValuePair<string, object>("split_processed_flag", splitProcessedFlag),
             new KeyValuePair<string, object>("split_byproduct_flag", splitByproductFlag),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
             Command command = new Command()
             {
@@ -133,7 +135,7 @@ namespace BOL.API.Repository.Repositories.Prod
             new KeyValuePair<string, object>("cur_storage_ent_id", curStorageEntId),
             new KeyValuePair<string, object>("cur_update_inv", curUpdateInv),
             new KeyValuePair<string, object>("cur_backflush", curBackflush),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
             Command command = new Command()
             {

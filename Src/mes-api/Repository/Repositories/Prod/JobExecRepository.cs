@@ -32,9 +32,12 @@ namespace BOL.API.Repository.Repositories.Prod;
 public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
 {
     private readonly CommandProcessor _CommandProcessor;
+    private readonly int _timeZoneBiasValue;
+
     public JobExecRepository(FactelligenceContext context, ILoggerFactory loggerFactory, IConfiguration configuration)
          : base(context, loggerFactory)
     {
+        _timeZoneBiasValue = (int)configuration.GetSection("Mes").GetValue(typeof(int), "_timeZoneBiasValue");
         _CommandProcessor = new CommandProcessor(configuration);
     }
 
@@ -64,7 +67,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("spare2", spare2),
             new KeyValuePair<string, object>("spare3", spare3),
             new KeyValuePair<string, object>("spare4", spare4),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue),
             new KeyValuePair<string, object>("row_id OUTPUT", rowId),
             new KeyValuePair<string, object>("prod_info OUTPUT", prodInfo)
         };
@@ -116,7 +119,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("spare2", spare2),
             new KeyValuePair<string, object>("spare3", spare3),
             new KeyValuePair<string, object>("spare4", spare4),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
 
         };
         Command command = new Command()
@@ -169,7 +172,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("req_finish_time_local", reqFinishTimeLocal),
             new KeyValuePair<string, object>("job_priority", jobPriority),
             new KeyValuePair<string, object>("apply_to_all_jobs", applyToAllJobs),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue),
             new KeyValuePair<string, object>("result OUTPUT", result),
         };
         Command command = new Command()
@@ -253,7 +256,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("req_finish_time_local", reqFinishTimeLocal),
             new KeyValuePair<string, object>("qty_reqd", qtyReqd),
             new KeyValuePair<string, object>("qty_at_start", qtyAtStart),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue),
             new KeyValuePair<string, object>("mod_id OUTPUT", modId)
 
         };
@@ -289,7 +292,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("cust_info", custInfo),
             new KeyValuePair<string, object>("mo_id", moId),
             new KeyValuePair<string, object>("notes", notes),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -334,7 +337,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("for_first_op", forFirstOp),
             new KeyValuePair<string, object>("spec_ver_id", specVerId),
             new KeyValuePair<string, object>("may_override_route", mayOverrideRoute),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -397,7 +400,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("client_type", clientType),
             new KeyValuePair<string, object>("no_propogation", noPropogation),
             new KeyValuePair<string, object>("check_auto_job_start", checkAutoJobStart),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -543,7 +546,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
         {
             new KeyValuePair<string, object>("wo_id", woId),
             new KeyValuePair<string, object>("item_id", itemId),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -637,7 +640,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("job_pos", jobPos),
             new KeyValuePair<string, object>("status_notes", statusNotes),
             new KeyValuePair<string, object>("act_finish_time_local", actFinishTimeLocal),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -673,7 +676,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("req_finish_time_local", reqFinishTimeLocal),
             new KeyValuePair<string, object>("target_sched_ent_id", targetSchedEntId),
             new KeyValuePair<string, object>("concurrent_link", concurrentLink),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue),
             new KeyValuePair<string, object>("run_ent_id OUTPUT", runEntId),
             new KeyValuePair<string, object>("edit_time OUTPUT", editTime),
             new KeyValuePair<string, object>("refresh_all OUTPUT", refreshAll)
@@ -717,7 +720,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("target_ent_id", targetEntId),
             new KeyValuePair<string, object>("status_notes", statusNotes),
             new KeyValuePair<string, object>("ignore_zero_start_qty_check", ignoreZeroStartQtyCheck),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -758,7 +761,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("spare2", spare2),
             new KeyValuePair<string, object>("spare3", spare3),
             new KeyValuePair<string, object>("spare4", spare4),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue),
             new KeyValuePair<string, object>("seq_no OUTPUT", seqNo)
         };
         Command command = new Command()
@@ -795,7 +798,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("status_notes", statusNotes),
             new KeyValuePair<string, object>("check_privs", checkPrivs),
             new KeyValuePair<string, object>("check_certs", checkCerts),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0)
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue)
         };
         Command command = new Command()
         {
@@ -828,7 +831,7 @@ public class JobExecRepository : RepositoryBase<JobExec>, IJobExecRepository
             new KeyValuePair<string, object>("status_notes", statusNotes),
             new KeyValuePair<string, object>("check_privs", checkPrivs),
             new KeyValuePair<string, object>("check_certs", checkCerts),
-            new KeyValuePair<string, object>("time_zone_bias_value", 0),
+            new KeyValuePair<string, object>("time_zone_bias_value", _timeZoneBiasValue),
             new KeyValuePair<string, object>("new_seq_no OUTPUT", newSeqNo)
         };
         Command command = new Command()
