@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace bol.api.Controllers.Core
 {
-    [Route("core/itemclassattr")]
+    [Route("prod/itemclassattr")]
     [EnableCors("AllowAnyOrigin")]
     public class ItemClassAttrController : ControllerBase
     {

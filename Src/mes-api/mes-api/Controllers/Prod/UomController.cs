@@ -8,29 +8,29 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace bol.api.Controllers.Core
 {
-    [Route("prod/itemclass")]
+    [Route("prod/uom")]
     [EnableCors("AllowAnyOrigin")]
-    public class ItemClassController : ControllerBase
+    public class UomController : ControllerBase
     {
         private readonly ILogger _logger;
-        private readonly IItemClassService _itemClassService;
+        private readonly IUomService _uomService;
 
-        public ItemClassController(IItemClassService itemClassService, ILoggerFactory loggerFactory)
+        public UomController(IUomService uomService, ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger(nameof(ItemClassController));
-            _itemClassService = itemClassService;
+            _logger = loggerFactory.CreateLogger(nameof(UomController));
+            _uomService = uomService;
         }
 
         // GET: api/values
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<IEnumerable<ItemClass>> Get()
+        public async Task<ActionResult> Get()
         {
             try
             { 
-                var itemClasss = _itemClassService.GetAll();
-                return Ok(itemClasss);
+                var uoms = await _uomService.GetAllAsync();
+                return Ok(uoms);
             }
             catch (Exception exp)
             {
@@ -43,12 +43,12 @@ namespace bol.api.Controllers.Core
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<ItemClass> Get(string id)
+        public async Task<ActionResult> Get(int id)
         {
             try
             {
-                var itemClass = _itemClassService.GetById(id);
-                return Ok(itemClass);
+                var uom = await _uomService.GetByIdAsync(id);
+                return Ok(uom);
 
             }
             catch (Exception exp)
@@ -65,18 +65,18 @@ namespace bol.api.Controllers.Core
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        public IActionResult Post([FromBody] ItemClass itemClass)
+        public async Task<ActionResult> Post([FromBody] Uom uom)
         {
             try
             {
-                if (itemClass == null)
+                if (uom == null)
                     return BadRequest();
 
-                itemClass.LastEditAt = DateTime.Now.ToUniversalTime();
+                uom.LastEditAt = DateTime.Now.ToUniversalTime();
                 if (ClaimsPrincipal.Current != null)
-                    itemClass.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                    uom.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-                _itemClassService.Create(itemClass);
+                await _uomService.CreateAsync(uom);
                 return Created();
             }
             catch (Exception exp)
@@ -93,23 +93,23 @@ namespace bol.api.Controllers.Core
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        public IActionResult Put(string id, [FromBody] ItemClass itemClass)
+        public async Task<ActionResult> Put(int id, [FromBody] Uom uom)
         {
             try
             {
-                if (!itemClass.ItemClassId.Equals(id))
-                    return BadRequest("ItemClassId mismatch");
+                if (id != uom.UomId)
+                    return BadRequest("UomId mismatch");
 
-                var itemClassToUpdate = _itemClassService.GetById(id);
+                var uomToUpdate = _uomService.GetByIdAsync(id);
 
-                if (itemClassToUpdate == null)
-                    return NotFound($"ItemClass with ItemClassId = {id} not found");
+                if (uomToUpdate == null)
+                    return NotFound($"Uom with UomId = {id} not found");
 
-                itemClass.LastEditAt = DateTime.Now.ToUniversalTime();
+                uom.LastEditAt = DateTime.Now.ToUniversalTime();
                 if (ClaimsPrincipal.Current != null)
-                    itemClass.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
+                    uom.LastEditBy = ClaimsPrincipal.Current.Identity.Name;
 
-                _itemClassService.Update(itemClass);
+                await _uomService.UpdateAsync(uom);
                 return Created();
             }
             catch (Exception exp)
@@ -125,16 +125,16 @@ namespace bol.api.Controllers.Core
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        public IActionResult Delete(string id)
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                var itemClassToDelete = _itemClassService.GetById(id);
+                var uomToDelete = _uomService.GetByIdAsync(id);
 
-                if (itemClassToDelete == null)
-                    return NotFound($"ItemClass with ItemClassId = {id} not found");
+                if (uomToDelete == null)
+                    return NotFound($"Uom with UomId = {id} not found");
 
-                _itemClassService.Delete(id);
+                await _uomService.DeleteAsync(id);
                 return NoContent();
             }
             catch (Exception exp)

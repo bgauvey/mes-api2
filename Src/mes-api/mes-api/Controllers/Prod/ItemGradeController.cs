@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace bol.api.Controllers.Core
 {
-    [Route("core/itemgrade")]
+    [Route("prod/itemgrade")]
     [EnableCors("AllowAnyOrigin")]
     public class ItemGradeController : ControllerBase
     {
