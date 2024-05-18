@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
-namespace api.Models;
+namespace BOL.API.Domain.Models.Prod;
 
 [Table("uom_conv")]
-[Index("FromUomId", "ToUomId", "ItemId", Name = "IX_uom_conv", IsUnique = true)]
 public partial class UomConv
 {
     [Column("from_uom_id")]

@@ -76,6 +76,7 @@ public class FactelligenceContext : DbContext
     public DbSet<JobEvent> JobEvents { get; set; }
     public DbSet<JobExec> JobExecs { get; set; }
     public DbSet<Uom> Uoms { get; set; }
+    public DbSet<UomConv> UomConvs { get; set; }
 
     // Security Models
     public DbSet<EntLogon> EntLogons { get; set; }

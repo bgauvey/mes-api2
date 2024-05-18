@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using mes_ui.Data;
+﻿using mes_ui.Data;
 using mes_ui.Services;
 
 var builder = WebApplication.CreateBuilder(args);
