@@ -71,6 +71,10 @@ public class FactelligenceContext : DbContext
     public DbSet<ItemState> ItemStates { get; set; }
     public DbSet<ItemGrade> ItemGrades { get; set; }
     public DbSet<ItemClass> ItemClasses { get; set; }
+    public DbSet<ItemReas> ItemReas { get; set; }
+    public DbSet<ItemReasGrp> ItemReasGrp { get; set; }
+    public DbSet<ItemReasGrpEntLink> ItemReasGrpEntLink { get; set; }
+    public DbSet<ItemReasGrpClassLink> ItemReasGrpClassLink { get; set; }
     public DbSet<ItemClassAttr> ItemClassAttrs { get; set; }
     public DbSet<Job> Jobs { get; set; }
     public DbSet<JobEvent> JobEvents { get; set; }

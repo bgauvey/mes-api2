@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
-namespace api.Models;
+namespace BOL.API.Domain.Models.Prod;
 
 [Table("item_reas_grp")]
-[Index("ReasGrpDesc", Name = "IX_item_reas_grp", IsUnique = true)]
 public partial class ItemReasGrp
 {
     [Column("reas_grp_desc")]

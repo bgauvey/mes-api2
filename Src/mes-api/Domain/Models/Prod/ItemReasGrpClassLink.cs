@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Models;
+namespace BOL.API.Domain.Models.Prod;
 
-[PrimaryKey("ReasGrpId", "EntId")]
-[Table("item_reas_grp_ent_link")]
-public partial class ItemReasGrpEntLink
+[PrimaryKey("ReasGrpId", "ItemClassId")]
+[Table("item_reas_grp_class_link")]
+public partial class ItemReasGrpClassLink
 {
     [Key]
     [Column("reas_grp_id")]
     public int ReasGrpId { get; set; }
 
     [Key]
-    [Column("ent_id")]
-    public int EntId { get; set; }
+    [Column("item_class_id")]
+    [StringLength(40)]
+    public string ItemClassId { get; set; } = null!;
 
     [Column("last_edit_comment")]
     [StringLength(254)]

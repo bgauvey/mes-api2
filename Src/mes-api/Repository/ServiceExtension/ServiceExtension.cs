@@ -79,6 +79,10 @@ public static class ServiceExtension
         services.AddScoped<IItemStateRepository, ItemStateRepository>();
         services.AddScoped<IItemGradeRepository, ItemGradeRepository>();
         services.AddScoped<IItemClassRepository, ItemClassRepository>();
+        services.AddScoped<IItemReasRepository, ItemReasRepository>();
+        services.AddScoped<IItemReasGrpRepository, ItemReasGrpRepository>();
+        services.AddScoped<IItemReasGrpEntLinkRepository, ItemReasGrpEntLinkRepository>();
+        services.AddScoped<IItemReasGrpClassLinkRepository, ItemReasGrpClassLinkRepository>();
         services.AddScoped<IItemClassAttrRepository, ItemClassAttrRepository>();
         services.AddScoped<IJobRepository, JobRepository>();
         services.AddScoped<IJobEventRepository, JobEventRepository>();
