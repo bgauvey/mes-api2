@@ -36,12 +36,4 @@ public partial class StdOperStepEntExc
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("EntId")]
-    [InverseProperty("StdOperStepEntExcs")]
-    public virtual JobSchedExec Ent { get; set; } = null!;
-
-    [ForeignKey("OperId, StepNo")]
-    [InverseProperty("StdOperStepEntExcs")]
-    public virtual StdOperStep StdOperStep { get; set; } = null!;
 }

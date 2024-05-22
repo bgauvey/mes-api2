@@ -59,15 +59,4 @@ public partial class StdOperEntLink
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("EntId")]
-    [InverseProperty("StdOperEntLinks")]
-    public virtual JobSchedExec Ent { get; set; } = null!;
-
-    [ForeignKey("OperId")]
-    [InverseProperty("StdOperEntLinks")]
-    public virtual StdOper Oper { get; set; } = null!;
-
-    [InverseProperty("StdOperEntLink")]
-    public virtual ICollection<StdOperEntSpec> StdOperEntSpecs { get; set; } = new List<StdOperEntSpec>();
 }

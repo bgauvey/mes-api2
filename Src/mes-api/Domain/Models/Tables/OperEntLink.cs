@@ -73,36 +73,4 @@ public partial class OperEntLink
 
     [Column("row_id")]
     public int RowId { get; set; }
-
-    [ForeignKey("EntId")]
-    [InverseProperty("OperEntLinks")]
-    public virtual JobSchedExec Ent { get; set; } = null!;
-
-    [InverseProperty("OperEntLink")]
-    public virtual ICollection<FolderItemOperEntLink> FolderItemOperEntLinks { get; set; } = new List<FolderItemOperEntLink>();
-
-    [InverseProperty("OperEntLink")]
-    public virtual ICollection<ItemRule> ItemRules { get; set; } = new List<ItemRule>();
-
-    [ForeignKey("ProcessId, OperId")]
-    [InverseProperty("OperEntLinks")]
-    public virtual Oper Oper { get; set; } = null!;
-
-    [InverseProperty("OperEntLink")]
-    public virtual ICollection<OperAllocRule> OperAllocRules { get; set; } = new List<OperAllocRule>();
-
-    [InverseProperty("OperEntLinkNavigation")]
-    public virtual ICollection<OperEntRoute> OperEntRouteOperEntLinkNavigations { get; set; } = new List<OperEntRoute>();
-
-    [InverseProperty("OperEntLink")]
-    public virtual ICollection<OperEntRoute> OperEntRouteOperEntLinks { get; set; } = new List<OperEntRoute>();
-
-    [InverseProperty("OperEntLink")]
-    public virtual ICollection<OperEntSpec> OperEntSpecs { get; set; } = new List<OperEntSpec>();
-
-    [InverseProperty("OperEntLinkNavigation")]
-    public virtual ICollection<OperProdRule> OperProdRuleOperEntLinkNavigations { get; set; } = new List<OperProdRule>();
-
-    [InverseProperty("OperEntLink")]
-    public virtual ICollection<OperProdRule> OperProdRuleOperEntLinks { get; set; } = new List<OperProdRule>();
 }

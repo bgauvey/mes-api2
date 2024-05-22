@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
-namespace api.Models;
+namespace BOL.API.Domain.Models.Prod;
 
 [Table("job_sched_exec")]
 public partial class JobSchedExec
@@ -55,15 +52,4 @@ public partial class JobSchedExec
     [Column("last_edit_at", TypeName = "datetime")]
     public DateTime LastEditAt { get; set; }
 
-    [InverseProperty("Ent")]
-    public virtual ICollection<OperEntLink> OperEntLinks { get; set; } = new List<OperEntLink>();
-
-    [InverseProperty("Ent")]
-    public virtual ICollection<OperStepEntExc> OperStepEntExcs { get; set; } = new List<OperStepEntExc>();
-
-    [InverseProperty("Ent")]
-    public virtual ICollection<StdOperEntLink> StdOperEntLinks { get; set; } = new List<StdOperEntLink>();
-
-    [InverseProperty("Ent")]
-    public virtual ICollection<StdOperStepEntExc> StdOperStepEntExcs { get; set; } = new List<StdOperStepEntExc>();
 }
