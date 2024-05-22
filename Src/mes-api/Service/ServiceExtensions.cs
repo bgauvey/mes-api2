@@ -53,6 +53,7 @@ namespace bol.api
             services.AddScoped<IItemReasGrpEntLinkService, ItemReasGrpEntLinkService>();
             services.AddScoped<IItemReasGrpClassLinkService, ItemReasGrpClassLinkService>();
             services.AddScoped<IItemClassAttrService, ItemClassAttrService>();
+            services.AddScoped<IJobEventService, JobEventService>();
             services.AddScoped<IJobExecService, JobExecService>();
             services.AddScoped<IUomService, UomService>();
             services.AddScoped<IUomConvService, UomConvService>();
