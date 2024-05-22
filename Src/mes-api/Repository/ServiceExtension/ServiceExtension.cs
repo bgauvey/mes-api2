@@ -85,6 +85,7 @@ public static class ServiceExtension
         services.AddScoped<IItemReasGrpClassLinkRepository, ItemReasGrpClassLinkRepository>();
         services.AddScoped<IItemClassAttrRepository, ItemClassAttrRepository>();
         services.AddScoped<IJobRepository, JobRepository>();
+        services.AddScoped<IJobStateRepository, JobStateRepository>();
         services.AddScoped<IJobEventRepository, JobEventRepository>();
         services.AddScoped<IJobSchedExecRepository, JobSchedExecRepository>();
         services.AddScoped<IJobExecRepository, JobExecRepository>();
