@@ -83,6 +83,7 @@ public class FactelligenceContext : DbContext
     public DbSet<JobSchedExec> JobSchedExecs { get; set; }
     public DbSet<Uom> Uoms { get; set; }
     public DbSet<UomConv> UomConvs { get; set; }
+    public DbSet<Wo> Wos { get; set; }
 
     // Security Models
     public DbSet<EntLogon> EntLogons { get; set; }

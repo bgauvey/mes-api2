@@ -91,6 +91,7 @@ public static class ServiceExtension
         services.AddScoped<IJobExecRepository, JobExecRepository>();
         services.AddScoped<IUomRepository, UomRepository>();
         services.AddScoped<IUomConvRepository, UomConvRepository>();
+        services.AddScoped<IWoRepository, WoRepository>();
 
         // Security
         services.AddScoped<IGrpNameRepository, GrpNameRepository>();
